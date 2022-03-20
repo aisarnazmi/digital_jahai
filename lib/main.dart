@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:digital_jahai_malay/screens/main_screen.dart';
+import 'package:digital_jahai/screens/main_screen.dart';
 
 void main() {
   runApp(const MyApp());

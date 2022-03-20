@@ -1,4 +1,4 @@
-package com.example.digital_jahai_malay
+package com.example.digital_jahai
 
 import io.flutter.embedding.android.FlutterActivity
 

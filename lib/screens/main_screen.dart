@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
-import 'package:digital_jahai_malay/screens/translate_screen.dart';
-import 'package:digital_jahai_malay/screens/library_screen.dart';
+import 'package:digital_jahai/screens/translate_screen.dart';
+import 'package:digital_jahai/screens/library_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);

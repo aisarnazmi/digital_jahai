@@ -1,4 +1,4 @@
-# digital_jahai_malay
+# digital_jahai
 
 A new Flutter project.
 

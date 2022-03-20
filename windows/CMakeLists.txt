@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
-project(digital_jahai_malay LANGUAGES CXX)
+project(digital_jahai LANGUAGES CXX)
 
-set(BINARY_NAME "digital_jahai_malay")
+set(BINARY_NAME "digital_jahai")
 
 cmake_policy(SET CMP0063 NEW)
 

@@ -1,6 +1,6 @@
 {
-    "name": "digital_jahai_malay",
-    "short_name": "digital_jahai_malay",
+    "name": "digital_jahai",
+    "short_name": "digital_jahai",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

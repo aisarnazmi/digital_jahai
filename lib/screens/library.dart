@@ -332,7 +332,6 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.w600,
-                                        letterSpacing: 1
                                       )),
                                     ),
                                   ),

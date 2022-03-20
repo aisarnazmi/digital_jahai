@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.digital_jahai_malay">
+    package="com.example.digital_jahai">
    <application
-        android:label="digital_jahai_malay"
+        android:label="digital_jahai"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
