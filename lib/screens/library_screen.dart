@@ -1,4 +1,10 @@
+import 'dart:convert';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'package:digital_jahai/utils/call_api.dart';
 
 class LibraryScreen extends StatefulWidget {
   const LibraryScreen({Key? key}) : super(key: key);
@@ -7,135 +13,381 @@ class LibraryScreen extends StatefulWidget {
   State<LibraryScreen> createState() => _LibraryScreenState();
 }
 
-
-
 class _LibraryScreenState extends State<LibraryScreen> {
+  TextEditingController jahaiTermController = TextEditingController();
+  TextEditingController malayTermController = TextEditingController();
+  TextEditingController englishTermController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+  TextEditingController termCategoryController = TextEditingController();
+
+  Future _storeLibrary(BuildContext context) async {
+    var payload = {
+      "jahai_term": jahaiTermController.text,
+      "malay_term": malayTermController.text,
+      "english_term": englishTermController.text,
+      "description": descriptionController.text,
+      "term_category": termCategoryController.text
+    };
+
+    await CallApi().post(payload, "library/store").then((response) {
+
+      // print(response.body);
+
+      // var data = jsonDecode(response.body);
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: Colors.indigo[800],
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Color(0xff181d5f),
+            Color(0xff112043),
+          ],
         ),
-        child: Column(
-          
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.fromLTRB(30, 80, 30, 0),
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        // backgroundColor: const Color(0xfffafafa),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 8.0.h),
               child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: const <Widget>[
-                  Text(
-                    'Digital Language Repository',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold),
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20.0.w),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+                                  Color(0xffeb7c91),
+                                  Color(0xffec6882),
+                                ],
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: Offset(5, 10),
+                                  blurRadius: 20.0,
+                                  color:
+                                      const Color(0xffec6882).withOpacity(0.4),
+                                )
+                              ],
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(50.0))),
+                          child: IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            color: Colors.white,
+                            icon: Icon(
+                              Icons.arrow_back,
+                              size: 22.w,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(height: 4),
-                  Text(
-                    'Jahai  ~  Malay',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(right: 12.0.w),
+                        child: Text(
+                          "Jahai Language\nRepository",
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                              // color: const Color(0xff181d5f),
+                              color: const Color(0xfffafafa),
+                              fontSize: 34.sp,
+                              fontWeight: FontWeight.w800,
+                              letterSpacing: -1),
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 35.0.h,
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height,
+                    child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20)),
+                          color: const Color(0xfffafafa),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.white.withOpacity(0.5),
+                              spreadRadius: 6,
+                              blurRadius: 20,
+                              offset: const Offset(
+                                  0, 4), // changes position of shadow
+                            ),
+                          ],
+                        ),
+                        child: Padding(
+                          padding:
+                              EdgeInsets.fromLTRB(20.0.w, 25.0.h, 20.0.w, 0.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      offset: Offset(5, 5),
+                                      blurRadius: 40.0,
+                                      color: Color(0xFF8B8DA3).withOpacity(0.3),
+                                    )
+                                  ],
+                                ),
+                                child: TextFormField(
+                                  controller: jahaiTermController,
+                                  decoration: InputDecoration(
+                                      labelText: 'Jahai Term',
+                                      labelStyle: TextStyle(
+                                        color: Colors.grey,
+                                        backgroundColor: Colors.white,
+                                      ),
+                                      // errorText: 'Error message',
+                                      enabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10.0)),
+                                          borderSide:
+                                              BorderSide(color: Colors.white)),
+                                      focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10.0)),
+                                          borderSide:
+                                              BorderSide(color: Colors.grey))
+                                      // suffixIcon: Icon(
+                                      //   Icons.error,
+                                      // ),
+                                      ),
+                                ),
+                              ),
+                              SizedBox(height: 30.0.h),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      offset: Offset(5, 5),
+                                      blurRadius: 40.0,
+                                      color: Color(0xFF8B8DA3).withOpacity(0.3),
+                                    )
+                                  ],
+                                ),
+                                child: TextFormField(
+                                  controller: malayTermController,
+                                  decoration: InputDecoration(
+                                      labelText: 'Malay Term',
+                                      labelStyle: TextStyle(
+                                        color: Colors.grey,
+                                        backgroundColor: Colors.white,
+                                      ),
+                                      // errorText: 'Error message',
+                                      enabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10.0)),
+                                          borderSide:
+                                              BorderSide(color: Colors.white)),
+                                      focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10.0)),
+                                          borderSide:
+                                              BorderSide(color: Colors.grey))
+                                      // suffixIcon: Icon(
+                                      //   Icons.error,
+                                      // ),
+                                      ),
+                                ),
+                              ),
+                              SizedBox(height: 30.0.h),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      offset: Offset(5, 5),
+                                      blurRadius: 40.0,
+                                      color: Color(0xFF8B8DA3).withOpacity(0.3),
+                                    )
+                                  ],
+                                ),
+                                child: TextFormField(
+                                  controller: englishTermController,
+                                  decoration: InputDecoration(
+                                      labelText: 'English Term',
+                                      labelStyle: TextStyle(
+                                        color: Colors.grey,
+                                        backgroundColor: Colors.white,
+                                      ),
+                                      // errorText: 'Error message',
+                                      enabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10.0)),
+                                          borderSide:
+                                              BorderSide(color: Colors.white)),
+                                      focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10.0)),
+                                          borderSide:
+                                              BorderSide(color: Colors.grey))
+                                      // suffixIcon: Icon(
+                                      //   Icons.error,
+                                      // ),
+                                      ),
+                                ),
+                              ),
+                              SizedBox(height: 30.0.h),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      offset: Offset(5, 5),
+                                      blurRadius: 40.0,
+                                      color: Color(0xFF8B8DA3).withOpacity(0.3),
+                                    )
+                                  ],
+                                ),
+                                child: TextFormField(
+                                  controller: descriptionController,
+                                  minLines: 4,
+                                  maxLines: 8,
+                                  decoration: InputDecoration(
+                                      labelText: 'Description',
+                                      labelStyle: TextStyle(
+                                        color: Colors.grey,
+                                        backgroundColor: Colors.white,
+                                      ),
+                                      // errorText: 'Error message',
+                                      enabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10.0)),
+                                          borderSide:
+                                              BorderSide(color: Colors.white)),
+                                      focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10.0)),
+                                          borderSide:
+                                              BorderSide(color: Colors.grey))
+                                      // suffixIcon: Icon(
+                                      //   Icons.error,
+                                      // ),
+                                      ),
+                                ),
+                              ),
+                              SizedBox(height: 30.0.h),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      offset: Offset(5, 5),
+                                      blurRadius: 40.0,
+                                      color: Color(0xFF8B8DA3).withOpacity(0.3),
+                                    )
+                                  ],
+                                ),
+                                child: TextFormField(
+                                  controller: termCategoryController,
+                                  decoration: InputDecoration(
+                                      labelText: 'Term Category',
+                                      labelStyle: TextStyle(
+                                        color: Colors.grey,
+                                        backgroundColor: Colors.white,
+                                      ),
+                                      // errorText: 'Error message',
+                                      enabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10.0)),
+                                          borderSide:
+                                              BorderSide(color: Colors.white)),
+                                      focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10.0)),
+                                          borderSide:
+                                              BorderSide(color: Colors.grey))
+                                      // suffixIcon: Icon(
+                                      //   Icons.error,
+                                      // ),
+                                      ),
+                                ),
+                              ),
+                              SizedBox(height: 30.0.h),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: <Widget>[
+                                  Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 20.0.w),
+                                    decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomRight,
+                                          colors: [
+                                            Color(0xffeb7c91),
+                                            Color(0xffec6882),
+                                          ],
+                                        ),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            offset: Offset(5, 10),
+                                            blurRadius: 20.0,
+                                            color: const Color(0xffec6882)
+                                                .withOpacity(0.4),
+                                          )
+                                        ],
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10.0))),
+                                    child: TextButton(
+                                      onPressed: () {
+                                        _storeLibrary(context);
+                                      },
+                                      child: Text("Sumbit",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w600,
+                                          )),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        )),
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 30),
-            Expanded(
-              child: Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(40),
-                        topRight: Radius.circular(40)),
-                    color: Colors.grey[50],
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(30, 25, 30, 0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        TextFormField(
-                          decoration: InputDecoration(
-                            labelText: 'Jahai Term',
-                            // errorText: 'Error message',
-                            border: OutlineInputBorder(
-                               borderRadius: const BorderRadius.all(Radius.circular(15.0)),
-                            ),
-                            // suffixIcon: Icon(
-                            //   Icons.error,
-                            // ),
-                          ),
-                        ),
-                        SizedBox(height: 25.0),
-                        TextFormField(
-                          decoration: InputDecoration(
-                            labelText: 'Malay Term',
-                            // errorText: 'Error message',
-                            border: OutlineInputBorder(
-                               borderRadius: const BorderRadius.all(Radius.circular(15.0)),
-                            ),
-                            // suffixIcon: Icon(
-                            //   Icons.error,
-                            // ),
-                          ),
-                        ),
-                        SizedBox(height: 25.0),
-                        TextFormField(
-                          decoration: InputDecoration(
-                            labelText: 'English Term',
-                            // errorText: 'Error message',
-                            border: OutlineInputBorder(
-                               borderRadius: const BorderRadius.all(Radius.circular(15.0)),
-                            ),
-                            // suffixIcon: Icon(
-                            //   Icons.error,
-                            // ),
-                          ),
-                        ),
-                        SizedBox(height: 25.0),
-                        TextFormField(
-                          decoration: InputDecoration(
-                            labelText: 'Category',
-                            // errorText: 'Error message',
-                            border: OutlineInputBorder(
-                               borderRadius: const BorderRadius.all(Radius.circular(15.0)),
-                            ),
-                            // suffixIcon: Icon(
-                            //   Icons.error,
-                            // ),
-                          ),
-                        ),
-                        SizedBox(height: 25.0),
-                        TextFormField(
-                          minLines: 4,
-                          maxLines: 4,
-                          decoration: InputDecoration(
-                            labelText: 'Description',
-                            border: OutlineInputBorder(
-                               borderRadius: const BorderRadius.all(Radius.circular(15.0)),
-                            ),
-                            // suffixIcon: Icon(
-                            //   Icons.error,
-                            // ),
-                          ),
-                        ),
-                        SizedBox(height: 25.0),
-                      ],
-                    ),
-                  )),
-            ),
-          ],
+          ),
         ),
       ),
     );
   }
 }
-
-

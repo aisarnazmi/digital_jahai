@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:digital_jahai/screens/library.dart';
+import 'package:digital_jahai/screens/library_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TranslateScreen extends StatefulWidget {
