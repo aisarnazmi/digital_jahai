@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:async';
 
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -21,6 +22,13 @@ class _LibraryScreenState extends State<LibraryScreen> {
   TextEditingController termCategoryController = TextEditingController();
 
   Future _storeLibrary(BuildContext context) async {
+    CoolAlert.show(
+        context: context,
+        type: CoolAlertType.loading,
+        text: "Please wait...",
+        barrierDismissible: false
+        );
+
     var payload = {
       "jahai_term": jahaiTermController.text,
       "malay_term": malayTermController.text,
@@ -29,12 +37,32 @@ class _LibraryScreenState extends State<LibraryScreen> {
       "term_category": termCategoryController.text
     };
 
-    await CallApi().post(payload, "library/store").then((response) {
+    var response = await CallApi().post(payload, "library/store");
 
-      // print(response.body);
+    if (response.statusCode == 200) {
+      Navigator.pop(context);
 
-      // var data = jsonDecode(response.body);
-    });
+      jahaiTermController.text = "";
+      malayTermController.text = "";
+      englishTermController.text = "";
+      descriptionController.text = "";
+      termCategoryController.text = "";
+
+      CoolAlert.show(
+          context: context,
+          type: CoolAlertType.success,
+          title: "Thank you!!!",
+          text: "New terms successfully added.");
+    } else {
+      Navigator.pop(context);
+
+      CoolAlert.show(
+        context: context,
+        type: CoolAlertType.error,
+        title: 'Oops...',
+        text: 'Sorry, something went wrong'
+      );
+    }
   }
 
   @override

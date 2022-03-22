@@ -37,6 +37,8 @@ dependencies:
   salomon_bottom_bar: ^3.2.0
   flutter_screenutil: ^5.3.1
   http: ^0.13.4
+  cool_alert: ^1.1.0
+  ms_undraw: ^3.1.0+2
 
 dev_dependencies:
   flutter_test:
