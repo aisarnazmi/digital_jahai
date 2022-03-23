@@ -74,7 +74,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-        gradient: const LinearGradient(
+        gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
@@ -102,7 +102,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                               gradient: LinearGradient(
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
-                                colors: [
+                                colors: const [
                                   Color(0xffeb7c91),
                                   Color(0xffec6882),
                                 ],
@@ -135,7 +135,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.only(right: 12.0.w),
+                        padding: EdgeInsets.only(right: 20.0.w),
                         child: Text(
                           "Jahai Language\nRepository",
                           textAlign: TextAlign.right,
@@ -378,7 +378,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                         gradient: LinearGradient(
                                           begin: Alignment.topLeft,
                                           end: Alignment.bottomRight,
-                                          colors: [
+                                          colors: const [
                                             Color(0xffeb7c91),
                                             Color(0xffec6882),
                                           ],

@@ -8,6 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:digital_jahai/screens/library_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ms_undraw/ms_undraw.dart';
+import 'package:skeleton_text/skeleton_text.dart';
+
+enum Language { jahai, malay, english }
 
 class TranslateScreen extends StatefulWidget {
   const TranslateScreen({Key? key}) : super(key: key);
@@ -17,18 +20,18 @@ class TranslateScreen extends StatefulWidget {
 }
 
 class _TranslateScreenState extends State<TranslateScreen> {
-  String firstLang = 'Jahai';
-  String secondLang = 'Malay';
-  String _search = "";
+  static Language _originLang = Language.values[0];
+  Language _transLang = Language.values[1];
+  final TextEditingController _searchController = TextEditingController();
 
   List<Term> termList = [];
 
   Future _getTranslation(String search) async {
     if (search == "") {
-      return null;
+      return [];
     } else {
       try {
-        var payload = {'language': firstLang, 'search': search};
+        var payload = {'language': _originLang.name, 'search': search};
 
         final response = await CallApi().post(payload, "library/translate");
         if (response.statusCode == 200) {
@@ -39,6 +42,8 @@ class _TranslateScreenState extends State<TranslateScreen> {
       }
     }
   }
+
+  String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
 
   Timer? _debounce;
 
@@ -115,7 +120,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.only(left: 12.0.w),
+                      padding: EdgeInsets.only(left: 20.0.w),
                       child: Text(
                         "Jahai Language\nRepository",
                         style: TextStyle(
@@ -129,7 +134,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(
-                      horizontal: 12.0.w, vertical: 20.0.h),
+                      horizontal: 20.0.w, vertical: 20.0.h),
                   child: Container(
                     padding: EdgeInsets.symmetric(
                         horizontal: 20.0.w, vertical: 5.0.h // 5 top and bottom
@@ -148,15 +153,15 @@ class _TranslateScreenState extends State<TranslateScreen> {
                         )
                       ],
                     ),
-                    child: TextField(
-                      // controller: _searchTerm,
+                    child: TextFormField(
+                      controller: _searchController,
                       onChanged: (val) {
                         setState(() {
-                          _search = val;
-                          _onSearchChanged(_search);
+                          // _searchController.text = val;
+                          _onSearchChanged(_searchController.text);
                         });
                       },
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         enabledBorder: InputBorder.none,
                         focusedBorder: InputBorder.none,
                         icon: Icon(
@@ -164,53 +169,126 @@ class _TranslateScreenState extends State<TranslateScreen> {
                           color: Colors.black38,
                           size: 24,
                         ),
-                        hintText: 'Type term to translate...',
+                        hintText: 'Enter term to translate...',
                         hintStyle: TextStyle(color: Colors.black38),
+                        suffixIcon: _searchController.text == ""
+                            ? null
+                            : IconButton(
+                                color: Colors.black38,
+                                iconSize: 24,
+                                icon: Icon(Icons.close),
+                                onPressed: () {
+                                  setState(() {
+                                    _searchController.clear();
+                                  });
+                                }),
                       ),
                     ),
                   ),
                 ),
-                Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 15.0.w),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          "Translation(s): ",
-                          style: TextStyle(
-                              fontSize: 17.sp, fontWeight: FontWeight.w700),
-                        )
-                      ],
-                    )),
-                SizedBox(
-                  height: 15.0.h,
-                ),
                 FutureBuilder<dynamic>(
-                  future: _getTranslation(_search),
+                  future: _getTranslation(_searchController.text),
                   builder: (context, snapshot) {
                     switch (snapshot.connectionState) {
                       case ConnectionState.waiting:
-                        return Text("Loading...");
+                        if (_searchController.text == "") {
+                          return Padding(
+                            padding: EdgeInsets.only(top: 80.0.h),
+                            child: Column(
+                              children: [
+                                UnDraw(
+                                  height: 150.0.h,
+                                  color: Color(0xff343090),
+                                  illustration: UnDrawIllustration.search,
+                                  errorWidget: Column(
+                                    children: [
+                                      Icon(Icons.perm_scan_wifi_outlined),
+                                      SizedBox(height: 10.0.w),
+                                      Text("No internet connection"),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        } else {
+                          return Column(
+                            children: <Widget>[
+                              Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 20.0.w),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        "Translation(s): ",
+                                        style: TextStyle(
+                                            fontSize: 17.sp,
+                                            fontWeight: FontWeight.w700),
+                                      )
+                                    ],
+                                  )),
+                              SizedBox(
+                                height: 15.0.h,
+                              ),
+                              SkeletonCard()
+                            ],
+                          );
+                        }
                       default:
                         if (snapshot.hasError) {
                           return Text('Error: ${snapshot.error}');
                         } else if (snapshot.data == null ||
                             snapshot.data.length <= 0) {
                           return Padding(
-                            padding: EdgeInsets.all(20.0.h),
-                            child: UnDraw(
-                              height: 150.0.h,
-                              color: Color(0xff181d5f),
-                              illustration: UnDrawIllustration.search,
-                              placeholder: Text(
-                                  "Illustration is loading..."), //optional, default is the CircularProgressIndicator().
-                              errorWidget: Icon(Icons.error_outline,
-                                  color: Colors
-                                      .red), //optional, default is the Text('Could not load illustration!').
+                            padding: EdgeInsets.only(top: 70.0.h),
+                            child: Column(
+                              children: [
+                                UnDraw(
+                                    height: 150.0.h,
+                                    color: Color(0xff343090),
+                                    illustration: _searchController.text != ""
+                                        ? UnDrawIllustration.void_
+                                        : UnDrawIllustration.search,
+                                    errorWidget: Column(
+                                      children: [
+                                        Icon(Icons.perm_scan_wifi_outlined),
+                                        SizedBox(height: 10.0.w),
+                                        Text("No internet connection"),
+                                      ],
+                                    )),
+                                SizedBox(height: 10.0.h),
+                                Text(_searchController.text != ""
+                                    ? "Sorry! No results found.."
+                                    : ''),
+                              ],
                             ),
                           );
                         } else {
-                          return TermCard(snapshot.data);
+                          return Column(
+                            children: <Widget>[
+                              Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 20.0.w),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        "Translation(s): ",
+                                        style: TextStyle(
+                                            fontSize: 17.sp,
+                                            fontWeight: FontWeight.w700),
+                                      )
+                                    ],
+                                  )),
+                              SizedBox(
+                                height: 15.0.h,
+                              ),
+                              TermCard(snapshot.data),
+                            ],
+                          );
                         }
                     }
                   },
@@ -246,7 +324,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
             Expanded(
               child: Center(
                   child: Text(
-                firstLang,
+                capitalize(_originLang.name),
                 style: TextStyle(
                     color: Colors.grey[800],
                     fontWeight: FontWeight.w600,
@@ -277,9 +355,9 @@ class _TranslateScreenState extends State<TranslateScreen> {
                   child: IconButton(
                     onPressed: () {
                       setState(() {
-                        var temp = firstLang;
-                        firstLang = secondLang;
-                        secondLang = temp;
+                        var temp = _originLang;
+                        _originLang = _transLang;
+                        _transLang = temp;
                       });
                     },
                     color: Colors.white,
@@ -294,7 +372,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
             Expanded(
               child: Center(
                   child: Text(
-                secondLang,
+                capitalize(_transLang.name),
                 style: TextStyle(
                     color: Colors.grey[800],
                     fontWeight: FontWeight.w600,
@@ -302,6 +380,279 @@ class _TranslateScreenState extends State<TranslateScreen> {
               )),
             ),
             const Spacer()
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SkeletonCard extends StatelessWidget {
+  const SkeletonCard({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20.0.w),
+      child: Container(
+        margin: EdgeInsets.only(bottom: 20.0.h),
+        decoration: BoxDecoration(
+            // color: Color(0xff5969e3),
+            // color: Color(0xff112043),
+            gradient: const LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Color(0xff181d5f),
+                Color(0xff112043),
+              ],
+            ),
+            boxShadow: [
+              BoxShadow(
+                offset: Offset(5, 10),
+                blurRadius: 20.0,
+                color: const Color(0xff181d5f).withOpacity(0.5),
+              )
+            ],
+            borderRadius: BorderRadius.all(Radius.circular(25))),
+        padding: EdgeInsets.fromLTRB(20.0.w, 30.0.h, 20.0.w, 40.0.h),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            SkeletonAnimation(
+              shimmerColor: Colors.white10.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(6),
+              shimmerDuration: 800,
+              child: Container(
+                height: 33.0.h,
+                width: 120.0.w,
+                decoration: BoxDecoration(
+                  color: Colors.white12,
+                  borderRadius: BorderRadius.circular(6),
+                  //  boxShadow: shadowList,
+                ),
+              ),
+            ),
+            SizedBox(height: 25.0.h),
+            Padding(
+              padding:
+                  EdgeInsets.symmetric(vertical: 13.0.h, horizontal: 10.0.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      SkeletonAnimation(
+                        shimmerColor: Colors.white10.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(5),
+                        shimmerDuration: 800,
+                        child: Container(
+                          height: 20.0.h,
+                          width: 90.0.w,
+                          decoration: BoxDecoration(
+                            color: Colors.white12,
+                            borderRadius: BorderRadius.circular(5),
+                            //  boxShadow: shadowList,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10.h),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 10.0.w),
+                        child: SkeletonAnimation(
+                          shimmerColor: Colors.white10.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(5),
+                          shimmerDuration: 800,
+                          child: Container(
+                            height: 20.0.h,
+                            width: 110.0.w,
+                            decoration: BoxDecoration(
+                              color: Colors.white12,
+                              borderRadius: BorderRadius.circular(5),
+                              //  boxShadow: shadowList,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 10.0.h),
+            Padding(
+              padding:
+                  EdgeInsets.symmetric(vertical: 13.0.h, horizontal: 10.0.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      SkeletonAnimation(
+                        shimmerColor: Colors.white10.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(5),
+                        shimmerDuration: 800,
+                        child: Container(
+                          height: 20.0.h,
+                          width: 90.0.w,
+                          decoration: BoxDecoration(
+                            color: Colors.white12,
+                            borderRadius: BorderRadius.circular(5),
+                            //  boxShadow: shadowList,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10.h),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 10.0.w),
+                        child: SkeletonAnimation(
+                          shimmerColor: Colors.white10.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(5),
+                          shimmerDuration: 800,
+                          child: Container(
+                            height: 20.0.h,
+                            width: 110.0.w,
+                            decoration: BoxDecoration(
+                              color: Colors.white12,
+                              borderRadius: BorderRadius.circular(5),
+                              //  boxShadow: shadowList,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 10.0.h),
+            Padding(
+              padding:
+                  EdgeInsets.symmetric(vertical: 13.0.h, horizontal: 10.0.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      SkeletonAnimation(
+                        shimmerColor: Colors.white10.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(5),
+                        shimmerDuration: 800,
+                        child: Container(
+                          height: 20.0.h,
+                          width: 90.0.w,
+                          decoration: BoxDecoration(
+                            color: Colors.white12,
+                            borderRadius: BorderRadius.circular(5),
+                            //  boxShadow: shadowList,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10.h),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SkeletonAnimation(
+                        shimmerColor: Colors.white10.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(5),
+                        shimmerDuration: 800,
+                        child: Container(
+                          height: 20.0.h,
+                          width: 270.0.w,
+                          decoration: BoxDecoration(
+                            color: Colors.white12,
+                            borderRadius: BorderRadius.circular(5),
+                            //  boxShadow: shadowList,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5.0.h,
+                      ),
+                      SkeletonAnimation(
+                        shimmerColor: Colors.white10.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(5),
+                        shimmerDuration: 800,
+                        child: Container(
+                          height: 20.0.h,
+                          width: 200.0.w,
+                          decoration: BoxDecoration(
+                            color: Colors.white12,
+                            borderRadius: BorderRadius.circular(5),
+                            //  boxShadow: shadowList,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5.0.h,
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 10.0.h),
+            Padding(
+              padding:
+                  EdgeInsets.symmetric(vertical: 13.0.h, horizontal: 10.0.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      SkeletonAnimation(
+                        shimmerColor: Colors.white10.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(5),
+                        shimmerDuration: 800,
+                        child: Container(
+                          height: 20.0.h,
+                          width: 80.0.w,
+                          decoration: BoxDecoration(
+                            color: Colors.white12,
+                            borderRadius: BorderRadius.circular(5),
+                            //  boxShadow: shadowList,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10.h),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 10.0.w),
+                        child: SkeletonAnimation(
+                          shimmerColor: Colors.white10.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(5),
+                          shimmerDuration: 800,
+                          child: Container(
+                            height: 20.0.h,
+                            width: 110.0.w,
+                            decoration: BoxDecoration(
+                              color: Colors.white12,
+                              borderRadius: BorderRadius.circular(5),
+                              //  boxShadow: shadowList,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -324,7 +675,7 @@ class TermCard extends StatelessWidget {
         itemCount: list == null ? 0 : list?.length,
         itemBuilder: (context, i) {
           return Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12.0.w),
+            padding: EdgeInsets.symmetric(horizontal: 20.0.w),
             child: Container(
               margin: EdgeInsets.only(bottom: 20.0.h),
               decoration: BoxDecoration(
@@ -351,7 +702,9 @@ class TermCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    list![i]['jahai_term'], //Search term
+                    _TranslateScreenState._originLang == Language.jahai
+                        ? list![i]['jahai_term']
+                        : list![i]['malay_term'], //Search term
                     style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 30.sp,
@@ -366,7 +719,11 @@ class TermCard extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            Text('Malay Term',
+                            Text(
+                                _TranslateScreenState._originLang ==
+                                        Language.jahai
+                                    ? 'Malay Term'
+                                    : 'Jahai Term',
                                 style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 16.sp,
@@ -379,7 +736,10 @@ class TermCard extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.only(left: 10.0.w),
                               child: Text(
-                                "- ${list![i]['malay_term']}",
+                                _TranslateScreenState._originLang ==
+                                        Language.jahai
+                                    ? "- ${list![i]['malay_term']}"
+                                    : "- ${list![i]['jahai_term']}",
                                 style: TextStyle(
                                     // fontStyle: FontStyle.italic,
                                     color: Colors.white),
