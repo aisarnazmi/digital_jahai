@@ -11,7 +11,6 @@ import 'package:ms_undraw/ms_undraw.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 
 enum Language { jahai, malay, english }
-
 class TranslateScreen extends StatefulWidget {
   const TranslateScreen({Key? key}) : super(key: key);
 
@@ -38,7 +37,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
           return json.decode(response.body);
         }
       } catch (e) {
-        print(e.toString());
+        // print(e.toString());
       }
     }
   }
@@ -193,7 +192,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
                       case ConnectionState.waiting:
                         if (_searchController.text == "") {
                           return Padding(
-                            padding: EdgeInsets.only(top: 80.0.h),
+                            padding: EdgeInsets.only(top: 70.0.h),
                             child: Column(
                               children: [
                                 UnDraw(
