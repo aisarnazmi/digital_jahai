@@ -44,7 +44,7 @@ class _MainScreenState extends State<MainScreen> {
               showCupertinoModalBottomSheet(
                   expand: false,
                   context: context,
-                  backgroundColor: Colors.transparent,
+                  backgroundColor: Colors.white,
                   builder: (context) => InstallKeyboardDialog()),
               // showModalBottomSheet(
               //   // expand: false,
@@ -105,24 +105,55 @@ class InstallKeyboardDialog extends StatelessWidget {
         child: SafeArea(
       top: false,
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 30.0.w, vertical: 20.0.h),
+        padding: EdgeInsets.fromLTRB(25.0.w, 10.0.h, 25.0.w, 20.0.h),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            
-            Text("Digital Jahai application required International Phonetic Alphabet (IPA) Keyboard to be used while input Jahai terms."),
-            SizedBox(height: 20.0.h,),
+            Align(
+              alignment: Alignment.topRight,
+              child: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(Icons.close)),
+            ),
+            SizedBox(
+              height: 8.0.h,
+            ),
+            Text(
+                "Digital Jahai application required International Phonetic Alphabet (IPA) Keyboard to be used with Jahai terms."),
+            SizedBox(
+              height: 20.0.h,
+            ),
             Text("Please install using above links: ",
-            style: TextStyle(
-              fontWeight: FontWeight.w600
-            )),
-            SizedBox(height: 15.0.h,),
+                style: TextStyle(fontWeight: FontWeight.w600)),
+            SizedBox(
+              height: 15.0.h,
+            ),
+            Linkify(
+              onOpen: _MainScreenState._onOpen,
+              options: LinkifyOptions(humanize: false),
+              text:
+                  "Android Platform: https://play.google.com/store/apps/details?id=com.google.android.inputmethod.latin",
+            ),
+            Text(
+                "\nStep to add IPA language on Gboard:-\n\n1. Open the Settings app.\n2. System > Languages & input > Keyboard > Virtual keyboard\n3. Tap Gboard and then Languages\n4. Pick International Phonetic Alphabet (IPA) language."),
+            SizedBox(
+              height: 15.0.h,
+            ),
             Linkify(
                 onOpen: _MainScreenState._onOpen,
                 options: LinkifyOptions(humanize: false),
-                text: "Android Platform: https://play.google.com/store/apps/details?id=com.google.android.inputmethod.latin\n\nIOS Platform: https://apps.apple.com/my/app/ipa-phonetic-keyboard/id1440241497",
-              ),
+                text:
+                    "IOS Platform: https://apps.apple.com/my/app/ipa-phonetic-keyboard/id1440241497"),
+            Text(
+                "\nStep to add IPA language on IOS Keyboard:-\n\n1. Open the Settings app\n2. Go to General > Keyboard > Keyboards\n3. Tap on 'Add New Keyboard.\n4. Add 'IPA Keyboard' from the 'Third-Party Keyboards list'."),
+
+             SizedBox(
+              height: 15.0.h,
+            ),
+            Text("* Now you can use IPA language while typing by switching keyboard language to IPA.")   
           ],
         ),
       ),

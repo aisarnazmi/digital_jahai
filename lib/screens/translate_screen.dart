@@ -286,6 +286,9 @@ class _TranslateScreenState extends State<TranslateScreen> {
                                 height: 15.0.h,
                               ),
                               TermCard(snapshot.data),
+                              SizedBox(
+                                height: 50.0.h,
+                              ),
                             ],
                           );
                         }
@@ -298,7 +301,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
         ),
       ),
       bottomSheet: Container(
-        margin: EdgeInsets.only(bottom: 20.0.h),
+        margin: EdgeInsets.only(bottom: 10.0.h),
         decoration: BoxDecoration(
           color: Colors.white,
           // borderRadius: const BorderRadius.only(
@@ -362,7 +365,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
                     color: Colors.white,
                     icon: Icon(
                       Icons.swap_horiz,
-                      size: 24.w,
+                      size: 24,
                     ),
                   ),
                 ),
