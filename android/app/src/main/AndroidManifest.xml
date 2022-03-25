@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.uitm.digital_jahai">
+    <uses-permission android:name="android.permission.INTERNET" />
    <application
         android:label="digital_jahai"
         android:name="${applicationName}"
