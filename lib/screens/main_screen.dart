@@ -126,7 +126,7 @@ class InstallKeyboardDialog extends StatelessWidget {
             SizedBox(
               height: 20.0.h,
             ),
-            Text("Please install using above links: ",
+            Text("Please install IPA keyboard using link below and, follow the installation steps: ",
                 style: TextStyle(fontWeight: FontWeight.w600)),
             SizedBox(
               height: 15.0.h,
@@ -148,7 +148,7 @@ class InstallKeyboardDialog extends StatelessWidget {
                 text:
                     "IOS Platform: https://apps.apple.com/my/app/ipa-phonetic-keyboard/id1440241497"),
             Text(
-                "\nStep to add IPA language on IOS Keyboard:-\n\n1. Open the Settings app\n2. Go to General > Keyboard > Keyboards\n3. Tap on 'Add New Keyboard.\n4. Add 'IPA Keyboard' from the 'Third-Party Keyboards list'."),
+                "\nStep to add IPA language on IOS Keyboard:-\n\n1. Open the Settings app\n2. Go to General > Keyboard > Keyboards\n3. Tap on 'Add New Keyboard'.\n4. Add 'IPA Keyboard' from the 'Third-Party Keyboards list'."),
 
              SizedBox(
               height: 15.0.h,
