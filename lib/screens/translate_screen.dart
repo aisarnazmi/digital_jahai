@@ -124,7 +124,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
                         "Jahai Language\nRepository",
                         style: TextStyle(
                             color: const Color(0xff181d5f),
-                            fontSize: 34.sp,
+                            fontSize: 36.sp,
                             fontWeight: FontWeight.w800,
                             letterSpacing: -1),
                       ),
@@ -168,7 +168,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
                           color: Colors.black38,
                           size: 24,
                         ),
-                        hintText: 'Enter term to translate...',
+                        hintText: "Enter ${ _originLang.name } term...",
                         hintStyle: TextStyle(color: Colors.black38),
                         suffixIcon: _searchController.text == ""
                             ? null
@@ -196,9 +196,9 @@ class _TranslateScreenState extends State<TranslateScreen> {
                             child: Column(
                               children: [
                                 UnDraw(
-                                  height: 150.0.h,
+                                  height: 200.0.h,
                                   color: Color(0xff343090),
-                                  illustration: UnDrawIllustration.search,
+                                  illustration: UnDrawIllustration.bibliophile,
                                   errorWidget: Column(
                                     children: [
                                       Icon(Icons.perm_scan_wifi_outlined),
@@ -245,11 +245,11 @@ class _TranslateScreenState extends State<TranslateScreen> {
                             child: Column(
                               children: [
                                 UnDraw(
-                                    height: 150.0.h,
+                                    height: 200.0.h,
                                     color: Color(0xff343090),
                                     illustration: _searchController.text != ""
                                         ? UnDrawIllustration.void_
-                                        : UnDrawIllustration.search,
+                                        : UnDrawIllustration.bibliophile,
                                     errorWidget: Column(
                                       children: [
                                         Icon(Icons.perm_scan_wifi_outlined),
@@ -287,7 +287,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
                               ),
                               TermCard(snapshot.data),
                               SizedBox(
-                                height: 50.0.h,
+                                height: 100.0.h,
                               ),
                             ],
                           );
@@ -301,7 +301,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
         ),
       ),
       bottomSheet: Container(
-        margin: EdgeInsets.only(bottom: 20.0.h),
+        margin: EdgeInsets.only(bottom: 5.0),
         decoration: BoxDecoration(
           color: Colors.white,
           // borderRadius: const BorderRadius.only(
@@ -488,56 +488,56 @@ class SkeletonCard extends StatelessWidget {
               ),
             ),
             SizedBox(height: 10.0.h),
-            Padding(
-              padding:
-                  EdgeInsets.symmetric(vertical: 13.0.h, horizontal: 10.0.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      SkeletonAnimation(
-                        shimmerColor: Colors.white10.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(5),
-                        shimmerDuration: 800,
-                        child: Container(
-                          height: 20.0.h,
-                          width: 90.0.w,
-                          decoration: BoxDecoration(
-                            color: Colors.white12,
-                            borderRadius: BorderRadius.circular(5),
-                            //  boxShadow: shadowList,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 10.h),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 10.0.w),
-                        child: SkeletonAnimation(
-                          shimmerColor: Colors.white10.withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(5),
-                          shimmerDuration: 800,
-                          child: Container(
-                            height: 20.0.h,
-                            width: 110.0.w,
-                            decoration: BoxDecoration(
-                              color: Colors.white12,
-                              borderRadius: BorderRadius.circular(5),
-                              //  boxShadow: shadowList,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 10.0.h),
+            // Padding(
+            //   padding:
+            //       EdgeInsets.symmetric(vertical: 13.0.h, horizontal: 10.0.w),
+            //   child: Column(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: [
+            //       Row(
+            //         children: [
+            //           SkeletonAnimation(
+            //             shimmerColor: Colors.white10.withOpacity(0.1),
+            //             borderRadius: BorderRadius.circular(5),
+            //             shimmerDuration: 800,
+            //             child: Container(
+            //               height: 20.0.h,
+            //               width: 90.0.w,
+            //               decoration: BoxDecoration(
+            //                 color: Colors.white12,
+            //                 borderRadius: BorderRadius.circular(5),
+            //                 //  boxShadow: shadowList,
+            //               ),
+            //             ),
+            //           ),
+            //         ],
+            //       ),
+            //       SizedBox(height: 10.h),
+            //       Row(
+            //         children: [
+            //           Padding(
+            //             padding: EdgeInsets.only(left: 10.0.w),
+            //             child: SkeletonAnimation(
+            //               shimmerColor: Colors.white10.withOpacity(0.1),
+            //               borderRadius: BorderRadius.circular(5),
+            //               shimmerDuration: 800,
+            //               child: Container(
+            //                 height: 20.0.h,
+            //                 width: 110.0.w,
+            //                 decoration: BoxDecoration(
+            //                   color: Colors.white12,
+            //                   borderRadius: BorderRadius.circular(5),
+            //                   //  boxShadow: shadowList,
+            //                 ),
+            //               ),
+            //             ),
+            //           ),
+            //         ],
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // SizedBox(height: 10.0.h),
             Padding(
               padding:
                   EdgeInsets.symmetric(vertical: 13.0.h, horizontal: 10.0.w),
@@ -753,39 +753,39 @@ class TermCard extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 10.0.h),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        vertical: 13.0.h, horizontal: 10.0.w),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Text('English Term',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16.sp,
-                                    color: Colors.white)),
-                          ],
-                        ),
-                        SizedBox(height: 10.h),
-                        Row(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(left: 10.0.w),
-                              child: Text(
-                                "- ${list![i]['english_term']}",
-                                style: TextStyle(
-                                    // fontStyle: FontStyle.italic,
-                                    color: Colors.white),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 10.0.h),
+                  // Padding(
+                  //   padding: EdgeInsets.symmetric(
+                  //       vertical: 13.0.h, horizontal: 10.0.w),
+                  //   child: Column(
+                  //     crossAxisAlignment: CrossAxisAlignment.start,
+                  //     children: [
+                  //       Row(
+                  //         children: [
+                  //           Text('English Term',
+                  //               style: TextStyle(
+                  //                   fontWeight: FontWeight.w600,
+                  //                   fontSize: 16.sp,
+                  //                   color: Colors.white)),
+                  //         ],
+                  //       ),
+                  //       SizedBox(height: 10.h),
+                  //       Row(
+                  //         children: [
+                  //           Padding(
+                  //             padding: EdgeInsets.only(left: 10.0.w),
+                  //             child: Text(
+                  //               "- ${list![i]['english_term']}",
+                  //               style: TextStyle(
+                  //                   // fontStyle: FontStyle.italic,
+                  //                   color: Colors.white),
+                  //             ),
+                  //           ),
+                  //         ],
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                  // SizedBox(height: 10.0.h),
                   Padding(
                     padding: EdgeInsets.symmetric(
                         vertical: 13.0.h, horizontal: 10.0.w),

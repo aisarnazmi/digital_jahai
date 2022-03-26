@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: () => MaterialApp(
+        title: "Digital Jahai",
         debugShowCheckedModeBanner: false,
         builder: (context, widget) {
           ScreenUtil.setContext(context);

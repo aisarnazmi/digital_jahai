@@ -25,8 +25,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
         context: context,
         type: CoolAlertType.loading,
         text: "Please wait...",
-        barrierDismissible: false
-        );
+        barrierDismissible: false);
 
     var payload = {
       "jahai_term": jahaiTermController.text,
@@ -56,11 +55,10 @@ class _LibraryScreenState extends State<LibraryScreen> {
       Navigator.pop(context);
 
       CoolAlert.show(
-        context: context,
-        type: CoolAlertType.error,
-        title: 'Oops...',
-        text: 'Sorry, something went wrong'
-      );
+          context: context,
+          type: CoolAlertType.error,
+          title: 'Oops...',
+          text: 'Sorry, something went wrong');
     }
   }
 
@@ -141,7 +139,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                           style: TextStyle(
                               // color: const Color(0xff181d5f),
                               color: const Color(0xfffafafa),
-                              fontSize: 34.sp,
+                              fontSize: 36.sp,
                               fontWeight: FontWeight.w800,
                               letterSpacing: -1),
                         ),
@@ -151,264 +149,268 @@ class _LibraryScreenState extends State<LibraryScreen> {
                   SizedBox(
                     height: 35.0.h,
                   ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height,
-                    child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                              topRight: Radius.circular(20)),
-                          color: const Color(0xfffafafa),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.white.withOpacity(0.5),
-                              spreadRadius: 6,
-                              blurRadius: 20,
-                              offset: const Offset(
-                                  0, 4), // changes position of shadow
+                  Container(
+                      padding: EdgeInsets.symmetric(
+                          vertical: 25.0.h, horizontal: 20.0.h),
+                      // height: MediaQuery.of(context).size.height,
+                      decoration: BoxDecoration(
+                        // borderRadius: const BorderRadius.only(
+                        //     topLeft: Radius.circular(20),
+                        //     topRight: Radius.circular(20)),
+                        borderRadius: BorderRadius.circular(20),
+                        color: const Color(0xfffafafa),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.white.withOpacity(0.5),
+                            spreadRadius: 6,
+                            blurRadius: 20,
+                            offset: const Offset(
+                                0, 4), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text("Add new term to Repository",
+                              style: TextStyle(
+                                  color: Colors.grey[600],
+                                  fontSize: 18.sp,
+                                  fontWeight: FontWeight.w600)),
+                          SizedBox(
+                            height: 30.0,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: Offset(5, 5),
+                                  blurRadius: 40.0,
+                                  color: Color(0xFF8B8DA3).withOpacity(0.3),
+                                )
+                              ],
                             ),
-                          ],
-                        ),
-                        child: Padding(
-                          padding:
-                              EdgeInsets.fromLTRB(20.0.w, 25.0.h, 20.0.w, 0.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      offset: Offset(5, 5),
-                                      blurRadius: 40.0,
-                                      color: Color(0xFF8B8DA3).withOpacity(0.3),
-                                    )
-                                  ],
-                                ),
-                                child: TextFormField(
-                                  controller: jahaiTermController,
-                                  decoration: InputDecoration(
-                                      labelText: 'Jahai Term',
-                                      labelStyle: TextStyle(
-                                        color: Colors.grey,
-                                        backgroundColor: Colors.white,
-                                      ),
-                                      // errorText: 'Error message',
-                                      enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10.0)),
-                                          borderSide:
-                                              BorderSide(color: Colors.white)),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10.0)),
-                                          borderSide:
-                                              BorderSide(color: Colors.grey))
-                                      // suffixIcon: Icon(
-                                      //   Icons.error,
-                                      // ),
-                                      ),
-                                ),
-                              ),
-                              SizedBox(height: 30.0.h),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      offset: Offset(5, 5),
-                                      blurRadius: 40.0,
-                                      color: Color(0xFF8B8DA3).withOpacity(0.3),
-                                    )
-                                  ],
-                                ),
-                                child: TextFormField(
-                                  controller: malayTermController,
-                                  decoration: InputDecoration(
-                                      labelText: 'Malay Term',
-                                      labelStyle: TextStyle(
-                                        color: Colors.grey,
-                                        backgroundColor: Colors.white,
-                                      ),
-                                      // errorText: 'Error message',
-                                      enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10.0)),
-                                          borderSide:
-                                              BorderSide(color: Colors.white)),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10.0)),
-                                          borderSide:
-                                              BorderSide(color: Colors.grey))
-                                      // suffixIcon: Icon(
-                                      //   Icons.error,
-                                      // ),
-                                      ),
-                                ),
-                              ),
-                              SizedBox(height: 30.0.h),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      offset: Offset(5, 5),
-                                      blurRadius: 40.0,
-                                      color: Color(0xFF8B8DA3).withOpacity(0.3),
-                                    )
-                                  ],
-                                ),
-                                child: TextFormField(
-                                  controller: englishTermController,
-                                  decoration: InputDecoration(
-                                      labelText: 'English Term',
-                                      labelStyle: TextStyle(
-                                        color: Colors.grey,
-                                        backgroundColor: Colors.white,
-                                      ),
-                                      // errorText: 'Error message',
-                                      enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10.0)),
-                                          borderSide:
-                                              BorderSide(color: Colors.white)),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10.0)),
-                                          borderSide:
-                                              BorderSide(color: Colors.grey))
-                                      // suffixIcon: Icon(
-                                      //   Icons.error,
-                                      // ),
-                                      ),
-                                ),
-                              ),
-                              SizedBox(height: 30.0.h),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      offset: Offset(5, 5),
-                                      blurRadius: 40.0,
-                                      color: Color(0xFF8B8DA3).withOpacity(0.3),
-                                    )
-                                  ],
-                                ),
-                                child: TextFormField(
-                                  controller: descriptionController,
-                                  minLines: 4,
-                                  maxLines: 8,
-                                  decoration: InputDecoration(
-                                      labelText: 'Description',
-                                      labelStyle: TextStyle(
-                                        color: Colors.grey,
-                                        backgroundColor: Colors.white,
-                                      ),
-                                      // errorText: 'Error message',
-                                      enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10.0)),
-                                          borderSide:
-                                              BorderSide(color: Colors.white)),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10.0)),
-                                          borderSide:
-                                              BorderSide(color: Colors.grey))
-                                      // suffixIcon: Icon(
-                                      //   Icons.error,
-                                      // ),
-                                      ),
-                                ),
-                              ),
-                              SizedBox(height: 30.0.h),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      offset: Offset(5, 5),
-                                      blurRadius: 40.0,
-                                      color: Color(0xFF8B8DA3).withOpacity(0.3),
-                                    )
-                                  ],
-                                ),
-                                child: TextFormField(
-                                  controller: termCategoryController,
-                                  decoration: InputDecoration(
-                                      labelText: 'Term Category',
-                                      labelStyle: TextStyle(
-                                        color: Colors.grey,
-                                        backgroundColor: Colors.white,
-                                      ),
-                                      // errorText: 'Error message',
-                                      enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10.0)),
-                                          borderSide:
-                                              BorderSide(color: Colors.white)),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10.0)),
-                                          borderSide:
-                                              BorderSide(color: Colors.grey))
-                                      // suffixIcon: Icon(
-                                      //   Icons.error,
-                                      // ),
-                                      ),
-                                ),
-                              ),
-                              SizedBox(height: 30.0.h),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: <Widget>[
-                                  Container(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 20.0.w),
-                                    decoration: BoxDecoration(
-                                        gradient: LinearGradient(
-                                          begin: Alignment.topLeft,
-                                          end: Alignment.bottomRight,
-                                          colors: const [
-                                            Color(0xffeb7c91),
-                                            Color(0xffec6882),
-                                          ],
-                                        ),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            offset: Offset(5, 10),
-                                            blurRadius: 20.0,
-                                            color: const Color(0xffec6882)
-                                                .withOpacity(0.4),
-                                          )
-                                        ],
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(10.0))),
-                                    child: TextButton(
-                                      onPressed: () {
-                                        _storeLibrary(context);
-                                      },
-                                      child: Text("Sumbit",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w600,
-                                          )),
-                                    ),
+                            child: TextFormField(
+                              controller: jahaiTermController,
+                              decoration: InputDecoration(
+                                  labelText: 'Jahai Term',
+                                  labelStyle: TextStyle(
+                                    color: Colors.grey,
+                                    backgroundColor: Colors.white,
                                   ),
-                                ],
+                                  // errorText: 'Error message',
+                                  enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10.0)),
+                                      borderSide:
+                                          BorderSide(color: Colors.white)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10.0)),
+                                      borderSide:
+                                          BorderSide(color: Colors.grey))
+                                  // suffixIcon: Icon(
+                                  //   Icons.error,
+                                  // ),
+                                  ),
+                            ),
+                          ),
+                          SizedBox(height: 30.0),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: Offset(5, 5),
+                                  blurRadius: 40.0,
+                                  color: Color(0xFF8B8DA3).withOpacity(0.3),
+                                )
+                              ],
+                            ),
+                            child: TextFormField(
+                              controller: malayTermController,
+                              decoration: InputDecoration(
+                                  labelText: 'Malay Term',
+                                  labelStyle: TextStyle(
+                                    color: Colors.grey,
+                                    backgroundColor: Colors.white,
+                                  ),
+                                  // errorText: 'Error message',
+                                  enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10.0)),
+                                      borderSide:
+                                          BorderSide(color: Colors.white)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10.0)),
+                                      borderSide:
+                                          BorderSide(color: Colors.grey))
+                                  // suffixIcon: Icon(
+                                  //   Icons.error,
+                                  // ),
+                                  ),
+                            ),
+                          ),
+                          SizedBox(height: 30.0),
+                          // Container(
+                          //   decoration: BoxDecoration(
+                          //     color: Colors.white,
+                          //     borderRadius: BorderRadius.circular(10),
+                          //     boxShadow: [
+                          //       BoxShadow(
+                          //         offset: Offset(5, 5),
+                          //         blurRadius: 40.0,
+                          //         color: Color(0xFF8B8DA3).withOpacity(0.3),
+                          //       )
+                          //     ],
+                          //   ),
+                          //   child: TextFormField(
+                          //     controller: englishTermController,
+                          //     decoration: InputDecoration(
+                          //         labelText: 'English Term',
+                          //         labelStyle: TextStyle(
+                          //           color: Colors.grey,
+                          //           backgroundColor: Colors.white,
+                          //         ),
+                          //         // errorText: 'Error message',
+                          //         enabledBorder: OutlineInputBorder(
+                          //             borderRadius: BorderRadius.all(
+                          //                 Radius.circular(10.0)),
+                          //             borderSide:
+                          //                 BorderSide(color: Colors.white)),
+                          //         focusedBorder: OutlineInputBorder(
+                          //             borderRadius: BorderRadius.all(
+                          //                 Radius.circular(10.0)),
+                          //             borderSide:
+                          //                 BorderSide(color: Colors.grey))
+                          //         // suffixIcon: Icon(
+                          //         //   Icons.error,
+                          //         // ),
+                          //         ),
+                          //   ),
+                          // ),
+                          // SizedBox(height: 30.0),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: Offset(5, 5),
+                                  blurRadius: 40.0,
+                                  color: Color(0xFF8B8DA3).withOpacity(0.3),
+                                )
+                              ],
+                            ),
+                            child: TextFormField(
+                              controller: descriptionController,
+                              minLines: 4,
+                              maxLines: 8,
+                              decoration: InputDecoration(
+                                  labelText: 'Description',
+                                  labelStyle: TextStyle(
+                                    color: Colors.grey,
+                                    backgroundColor: Colors.white,
+                                  ),
+                                  // errorText: 'Error message',
+                                  enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10.0)),
+                                      borderSide:
+                                          BorderSide(color: Colors.white)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10.0)),
+                                      borderSide:
+                                          BorderSide(color: Colors.grey))
+                                  // suffixIcon: Icon(
+                                  //   Icons.error,
+                                  // ),
+                                  ),
+                            ),
+                          ),
+                          SizedBox(height: 30.0),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: Offset(5, 5),
+                                  blurRadius: 40.0,
+                                  color: Color(0xFF8B8DA3).withOpacity(0.3),
+                                )
+                              ],
+                            ),
+                            child: TextFormField(
+                              controller: termCategoryController,
+                              decoration: InputDecoration(
+                                  labelText: 'Term Category',
+                                  labelStyle: TextStyle(
+                                    color: Colors.grey,
+                                    backgroundColor: Colors.white,
+                                  ),
+                                  // errorText: 'Error message',
+                                  enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10.0)),
+                                      borderSide:
+                                          BorderSide(color: Colors.white)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10.0)),
+                                      borderSide:
+                                          BorderSide(color: Colors.grey))
+                                  // suffixIcon: Icon(
+                                  //   Icons.error,
+                                  // ),
+                                  ),
+                            ),
+                          ),
+                          SizedBox(height: 15.0),
+                        ],
+                      )),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 20.0.w, vertical: 20.0.h),
+                        padding: EdgeInsets.symmetric(horizontal: 20.0.w),
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: const [
+                                Color(0xffeb7c91),
+                                Color(0xffec6882),
+                              ],
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                offset: Offset(5, 10),
+                                blurRadius: 20.0,
+                                color: const Color(0xffec6882).withOpacity(0.4),
                               )
                             ],
-                          ),
-                        )),
-                  ),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0))),
+                        child: TextButton(
+                          onPressed: () {
+                            _storeLibrary(context);
+                          },
+                          child: Text("Sumbit",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                              )),
+                        ),
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),
