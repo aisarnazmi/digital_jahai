@@ -259,7 +259,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
                                     )),
                                 SizedBox(height: 10.0.h),
                                 Text(_searchController.text != ""
-                                    ? "Sorry! No results found.."
+                                    ? "Sorry! No translation found.."
                                     : ''),
                               ],
                             ),

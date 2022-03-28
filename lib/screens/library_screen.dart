@@ -310,7 +310,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                             child: TextFormField(
                               controller: descriptionController,
                               minLines: 4,
-                              maxLines: 8,
+                              maxLines: 4,
                               decoration: InputDecoration(
                                   labelText: 'Description',
                                   labelStyle: TextStyle(
