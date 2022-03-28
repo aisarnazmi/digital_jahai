@@ -150,6 +150,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                     height: 35.0.h,
                   ),
                   Container(
+                      margin: EdgeInsets.symmetric(horizontal: 15.0.w),
                       padding: EdgeInsets.symmetric(
                           vertical: 25.0.h, horizontal: 20.0.h),
                       // height: MediaQuery.of(context).size.height,
@@ -161,8 +162,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
                         color: const Color(0xfffafafa),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.white.withOpacity(0.5),
-                            spreadRadius: 6,
+                            color: Colors.white.withOpacity(0.4),
+                            spreadRadius: 1,
                             blurRadius: 20,
                             offset: const Offset(
                                 0, 4), // changes position of shadow
