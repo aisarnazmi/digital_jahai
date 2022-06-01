@@ -2,7 +2,7 @@
     package="com.uitm.digital_jahai">
     <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="Digital Jahai"
+        android:label="digital_jahai"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
