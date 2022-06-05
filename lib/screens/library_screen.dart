@@ -70,16 +70,17 @@ class _LibraryScreenState extends State<LibraryScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Color(0xff181d5f),
-            Color(0xff112043),
-          ],
-        ),
-      ),
+      color: const Color(0xfffafafa),
+      // decoration: const BoxDecoration(
+      //   gradient: LinearGradient(
+      //     begin: Alignment.topLeft,
+      //     end: Alignment.bottomRight,
+      //     colors: [
+      //       Color(0xff181d5f),
+      //       Color(0xff112043),
+      //     ],
+      //   ),
+      // ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         // backgroundColor: const Color(0xfffafafa),
@@ -137,8 +138,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
                           "Jahai Language\nRepository",
                           textAlign: TextAlign.right,
                           style: TextStyle(
-                              // color: const Color(0xff181d5f),
-                              color: const Color(0xfffafafa),
+                              color: const Color(0xff181d5f),
+                              // color: const Color(0xfffafafa),
                               fontSize: 36.sp,
                               fontWeight: FontWeight.w800,
                               letterSpacing: -1),
@@ -150,26 +151,23 @@ class _LibraryScreenState extends State<LibraryScreen> {
                     height: 35.0.h,
                   ),
                   Container(
-                      margin: EdgeInsets.symmetric(horizontal: 15.0.w),
+                      // margin: EdgeInsets.symmetric(horizontal: 15.0.w),
                       padding: EdgeInsets.symmetric(
                           vertical: 25.0.h, horizontal: 20.0.h),
                       // height: MediaQuery.of(context).size.height,
-                      decoration: BoxDecoration(
-                        // borderRadius: const BorderRadius.only(
-                        //     topLeft: Radius.circular(20),
-                        //     topRight: Radius.circular(20)),
-                        borderRadius: BorderRadius.circular(20),
-                        color: const Color(0xfffafafa),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.white.withOpacity(0.4),
-                            spreadRadius: 1,
-                            blurRadius: 20,
-                            offset: const Offset(
-                                0, 4), // changes position of shadow
-                          ),
-                        ],
-                      ),
+                      // decoration: BoxDecoration(
+                      //   borderRadius: BorderRadius.circular(20),
+                      //   color: const Color(0xfffafafa),
+                      //   boxShadow: [
+                      //     BoxShadow(
+                      //       color: Colors.white.withOpacity(0.4),
+                      //       spreadRadius: 1,
+                      //       blurRadius: 20,
+                      //       offset: const Offset(
+                      //           0, 4), // changes position of shadow
+                      //     ),
+                      //   ],
+                      // ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
@@ -199,7 +197,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                   labelText: 'Jahai Term',
                                   labelStyle: TextStyle(
                                     color: Colors.grey,
-                                    backgroundColor: Colors.white,
+                                    // backgroundColor: Colors.white,
                                   ),
                                   // errorText: 'Error message',
                                   enabledBorder: OutlineInputBorder(
@@ -237,7 +235,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                   labelText: 'Malay Term',
                                   labelStyle: TextStyle(
                                     color: Colors.grey,
-                                    backgroundColor: Colors.white,
+                                    // backgroundColor: Colors.white,
                                   ),
                                   // errorText: 'Error message',
                                   enabledBorder: OutlineInputBorder(
@@ -315,7 +313,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                   labelText: 'Description',
                                   labelStyle: TextStyle(
                                     color: Colors.grey,
-                                    backgroundColor: Colors.white,
+                                    // backgroundColor: Colors.white,
                                   ),
                                   // errorText: 'Error message',
                                   enabledBorder: OutlineInputBorder(
@@ -353,7 +351,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                   labelText: 'Term Category',
                                   labelStyle: TextStyle(
                                     color: Colors.grey,
-                                    backgroundColor: Colors.white,
+                                    // backgroundColor: Colors.white,
                                   ),
                                   // errorText: 'Error message',
                                   enabledBorder: OutlineInputBorder(
