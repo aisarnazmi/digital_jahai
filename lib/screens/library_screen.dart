@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:digital_jahai/utils/call_api.dart';
+import 'package:iconly/iconly.dart';
 
 class LibraryScreen extends StatefulWidget {
   const LibraryScreen({Key? key}) : super(key: key);
@@ -98,8 +99,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                               BoxShadow(
                                 offset: Offset(5, 10),
                                 blurRadius: 20.0,
-                                color:
-                                    const Color(0xffec6882).withOpacity(0.4),
+                                color: const Color(0xffec6882).withOpacity(0.4),
                               )
                             ],
                             borderRadius:
@@ -110,14 +110,15 @@ class _LibraryScreenState extends State<LibraryScreen> {
                           },
                           color: Colors.white,
                           icon: Icon(
-                            Icons.arrow_back,
-                            size: 22.w,
+                            IconlyLight.arrow_left_2,
+                            size: 22,
                           ),
                         ),
                       ),
                     ),
                   ],
                 ),
+                SizedBox(height: 20.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
@@ -137,7 +138,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                   ],
                 ),
                 SizedBox(
-                  height: 35.0.h,
+                  height: 15.0.h,
                 ),
                 Container(
                     // margin: EdgeInsets.symmetric(horizontal: 15.0.w),
@@ -190,15 +191,14 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                 ),
                                 // errorText: 'Error message',
                                 enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(10.0)),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10.0)),
                                     borderSide:
                                         BorderSide(color: Colors.white)),
                                 focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(10.0)),
-                                    borderSide:
-                                        BorderSide(color: Colors.grey))
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10.0)),
+                                    borderSide: BorderSide(color: Colors.grey))
                                 // suffixIcon: Icon(
                                 //   Icons.error,
                                 // ),
@@ -228,15 +228,14 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                 ),
                                 // errorText: 'Error message',
                                 enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(10.0)),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10.0)),
                                     borderSide:
                                         BorderSide(color: Colors.white)),
                                 focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(10.0)),
-                                    borderSide:
-                                        BorderSide(color: Colors.grey))
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10.0)),
+                                    borderSide: BorderSide(color: Colors.grey))
                                 // suffixIcon: Icon(
                                 //   Icons.error,
                                 // ),
@@ -306,15 +305,14 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                 ),
                                 // errorText: 'Error message',
                                 enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(10.0)),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10.0)),
                                     borderSide:
                                         BorderSide(color: Colors.white)),
                                 focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(10.0)),
-                                    borderSide:
-                                        BorderSide(color: Colors.grey))
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10.0)),
+                                    borderSide: BorderSide(color: Colors.grey))
                                 // suffixIcon: Icon(
                                 //   Icons.error,
                                 // ),
@@ -344,15 +342,14 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                 ),
                                 // errorText: 'Error message',
                                 enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(10.0)),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10.0)),
                                     borderSide:
                                         BorderSide(color: Colors.white)),
                                 focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(10.0)),
-                                    borderSide:
-                                        BorderSide(color: Colors.grey))
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10.0)),
+                                    borderSide: BorderSide(color: Colors.grey))
                                 // suffixIcon: Icon(
                                 //   Icons.error,
                                 // ),
@@ -366,7 +363,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: 20.0.w, vertical: 20.0.h),
+                      margin: EdgeInsets.symmetric(
+                          horizontal: 20.0.w, vertical: 20.0.h),
                       padding: EdgeInsets.symmetric(horizontal: 20.0.w),
                       decoration: BoxDecoration(
                           gradient: LinearGradient(

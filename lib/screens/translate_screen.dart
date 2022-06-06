@@ -9,6 +9,7 @@ import 'package:digital_jahai/screens/library_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ms_undraw/ms_undraw.dart';
 import 'package:skeleton_text/skeleton_text.dart';
+import 'package:iconly/iconly.dart';
 
 enum Language { jahai, malay, english }
 
@@ -99,14 +100,24 @@ class _TranslateScreenState extends State<TranslateScreen> {
                         padding: EdgeInsets.symmetric(horizontal: 10.0.w),
                         child: IconButton(
                             onPressed: () {
-                              setState(() {
-                                xOffset = 220.w;
-                                yOffset = 80.h;
-                                scaleFactor = 0.8;
-                                isDrawerOpen = true;
-                              });
+                              if (isDrawerOpen) {
+                                setState(() {
+                                  xOffset = 0;
+                                  yOffset = 0;
+                                  scaleFactor = 1;
+                                  isDrawerOpen = false;
+                                });
+                              } else {
+                                setState(() {
+                                  xOffset = 240.w;
+                                  yOffset = 115.h;
+                                  scaleFactor = 0.75;
+                                  isDrawerOpen = true;
+                                });
+                              }
                             },
-                            icon: Icon(Icons.menu)),
+                            icon: Icon(Icons.menu),
+                            color: Colors.black54),
                       ),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20.0.w),
@@ -148,6 +159,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
                       ),
                     ],
                   ),
+                  SizedBox(height: 20.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
@@ -188,6 +200,16 @@ class _TranslateScreenState extends State<TranslateScreen> {
                       ),
                       child: TextFormField(
                         controller: _searchController,
+                        onTap: () {
+                          if (isDrawerOpen) {
+                            setState(() {
+                              xOffset = 0;
+                              yOffset = 0;
+                              scaleFactor = 1;
+                              isDrawerOpen = false;
+                            });
+                          }
+                        },
                         onChanged: (val) {
                           setState(() {
                             // _searchController.text = val;
@@ -198,16 +220,16 @@ class _TranslateScreenState extends State<TranslateScreen> {
                           enabledBorder: InputBorder.none,
                           focusedBorder: InputBorder.none,
                           icon: Icon(
-                            Icons.search,
-                            color: Colors.black38,
-                            size: 24,
+                            IconlyBroken.search,
+                            color: Colors.black54,
+                            size: 22,
                           ),
                           hintText: "Enter ${_originLang.name} term...",
-                          hintStyle: TextStyle(color: Colors.black38),
+                          hintStyle: TextStyle(color: Colors.black54),
                           suffixIcon: _searchController.text == ""
                               ? null
                               : IconButton(
-                                  color: Colors.black38,
+                                  color: Colors.black54,
                                   iconSize: 24,
                                   icon: Icon(Icons.close),
                                   onPressed: () {
