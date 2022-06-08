@@ -4,9 +4,12 @@ import 'dart:convert';
 import 'package:digital_jahai/models/term.dart';
 import 'package:digital_jahai/utils/call_api.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
 
 import 'package:digital_jahai/screens/library_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:ms_undraw/ms_undraw.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 import 'package:iconly/iconly.dart';
@@ -71,288 +74,294 @@ class _TranslateScreenState extends State<TranslateScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+
     return AnimatedContainer(
       transform: Matrix4.translationValues(xOffset, yOffset, 0)
         ..scale(scaleFactor),
       duration: Duration(milliseconds: 200),
       child: Scaffold(
         backgroundColor: const Color(0xfffafafa),
-        body: GestureDetector(
-          onTap: () {
-            if (isDrawerOpen) {
-              setState(() {
-                xOffset = 0;
-                yOffset = 0;
-                scaleFactor = 1;
-                isDrawerOpen = false;
-              });
-            }
-          },
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 8.0.h),
-              child: Column(
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10.0.w),
-                        child: IconButton(
-                            onPressed: () {
-                              if (isDrawerOpen) {
-                                setState(() {
-                                  xOffset = 0;
-                                  yOffset = 0;
-                                  scaleFactor = 1;
-                                  isDrawerOpen = false;
-                                });
-                              } else {
-                                setState(() {
-                                  xOffset = 240.w;
-                                  yOffset = 115.h;
-                                  scaleFactor = 0.75;
-                                  isDrawerOpen = true;
-                                });
-                              }
-                            },
-                            icon: Icon(Icons.menu),
-                            color: Colors.black54),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20.0.w),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: const [
-                                  Color(0xffeb7c91),
-                                  Color(0xffec6882),
-                                ],
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  offset: Offset(5, 10),
-                                  blurRadius: 20.0,
-                                  color:
-                                      const Color(0xffec6882).withOpacity(0.4),
-                                )
-                              ],
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(50.0))),
+        body: SafeArea(
+          child: GestureDetector(
+            onTap: () {
+              if (isDrawerOpen) {
+                setState(() {
+                  xOffset = 0;
+                  yOffset = 0;
+                  scaleFactor = 1;
+                  isDrawerOpen = false;
+                });
+              }
+            },
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 8.0.h),
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10.0.w),
                           child: IconButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          const LibraryScreen()));
-                            },
-                            color: Colors.white,
-                            icon: Icon(
-                              Icons.menu_book,
-                              size: 22.w,
+                              onPressed: () {
+                                if (isDrawerOpen) {
+                                  setState(() {
+                                    xOffset = 0;
+                                    yOffset = 0;
+                                    scaleFactor = 1;
+                                    isDrawerOpen = false;
+                                  });
+                                } else {
+                                  setState(() {
+                                    xOffset = 240.w;
+                                    yOffset = 115.h;
+                                    scaleFactor = 0.75;
+                                    isDrawerOpen = true;
+                                  });
+                                }
+                              },
+                              icon: SvgPicture.asset(
+                                'assets/icons/menu.svg',
+                                semanticsLabel: 'Menu'
+                              )),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20.0.w),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: const [
+                                    Color(0xffeb7c91),
+                                    Color(0xffec6882),
+                                  ],
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    offset: Offset(5, 10),
+                                    blurRadius: 20.0,
+                                    color:
+                                        const Color(0xffec6882).withOpacity(0.4),
+                                  )
+                                ],
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(50.0))),
+                            child: IconButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            const LibraryScreen()));
+                              },
+                              color: Colors.white,
+                              icon: Icon(
+                                Icons.menu_book,
+                                size: 22.w,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(left: 20.0.w),
-                        child: Text(
-                          "Jahai Language\nRepository",
-                          style: TextStyle(
-                              color: const Color(0xff181d5f),
-                              fontSize: 36.sp,
-                              fontWeight: FontWeight.w800,
-                              letterSpacing: -1),
-                        ),
-                      )
-                    ],
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: 20.0.w, vertical: 20.0.h),
-                    child: Container(
+                      ],
+                    ),
+                    SizedBox(height: 20.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.only(left: 20.0.w),
+                          child: Text(
+                            "Jahai Language\nRepository",
+                            style: TextStyle(
+                                color: const Color(0xff181d5f),
+                                fontSize: 36.sp,
+                                fontWeight: FontWeight.w800,
+                                letterSpacing: -1),
+                          ),
+                        )
+                      ],
+                    ),
+                    Padding(
                       padding: EdgeInsets.symmetric(
-                          horizontal: 20.0.w,
-                          vertical: 5.0.h // 5 top and bottom
-                          ),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        // color: Colors.grey[100],
-                        border: Border.all(color: Colors.grey.shade300),
-                        borderRadius: BorderRadius.circular(12),
-                        boxShadow: [
-                          BoxShadow(
-                            offset: Offset(5, 10),
-                            blurRadius: 40.0,
-                            color: Color.fromARGB(255, 139, 141, 163)
-                                .withOpacity(0.4),
-                          )
-                        ],
-                      ),
-                      child: TextFormField(
-                        controller: _searchController,
-                        onTap: () {
-                          if (isDrawerOpen) {
+                          horizontal: 20.0.w, vertical: 20.0.h),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 20.0.w,
+                            vertical: 5.0.h // 5 top and bottom
+                            ),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          // color: Colors.grey[100],
+                          border: Border.all(color: Colors.grey.shade300),
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              offset: Offset(5, 10),
+                              blurRadius: 40.0,
+                              color: Color.fromARGB(255, 139, 141, 163)
+                                  .withOpacity(0.4),
+                            )
+                          ],
+                        ),
+                        child: TextFormField(
+                          controller: _searchController,
+                          onTap: () {
+                            if (isDrawerOpen) {
+                              setState(() {
+                                xOffset = 0;
+                                yOffset = 0;
+                                scaleFactor = 1;
+                                isDrawerOpen = false;
+                              });
+                            }
+                          },
+                          onChanged: (val) {
                             setState(() {
-                              xOffset = 0;
-                              yOffset = 0;
-                              scaleFactor = 1;
-                              isDrawerOpen = false;
+                              // _searchController.text = val;
+                              _onSearchChanged(_searchController.text);
                             });
-                          }
-                        },
-                        onChanged: (val) {
-                          setState(() {
-                            // _searchController.text = val;
-                            _onSearchChanged(_searchController.text);
-                          });
-                        },
-                        decoration: InputDecoration(
-                          enabledBorder: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          icon: Icon(
-                            IconlyBroken.search,
-                            color: Colors.black54,
-                            size: 22,
+                          },
+                          decoration: InputDecoration(
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            icon: Icon(
+                              IconlyBroken.search,
+                              color: Colors.black54,
+                              size: 22,
+                            ),
+                            hintText: "Enter ${_originLang.name} term...",
+                            hintStyle: TextStyle(color: Colors.black54),
+                            suffixIcon: _searchController.text == ""
+                                ? null
+                                : IconButton(
+                                    color: Colors.black54,
+                                    iconSize: 24,
+                                    icon: Icon(Icons.close),
+                                    onPressed: () {
+                                      setState(() {
+                                        _searchController.clear();
+                                      });
+                                    }),
                           ),
-                          hintText: "Enter ${_originLang.name} term...",
-                          hintStyle: TextStyle(color: Colors.black54),
-                          suffixIcon: _searchController.text == ""
-                              ? null
-                              : IconButton(
-                                  color: Colors.black54,
-                                  iconSize: 24,
-                                  icon: Icon(Icons.close),
-                                  onPressed: () {
-                                    setState(() {
-                                      _searchController.clear();
-                                    });
-                                  }),
                         ),
                       ),
                     ),
-                  ),
-                  FutureBuilder<dynamic>(
-                    future: _getTranslation(_searchController.text),
-                    builder: (context, snapshot) {
-                      switch (snapshot.connectionState) {
-                        case ConnectionState.waiting:
-                          if (_searchController.text == "") {
-                            return Padding(
-                              padding: EdgeInsets.only(top: 70.0.h),
-                              child: Column(
-                                children: [
-                                  UnDraw(
-                                    height: 200.0.h,
-                                    color: Color(0xff343090),
-                                    illustration:
-                                        UnDrawIllustration.bibliophile,
-                                    errorWidget: Column(
-                                      children: [
-                                        Icon(Icons.perm_scan_wifi_outlined),
-                                        SizedBox(height: 10.0.w),
-                                        Text("No internet connection"),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          } else {
-                            return Column(
-                              children: <Widget>[
-                                Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 20.0.w),
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Text(
-                                          "Translation(s): ",
-                                          style: TextStyle(
-                                              fontSize: 17.sp,
-                                              fontWeight: FontWeight.w700),
-                                        )
-                                      ],
-                                    )),
-                                SizedBox(
-                                  height: 15.0.h,
-                                ),
-                                SkeletonCard()
-                              ],
-                            );
-                          }
-                        default:
-                          if (snapshot.hasError) {
-                            return Text('Error: ${snapshot.error}');
-                          } else if (snapshot.data == null ||
-                              snapshot.data.length <= 0) {
-                            return Padding(
-                              padding: EdgeInsets.only(top: 70.0.h),
-                              child: Column(
-                                children: [
-                                  UnDraw(
+                    FutureBuilder<dynamic>(
+                      future: _getTranslation(_searchController.text),
+                      builder: (context, snapshot) {
+                        switch (snapshot.connectionState) {
+                          case ConnectionState.waiting:
+                            if (_searchController.text == "") {
+                              return Padding(
+                                padding: EdgeInsets.only(top: 70.0.h),
+                                child: Column(
+                                  children: [
+                                    UnDraw(
                                       height: 200.0.h,
                                       color: Color(0xff343090),
-                                      illustration: _searchController.text != ""
-                                          ? UnDrawIllustration.void_
-                                          : UnDrawIllustration.bibliophile,
+                                      illustration:
+                                          UnDrawIllustration.bibliophile,
                                       errorWidget: Column(
                                         children: [
                                           Icon(Icons.perm_scan_wifi_outlined),
                                           SizedBox(height: 10.0.w),
                                           Text("No internet connection"),
                                         ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            } else {
+                              return Column(
+                                children: <Widget>[
+                                  Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 20.0.w),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Text(
+                                            "Translation(s): ",
+                                            style: TextStyle(
+                                                fontSize: 17.sp,
+                                                fontWeight: FontWeight.w700),
+                                          )
+                                        ],
                                       )),
-                                  SizedBox(height: 10.0.h),
-                                  Text(_searchController.text != ""
-                                      ? "Sorry! No translation found.."
-                                      : ''),
+                                  SizedBox(
+                                    height: 15.0.h,
+                                  ),
+                                  SkeletonCard()
                                 ],
-                              ),
-                            );
-                          } else {
-                            return Column(
-                              children: <Widget>[
-                                Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 20.0.w),
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Text(
-                                          "Translation(s): ",
-                                          style: TextStyle(
-                                              fontSize: 17.sp,
-                                              fontWeight: FontWeight.w700),
-                                        )
-                                      ],
-                                    )),
-                                SizedBox(
-                                  height: 15.0.h,
+                              );
+                            }
+                          default:
+                            if (snapshot.hasError) {
+                              return Text('Error: ${snapshot.error}');
+                            } else if (snapshot.data == null ||
+                                snapshot.data.length <= 0) {
+                              return Padding(
+                                padding: EdgeInsets.only(top: 70.0.h),
+                                child: Column(
+                                  children: [
+                                    UnDraw(
+                                        height: 200.0.h,
+                                        color: Color(0xff343090),
+                                        illustration: _searchController.text != ""
+                                            ? UnDrawIllustration.void_
+                                            : UnDrawIllustration.bibliophile,
+                                        errorWidget: Column(
+                                          children: [
+                                            Icon(Icons.perm_scan_wifi_outlined),
+                                            SizedBox(height: 10.0.w),
+                                            Text("No internet connection"),
+                                          ],
+                                        )),
+                                    SizedBox(height: 10.0.h),
+                                    Text(_searchController.text != ""
+                                        ? "Sorry! No translation found.."
+                                        : ''),
+                                  ],
                                 ),
-                                TermCard(snapshot.data),
-                                SizedBox(
-                                  height: 100.0.h,
-                                ),
-                              ],
-                            );
-                          }
-                      }
-                    },
-                  ),
-                ],
+                              );
+                            } else {
+                              return Column(
+                                children: <Widget>[
+                                  Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 20.0.w),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Text(
+                                            "Translation(s): ",
+                                            style: TextStyle(
+                                                fontSize: 17.sp,
+                                                fontWeight: FontWeight.w700),
+                                          )
+                                        ],
+                                      )),
+                                  SizedBox(
+                                    height: 15.0.h,
+                                  ),
+                                  TermCard(snapshot.data),
+                                  SizedBox(
+                                    height: 100.0.h,
+                                  ),
+                                ],
+                              );
+                            }
+                        }
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

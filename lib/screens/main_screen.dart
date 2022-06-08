@@ -55,11 +55,9 @@ class _MainScreenState extends State<MainScreen> {
               // )
             });
     return Scaffold(
-        body: SafeArea(
-      child: Stack(
-        children: const [DrawerScreen(), TranslateScreen()],
-      ),
-    )
+        body: Stack(
+          children: const [DrawerScreen(), TranslateScreen()],
+        )
         // body: SafeArea(child: _layoutPage.elementAt(_selectedIndex)),
         // bottomNavigationBar: Container(
         //   decoration: BoxDecoration(

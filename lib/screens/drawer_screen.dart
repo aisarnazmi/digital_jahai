@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconly/iconly.dart';
 
@@ -12,8 +14,10 @@ class DrawerScreen extends StatefulWidget {
 class _DrawerScreenState extends State<DrawerScreen> {
   @override
   Widget build(BuildContext context) {
+    // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
+
     return Container(
-      padding: EdgeInsets.only(top: 25.h, left: 15.w, bottom: 25.h),
+      padding: EdgeInsets.only(top: 50.h, left: 15.w, bottom: 30.h),
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
@@ -34,24 +38,24 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   CircleAvatar(),
                   SizedBox(width: 20.w),
                   Column(
-					crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         "Guest",
                         style: TextStyle(
                             color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20.sp),
                       ),
-					  SizedBox(height: 5.0.h),
-					  Text(
+              SizedBox(height: 2.0.h),
+              Text(
                         "guest@gmail.com",
                         style: TextStyle(
-                            color: Colors.white70, fontWeight: FontWeight.bold, fontSize: 13.sp),
+                            color: Colors.white70, fontWeight: FontWeight.normal, fontSize: 13.sp),
                       )
                     ],
                   ),
                 ],
               ),
-			  SizedBox(height: 80.0.h),
+          SizedBox(height: 80.0.h),
               Padding(
                 padding: EdgeInsets.only(bottom: 25.0.h, left: 8.0.w),
                 child: Row(
@@ -64,7 +68,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   ],
                 ),
               ),
-			  Padding(
+          Padding(
                 padding: EdgeInsets.only(bottom: 25.0.h, left: 8.0.w),
                 child: Row(
                   children: [
