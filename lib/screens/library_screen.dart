@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter/services.dart';
 
 import 'package:digital_jahai/utils/call_api.dart';
 import 'package:iconly/iconly.dart';
@@ -73,8 +72,6 @@ class _LibraryScreenState extends State<LibraryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
-
     return Scaffold(
       backgroundColor: const Color(0xfffafafa),
       body: SafeArea(

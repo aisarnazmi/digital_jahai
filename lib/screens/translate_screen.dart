@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:digital_jahai/models/term.dart';
 import 'package:digital_jahai/utils/call_api.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 
 import 'package:digital_jahai/screens/library_screen.dart';
@@ -74,8 +73,6 @@ class _TranslateScreenState extends State<TranslateScreen> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
-
     return AnimatedContainer(
       transform: Matrix4.translationValues(xOffset, yOffset, 0)
         ..scale(scaleFactor),
