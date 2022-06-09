@@ -13,7 +13,7 @@ class DrawerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 50.h, left: 15.w, bottom: 30.h),
+      padding: EdgeInsets.only(top: 60.h, left: 25.w, bottom: 40.h),
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
@@ -30,7 +30,8 @@ class DrawerScreen extends StatelessWidget {
               (screenC.isDrawerOpen.value
                   ? 0
                   : -MediaQuery.of(context).size.width),
-              0, 0),
+              0,
+              0),
           duration: Duration(milliseconds: 200),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -39,8 +40,6 @@ class DrawerScreen extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      CircleAvatar(),
-                      SizedBox(width: 20.w),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -49,9 +48,9 @@ class DrawerScreen extends StatelessWidget {
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 20.sp),
+                                fontSize: 32.sp),
                           ),
-                          SizedBox(height: 2.0.h),
+                          SizedBox(height: 5.0.h),
                           Text(
                             "guest@gmail.com",
                             style: TextStyle(
@@ -64,63 +63,28 @@ class DrawerScreen extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: 80.0.h),
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 25.0.h, left: 8.0.w),
-                    child: Row(
-                      children: [
-                        Icon(IconlyBold.profile,
-                            color: Colors.white54, size: 22),
-                        SizedBox(width: 15.w),
-                        Text("My Account",
-                            style: TextStyle(
-                                color: Colors.white54,
-                                fontWeight: FontWeight.w600))
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 25.0.h, left: 8.0.w),
-                    child: Row(
-                      children: [
-                        Icon(IconlyBold.category,
-                            color: Colors.white54, size: 22),
-                        SizedBox(width: 15.w),
-                        Text("Manage",
-                            style: TextStyle(
-                                color: Colors.white54,
-                                fontWeight: FontWeight.w600))
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 25.0.h, left: 8.0.w),
-                    child: Row(
-                      children: [
-                        Icon(IconlyBold.info_square,
-                            color: Colors.white54, size: 22),
-                        SizedBox(width: 15.w),
-                        Text("How to Use?",
-                            style: TextStyle(
-                                color: Colors.white54,
-                                fontWeight: FontWeight.w600))
-                      ],
-                    ),
+                  Column(
+                    children: menuItems
+                        .map((element) => Padding(
+                          padding: EdgeInsets.only(bottom: 30.0.h),
+                          child: Row(children: [
+                                Icon(element['icon'],
+                                    color: Colors.white54, size: 24),
+                                SizedBox(width: 15.w),
+                                Text(element['label'],
+                                    style: TextStyle(
+                                        color: Colors.white54,
+                                        fontWeight: FontWeight.w600))
+                              ]),
+                        ))
+                        .toList(),
                   )
                 ],
               ),
               Row(
                 children: [
-                  Icon(IconlyBold.setting, color: Colors.white54, size: 22),
+                  Icon(IconlyBold.login, color: Colors.white54, size: 24),
                   SizedBox(width: 15.w),
-                  Text("Settings",
-                      style: TextStyle(
-                          color: Colors.white54, fontWeight: FontWeight.w600)),
-                  Container(
-                    width: 2,
-                    height: 12,
-                    color: Colors.white54,
-                    margin: EdgeInsets.symmetric(horizontal: 10),
-                  ),
                   Text("Login",
                       style: TextStyle(
                           color: Colors.white54, fontWeight: FontWeight.w600))
@@ -133,3 +97,10 @@ class DrawerScreen extends StatelessWidget {
     );
   }
 }
+
+List<Map> menuItems = [
+  {'icon': IconlyBold.profile, 'label': 'My Account', 'route': ''},
+  {'icon': IconlyBold.category, 'label': 'Manage Terms', 'route': ''},
+  {'icon': IconlyBold.setting, 'label': 'Setting', 'route': ''},
+  {'icon': IconlyBold.info_square, 'label': 'How to Use?', 'route': ''}
+];
