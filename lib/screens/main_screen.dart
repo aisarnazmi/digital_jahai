@@ -11,7 +11,9 @@ import 'package:digital_jahai/screens/translate_screen.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class MainScreen extends StatelessWidget {
-  const MainScreen({Key? key}) : super(key: key);
+  final screenC = Get.put(ScreenController());
+
+  MainScreen({Key? key}) : super(key: key);
 
   static Future<void> _onOpen(LinkableElement link) async {
     if (await canLaunch(link.url)) {
@@ -24,7 +26,7 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(
-        Duration(microseconds: 700),
+        Duration(microseconds: 1300),
         () => {
               showCupertinoModalBottomSheet(
                   expand: false,
@@ -34,7 +36,7 @@ class MainScreen extends StatelessWidget {
             });
     return Scaffold(
         body: Stack(
-      children: [drawerScreen(), translateScreen()],
+      children: [drawerScreen(), translateScreen(screenC)],
     ));
   }
 }
@@ -43,8 +45,7 @@ Widget drawerScreen() {
   return DrawerScreen();
 }
 
-Widget translateScreen() {
-  final screenC = Get.put(ScreenController());
+Widget translateScreen(screenC) {
 
   return Obx(() => GestureDetector(
         onTap: () => screenC.closeDrawer(),
@@ -65,8 +66,8 @@ Widget translateScreen() {
         },
         child: AnimatedContainer(
           transform: Matrix4.translationValues(
-              screenC.xOffset.value, screenC.yOffset.value, 0)
-            ..scale(screenC.scaleFactor.value),
+              screenC.xOffsetMain.value, screenC.yOffsetMain.value, 0)
+            ..scale(screenC.scaleFactorMain.value),
           duration: Duration(milliseconds: 200),
           decoration: BoxDecoration(
             boxShadow: [

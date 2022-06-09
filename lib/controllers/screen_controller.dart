@@ -3,26 +3,29 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class ScreenController extends GetxController {
-  RxBool isDrawerOpen = false.obs;
-  RxBool isDragging = false.obs;
+  var isDrawerOpen = false.obs;
+  var isDragging = false.obs;
 
-  RxDouble xOffset = 0.0.obs;
-  RxDouble yOffset = 0.0.obs;
-  RxDouble scaleFactor = 1.0.obs;
+  var xOffsetMain = 0.0.obs;
+  var yOffsetMain = 0.0.obs;
+  var scaleFactorMain = 1.0.obs;
+  var scaleFactorDrawer = 0.1.obs;
 
   void openDrawer() {
-    xOffset.value = 240;
-    yOffset.value = 115;
-    scaleFactor.value = 0.7;
+    xOffsetMain.value = 240;
+    yOffsetMain.value = 115;
+    scaleFactorMain.value = 0.7;
+    scaleFactorDrawer.value = 1;
     isDrawerOpen.value = true;
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
 
   }
 
   void closeDrawer() {
-    xOffset.value = 0;
-    yOffset.value = 0;
-    scaleFactor.value = 1;
+    xOffsetMain.value = 0;
+    yOffsetMain.value = 0;
+    scaleFactorMain.value = 1;
+    scaleFactorDrawer.value = 0.1;
     isDrawerOpen.value = false;
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
   }

@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
             child: widget as Widget,
           );
         },
-        home: const MainScreen(),
+        home: MainScreen(),
       ),
     );
   }
