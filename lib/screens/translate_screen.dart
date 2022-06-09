@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:digital_jahai/controllers/screen_controller.dart';
 import 'package:digital_jahai/models/term.dart';
 import 'package:digital_jahai/utils/call_api.dart';
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
 
 import 'package:digital_jahai/screens/library_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,14 +24,11 @@ class TranslateScreen extends StatefulWidget {
 }
 
 class _TranslateScreenState extends State<TranslateScreen> {
+  final screenC = Get.put(ScreenController());
+
   static Language _originLang = Language.values[0];
   Language _transLang = Language.values[1];
   final TextEditingController _searchController = TextEditingController();
-
-  double xOffset = 0;
-  double yOffset = 0;
-  double scaleFactor = 1;
-  bool isDrawerOpen = false;
 
   List<Term> termList = [];
 
@@ -73,380 +71,338 @@ class _TranslateScreenState extends State<TranslateScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      transform: Matrix4.translationValues(xOffset, yOffset, 0)
-        ..scale(scaleFactor),
-      duration: Duration(milliseconds: 200),
-      child: Scaffold(
-        backgroundColor: const Color(0xfffafafa),
-        body: SafeArea(
-          child: GestureDetector(
-            onTap: () {
-              if (isDrawerOpen) {
-                setState(() {
-                  xOffset = 0;
-                  yOffset = 0;
-                  scaleFactor = 1;
-                  isDrawerOpen = false;
-                });
-              }
-            },
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 8.0.h),
-                child: Column(
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10.0.w),
-                          child: IconButton(
-                              onPressed: () {
-                                if (isDrawerOpen) {
-                                  setState(() {
-                                    xOffset = 0;
-                                    yOffset = 0;
-                                    scaleFactor = 1;
-                                    isDrawerOpen = false;
-                                  });
-                                } else {
-                                  setState(() {
-                                    xOffset = 240.w;
-                                    yOffset = 115.h;
-                                    scaleFactor = 0.75;
-                                    isDrawerOpen = true;
-                                  });
-                                }
-                              },
-                              icon: SvgPicture.asset(
-                                'assets/icons/menu.svg',
-                                semanticsLabel: 'Menu'
-                              )),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20.0.w),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: const [
-                                    Color(0xffeb7c91),
-                                    Color(0xffec6882),
-                                  ],
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    offset: Offset(5, 10),
-                                    blurRadius: 20.0,
-                                    color:
-                                        const Color(0xffec6882).withOpacity(0.4),
-                                  )
-                                ],
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(50.0))),
-                            child: IconButton(
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            const LibraryScreen()));
-                              },
-                              color: Colors.white,
-                              icon: Icon(
-                                Icons.menu_book,
-                                size: 22.w,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 20.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(left: 20.0.w),
-                          child: Text(
-                            "Jahai Language\nRepository",
-                            style: TextStyle(
-                                color: const Color(0xff181d5f),
-                                fontSize: 36.sp,
-                                fontWeight: FontWeight.w800,
-                                letterSpacing: -1),
-                          ),
-                        )
-                      ],
+    return Scaffold(
+      backgroundColor: const Color(0xfffafafa),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 8.0.h),
+            child: Column(
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10.0.w),
+                      child: IconButton(
+                          onPressed: () => screenC.openDrawer(),
+                          icon: SvgPicture.asset(
+                            'assets/icons/menu.svg',
+                            semanticsLabel: 'Menu'
+                          )),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 20.0.w, vertical: 20.0.h),
+                      padding: EdgeInsets.symmetric(horizontal: 20.0.w),
                       child: Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 20.0.w,
-                            vertical: 5.0.h // 5 top and bottom
-                            ),
                         decoration: BoxDecoration(
-                          color: Colors.white,
-                          // color: Colors.grey[100],
-                          border: Border.all(color: Colors.grey.shade300),
-                          borderRadius: BorderRadius.circular(12),
-                          boxShadow: [
-                            BoxShadow(
-                              offset: Offset(5, 10),
-                              blurRadius: 40.0,
-                              color: Color.fromARGB(255, 139, 141, 163)
-                                  .withOpacity(0.4),
-                            )
-                          ],
-                        ),
-                        child: TextFormField(
-                          controller: _searchController,
-                          onTap: () {
-                            if (isDrawerOpen) {
-                              setState(() {
-                                xOffset = 0;
-                                yOffset = 0;
-                                scaleFactor = 1;
-                                isDrawerOpen = false;
-                              });
-                            }
-                          },
-                          onChanged: (val) {
-                            setState(() {
-                              // _searchController.text = val;
-                              _onSearchChanged(_searchController.text);
-                            });
-                          },
-                          decoration: InputDecoration(
-                            enabledBorder: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            icon: Icon(
-                              IconlyBroken.search,
-                              color: Colors.black54,
-                              size: 22,
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: const [
+                                Color(0xffeb7c91),
+                                Color(0xffec6882),
+                              ],
                             ),
-                            hintText: "Enter ${_originLang.name} term...",
-                            hintStyle: TextStyle(color: Colors.black54),
-                            suffixIcon: _searchController.text == ""
-                                ? null
-                                : IconButton(
-                                    color: Colors.black54,
-                                    iconSize: 24,
-                                    icon: Icon(Icons.close),
-                                    onPressed: () {
-                                      setState(() {
-                                        _searchController.clear();
-                                      });
-                                    }),
+                            boxShadow: [
+                              BoxShadow(
+                                offset: Offset(5, 10),
+                                blurRadius: 20.0,
+                                color:
+                                    const Color(0xffec6882).withOpacity(0.4),
+                              )
+                            ],
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(50.0))),
+                        child: IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        const LibraryScreen()));
+                          },
+                          color: Colors.white,
+                          icon: Icon(
+                            Icons.menu_book,
+                            size: 22.w,
                           ),
                         ),
                       ),
                     ),
-                    FutureBuilder<dynamic>(
-                      future: _getTranslation(_searchController.text),
-                      builder: (context, snapshot) {
-                        switch (snapshot.connectionState) {
-                          case ConnectionState.waiting:
-                            if (_searchController.text == "") {
-                              return Padding(
-                                padding: EdgeInsets.only(top: 70.0.h),
-                                child: Column(
-                                  children: [
-                                    UnDraw(
-                                      height: 200.0.h,
-                                      color: Color(0xff343090),
-                                      illustration:
-                                          UnDrawIllustration.bibliophile,
-                                      errorWidget: Column(
-                                        children: [
-                                          Icon(Icons.perm_scan_wifi_outlined),
-                                          SizedBox(height: 10.0.w),
-                                          Text("No internet connection"),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            } else {
-                              return Column(
-                                children: <Widget>[
-                                  Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 20.0.w),
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          Text(
-                                            "Translation(s): ",
-                                            style: TextStyle(
-                                                fontSize: 17.sp,
-                                                fontWeight: FontWeight.w700),
-                                          )
-                                        ],
-                                      )),
-                                  SizedBox(
-                                    height: 15.0.h,
-                                  ),
-                                  SkeletonCard()
-                                ],
-                              );
-                            }
-                          default:
-                            if (snapshot.hasError) {
-                              return Text('Error: ${snapshot.error}');
-                            } else if (snapshot.data == null ||
-                                snapshot.data.length <= 0) {
-                              return Padding(
-                                padding: EdgeInsets.only(top: 70.0.h),
-                                child: Column(
-                                  children: [
-                                    UnDraw(
-                                        height: 200.0.h,
-                                        color: Color(0xff343090),
-                                        illustration: _searchController.text != ""
-                                            ? UnDrawIllustration.void_
-                                            : UnDrawIllustration.bibliophile,
-                                        errorWidget: Column(
-                                          children: [
-                                            Icon(Icons.perm_scan_wifi_outlined),
-                                            SizedBox(height: 10.0.w),
-                                            Text("No internet connection"),
-                                          ],
-                                        )),
-                                    SizedBox(height: 10.0.h),
-                                    Text(_searchController.text != ""
-                                        ? "Sorry! No translation found.."
-                                        : ''),
-                                  ],
-                                ),
-                              );
-                            } else {
-                              return Column(
-                                children: <Widget>[
-                                  Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 20.0.w),
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          Text(
-                                            "Translation(s): ",
-                                            style: TextStyle(
-                                                fontSize: 17.sp,
-                                                fontWeight: FontWeight.w700),
-                                          )
-                                        ],
-                                      )),
-                                  SizedBox(
-                                    height: 15.0.h,
-                                  ),
-                                  TermCard(snapshot.data),
-                                  SizedBox(
-                                    height: 100.0.h,
-                                  ),
-                                ],
-                              );
-                            }
-                        }
-                      },
-                    ),
                   ],
                 ),
-              ),
-            ),
-          ),
-        ),
-        bottomSheet: Container(
-          margin: EdgeInsets.only(bottom: 5.0),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            // borderRadius: const BorderRadius.only(
-            //   topLeft: Radius.circular(15),
-            //   topRight: Radius.circular(15),
-            // ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.white.withOpacity(0.5),
-                spreadRadius: 7,
-                blurRadius: 5,
-                offset: const Offset(7, 0), // changes position of shadow
-              ),
-            ],
-          ),
-          height: 80.0.h,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              const Spacer(),
-              Expanded(
-                child: Center(
-                    child: Text(
-                  capitalize(_originLang.name),
-                  style: TextStyle(
-                      color: Colors.grey[800],
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14.sp),
-                )),
-              ),
-              Expanded(
-                flex: 3,
-                child: Center(
+                SizedBox(height: 20.h),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(left: 20.0.w),
+                      child: Text(
+                        "Jahai Language\nRepository",
+                        style: TextStyle(
+                            color: const Color(0xff181d5f),
+                            fontSize: 36.sp,
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: -1),
+                      ),
+                    )
+                  ],
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: 20.0.w, vertical: 20.0.h),
                   child: Container(
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: const [
-                            Color(0xffeb7c91),
-                            Color(0xffec6882),
-                          ],
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 20.0.w,
+                        vertical: 5.0.h // 5 top and bottom
                         ),
-                        boxShadow: [
-                          BoxShadow(
-                            offset: Offset(5, 10),
-                            blurRadius: 20.0,
-                            color: const Color(0xffec6882).withOpacity(0.4),
-                          )
-                        ],
-                        borderRadius: BorderRadius.all(Radius.circular(15.0))),
-                    child: IconButton(
-                      onPressed: () {
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      // color: Colors.grey[100],
+                      border: Border.all(color: Colors.grey.shade300),
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          offset: Offset(5, 10),
+                          blurRadius: 40.0,
+                          color: Color.fromARGB(255, 139, 141, 163)
+                              .withOpacity(0.4),
+                        )
+                      ],
+                    ),
+                    child: TextFormField(
+                      controller: _searchController,
+                      onTap: () => screenC.closeDrawer(),
+                      onChanged: (val) {
                         setState(() {
-                          var temp = _originLang;
-                          _originLang = _transLang;
-                          _transLang = temp;
+                          // _searchController.text = val;
+                          _onSearchChanged(_searchController.text);
                         });
                       },
-                      color: Colors.white,
-                      icon: Icon(
-                        Icons.swap_horiz,
-                        size: 24.w,
+                      decoration: InputDecoration(
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        icon: Icon(
+                          IconlyBroken.search,
+                          color: Colors.black54,
+                          size: 22,
+                        ),
+                        hintText: "Enter ${_originLang.name} term...",
+                        hintStyle: TextStyle(color: Colors.black54),
+                        suffixIcon: _searchController.text == ""
+                            ? null
+                            : IconButton(
+                                color: Colors.black54,
+                                iconSize: 24,
+                                icon: Icon(Icons.close),
+                                onPressed: () {
+                                  setState(() {
+                                    _searchController.clear();
+                                  });
+                                }),
                       ),
                     ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: Center(
-                    child: Text(
-                  capitalize(_transLang.name),
-                  style: TextStyle(
-                      color: Colors.grey[800],
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14.sp),
-                )),
-              ),
-              const Spacer()
-            ],
+                FutureBuilder<dynamic>(
+                  future: _getTranslation(_searchController.text),
+                  builder: (context, snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.waiting:
+                        if (_searchController.text == "") {
+                          return Padding(
+                            padding: EdgeInsets.only(top: 70.0.h),
+                            child: Column(
+                              children: [
+                                UnDraw(
+                                  height: 200.0.h,
+                                  color: Color(0xff343090),
+                                  illustration:
+                                      UnDrawIllustration.bibliophile,
+                                  errorWidget: Column(
+                                    children: [
+                                      Icon(Icons.perm_scan_wifi_outlined),
+                                      SizedBox(height: 10.0.w),
+                                      Text("No internet connection"),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        } else {
+                          return Column(
+                            children: <Widget>[
+                              Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 20.0.w),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        "Translation(s): ",
+                                        style: TextStyle(
+                                            fontSize: 17.sp,
+                                            fontWeight: FontWeight.w700),
+                                      )
+                                    ],
+                                  )),
+                              SizedBox(
+                                height: 15.0.h,
+                              ),
+                              SkeletonCard()
+                            ],
+                          );
+                        }
+                      default:
+                        if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        } else if (snapshot.data == null ||
+                            snapshot.data.length <= 0) {
+                          return Padding(
+                            padding: EdgeInsets.only(top: 70.0.h),
+                            child: Column(
+                              children: [
+                                UnDraw(
+                                    height: 200.0.h,
+                                    color: Color(0xff343090),
+                                    illustration: _searchController.text != ""
+                                        ? UnDrawIllustration.void_
+                                        : UnDrawIllustration.bibliophile,
+                                    errorWidget: Column(
+                                      children: [
+                                        Icon(Icons.perm_scan_wifi_outlined),
+                                        SizedBox(height: 10.0.w),
+                                        Text("No internet connection"),
+                                      ],
+                                    )),
+                                SizedBox(height: 10.0.h),
+                                Text(_searchController.text != ""
+                                    ? "Sorry! No translation found.."
+                                    : ''),
+                              ],
+                            ),
+                          );
+                        } else {
+                          return Column(
+                            children: <Widget>[
+                              Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 20.0.w),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        "Translation(s): ",
+                                        style: TextStyle(
+                                            fontSize: 17.sp,
+                                            fontWeight: FontWeight.w700),
+                                      )
+                                    ],
+                                  )),
+                              SizedBox(
+                                height: 15.0.h,
+                              ),
+                              TermCard(snapshot.data),
+                              SizedBox(
+                                height: 100.0.h,
+                              ),
+                            ],
+                          );
+                        }
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
+        ),
+      ),
+      bottomSheet: Container(
+        margin: EdgeInsets.only(bottom: 5.0),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          // borderRadius: const BorderRadius.only(
+          //   topLeft: Radius.circular(15),
+          //   topRight: Radius.circular(15),
+          // ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.white.withOpacity(0.5),
+              spreadRadius: 7,
+              blurRadius: 5,
+              offset: const Offset(7, 0), // changes position of shadow
+            ),
+          ],
+        ),
+        height: 80.0.h,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            const Spacer(),
+            Expanded(
+              child: Center(
+                  child: Text(
+                capitalize(_originLang.name),
+                style: TextStyle(
+                    color: Colors.grey[800],
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14.sp),
+              )),
+            ),
+            Expanded(
+              flex: 3,
+              child: Center(
+                child: Container(
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: const [
+                          Color(0xffeb7c91),
+                          Color(0xffec6882),
+                        ],
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          offset: Offset(5, 10),
+                          blurRadius: 20.0,
+                          color: const Color(0xffec6882).withOpacity(0.4),
+                        )
+                      ],
+                      borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                  child: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        var temp = _originLang;
+                        _originLang = _transLang;
+                        _transLang = temp;
+                      });
+                    },
+                    color: Colors.white,
+                    icon: Icon(
+                      Icons.swap_horiz,
+                      size: 24.w,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              child: Center(
+                  child: Text(
+                capitalize(_transLang.name),
+                style: TextStyle(
+                    color: Colors.grey[800],
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14.sp),
+              )),
+            ),
+            const Spacer()
+          ],
         ),
       ),
     );

@@ -13,8 +13,6 @@ class DrawerScreen extends StatefulWidget {
 class _DrawerScreenState extends State<DrawerScreen> {
   @override
   Widget build(BuildContext context) {
-    // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
-
     return Container(
       padding: EdgeInsets.only(top: 50.h, left: 15.w, bottom: 30.h),
       decoration: const BoxDecoration(
