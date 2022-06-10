@@ -26,7 +26,7 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(
-        Duration(microseconds: 1300),
+        Duration(milliseconds: 700),
         () => {
               showCupertinoModalBottomSheet(
                   expand: false,

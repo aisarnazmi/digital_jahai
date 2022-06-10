@@ -44,7 +44,7 @@ class DrawerScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Guest",
+                            "Admin",
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -52,7 +52,7 @@ class DrawerScreen extends StatelessWidget {
                           ),
                           SizedBox(height: 5.0.h),
                           Text(
-                            "guest@gmail.com",
+                            "admin@email.com",
                             style: TextStyle(
                                 color: Colors.white70,
                                 fontWeight: FontWeight.normal,
@@ -83,9 +83,9 @@ class DrawerScreen extends StatelessWidget {
               ),
               Row(
                 children: [
-                  Icon(IconlyBold.login, color: Colors.white54, size: 24),
+                  Icon(IconlyBold.logout, color: Colors.white54, size: 24),
                   SizedBox(width: 15.w),
-                  Text("Login",
+                  Text("Logout",
                       style: TextStyle(
                           color: Colors.white54, fontWeight: FontWeight.w600))
                 ],
