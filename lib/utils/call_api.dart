@@ -1,32 +1,27 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 class CallApi {
-  final String _url = "https://digital-jahai.000webhostapp.com/api/";
+  final String _baseUrl = kDebugMode ? 'http://127.0.0.1:8000/api' : 'https://digital-jahai.000webhostapp.com/api';
 
-  post(payload, apiUrl) async {
-    var fullUrl = _url + apiUrl;
+  post(path, headers, payload) async {
+    var url = _baseUrl + path;
 
     return await http.post(
-      Uri.parse(fullUrl),
+      Uri.parse(url),
       body: jsonEncode(payload),
-      headers: _setHeaders(),
+      headers: headers,
     );
   }
 
-  get(payload, apiUrl) async {
-    var fullUrl = _url + apiUrl;
+  get(path, headers) async {
+    var url = _baseUrl + path;
 
     return await http.get(
-      Uri.parse(fullUrl),
-      
-      headers: _setHeaders(),
+      Uri.parse(url),
+      headers: headers,
     );
   }
-
-  _setHeaders() => {
-        'Content-type': 'application/json',
-        'Accept': 'application/json',
-      };
 }

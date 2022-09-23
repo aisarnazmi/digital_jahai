@@ -28,11 +28,10 @@ class MainScreen extends StatelessWidget {
     Future.delayed(
         Duration(milliseconds: 700),
         () => {
-              showCupertinoModalBottomSheet(
-                  expand: false,
-                  context: context,
-                  backgroundColor: Colors.white,
-                  builder: (context) => InstallKeyboardDialog()),
+              // showCupertinoModalBottomSheet(
+              //     context: context,
+              //     backgroundColor: Colors.white,
+              //     builder: (context) => KeyboardDialogModal()),
             });
     return Scaffold(
         body: Stack(
@@ -46,7 +45,6 @@ Widget drawerScreen() {
 }
 
 Widget translateScreen(screenC) {
-
   return Obx(() => GestureDetector(
         onTap: () => screenC.closeDrawer(),
         onHorizontalDragStart: (details) => screenC.isDragging.value = true,
@@ -86,8 +84,8 @@ Widget translateScreen(screenC) {
       ));
 }
 
-class InstallKeyboardDialog extends StatelessWidget {
-  const InstallKeyboardDialog({Key? key}) : super(key: key);
+class KeyboardDialogModal extends StatelessWidget {
+  const KeyboardDialogModal({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -101,16 +99,23 @@ class InstallKeyboardDialog extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Align(
-                alignment: Alignment.topRight,
-                child: IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: Icon(Icons.close)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("How to Use?",
+                      style: TextStyle(
+                          color: Colors.grey[600],
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w600)),
+                  IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(Icons.close)),
+                ],
               ),
               SizedBox(
-                height: 8.0.h,
+                height: 25.0.h,
               ),
               Text(
                   "Digital Jahai application required International Phonetic Alphabet (IPA) Keyboard to be used with Jahai terms."),

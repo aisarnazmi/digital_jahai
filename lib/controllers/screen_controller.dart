@@ -13,7 +13,7 @@ class ScreenController extends GetxController {
 
   void openDrawer() {
     xOffsetMain.value = 240;
-    yOffsetMain.value = 115;
+    yOffsetMain.value = 140;
     scaleFactorMain.value = 0.7;
     scaleFactorDrawer.value = 1;
     isDrawerOpen.value = true;

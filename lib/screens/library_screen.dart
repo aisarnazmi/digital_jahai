@@ -15,11 +15,11 @@ class LibraryScreen extends StatefulWidget {
 }
 
 class _LibraryScreenState extends State<LibraryScreen> {
-  TextEditingController jahaiTermController = TextEditingController();
-  TextEditingController malayTermController = TextEditingController();
-  TextEditingController englishTermController = TextEditingController();
-  TextEditingController descriptionController = TextEditingController();
-  TextEditingController termCategoryController = TextEditingController();
+  final TextEditingController jahaiTermController = TextEditingController();
+  final TextEditingController malayTermController = TextEditingController();
+  final TextEditingController englishTermController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
+  final TextEditingController termCategoryController = TextEditingController();
 
   Future _storeLibrary(BuildContext context) async {
     CoolAlert.show(
@@ -36,7 +36,12 @@ class _LibraryScreenState extends State<LibraryScreen> {
       "term_category": termCategoryController.text
     };
 
-    var response = await CallApi().post(payload, "library/store");
+    final headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      };
+
+    final response = await CallApi().post('/library/store', headers, payload);
 
     if (response.statusCode == 200) {
       if (!mounted) return;
@@ -143,7 +148,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                 Container(
                     // margin: EdgeInsets.symmetric(horizontal: 15.0.w),
                     padding: EdgeInsets.symmetric(
-                        vertical: 25.0.h, horizontal: 20.0.h),
+                        vertical: 25.0.h, horizontal: 20.0.w),
                     // height: MediaQuery.of(context).size.height,
                     // decoration: BoxDecoration(
                     //   borderRadius: BorderRadius.circular(20),
@@ -161,10 +166,10 @@ class _LibraryScreenState extends State<LibraryScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text("Add new term to Repository",
+                        Text("Add New Term to Repository",
                             style: TextStyle(
                                 color: Colors.grey[600],
-                                fontSize: 18.sp,
+                                fontSize: 20.sp,
                                 fontWeight: FontWeight.w600)),
                         SizedBox(
                           height: 30.0,
@@ -175,8 +180,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
                             borderRadius: BorderRadius.circular(10),
                             boxShadow: [
                               BoxShadow(
-                                offset: Offset(5, 5),
-                                blurRadius: 40.0,
+                                offset: Offset(0, 2),
+                                blurRadius: 3.0,
                                 color: Color(0xFF8B8DA3).withOpacity(0.3),
                               )
                             ],
@@ -205,15 +210,15 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                 ),
                           ),
                         ),
-                        SizedBox(height: 30.0),
+                        SizedBox(height: 20.0),
                         Container(
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(10),
                             boxShadow: [
                               BoxShadow(
-                                offset: Offset(5, 5),
-                                blurRadius: 40.0,
+                                offset: Offset(0, 2),
+                                blurRadius: 3.0,
                                 color: Color(0xFF8B8DA3).withOpacity(0.3),
                               )
                             ],
@@ -242,15 +247,15 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                 ),
                           ),
                         ),
-                        SizedBox(height: 30.0),
+                        SizedBox(height: 20.0),
                         // Container(
                         //   decoration: BoxDecoration(
                         //     color: Colors.white,
                         //     borderRadius: BorderRadius.circular(10),
                         //     boxShadow: [
                         //       BoxShadow(
-                        //         offset: Offset(5, 5),
-                        //         blurRadius: 40.0,
+                        //         offset: Offset(0, 2),
+                        //         blurRadius: 3.0,
                         //         color: Color(0xFF8B8DA3).withOpacity(0.3),
                         //       )
                         //     ],
@@ -287,8 +292,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
                             borderRadius: BorderRadius.circular(10),
                             boxShadow: [
                               BoxShadow(
-                                offset: Offset(5, 5),
-                                blurRadius: 40.0,
+                                offset: Offset(0, 2),
+                                blurRadius: 3.0,
                                 color: Color(0xFF8B8DA3).withOpacity(0.3),
                               )
                             ],
@@ -319,15 +324,15 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                 ),
                           ),
                         ),
-                        SizedBox(height: 30.0),
+                        SizedBox(height: 20.0),
                         Container(
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(10),
                             boxShadow: [
                               BoxShadow(
-                                offset: Offset(5, 5),
-                                blurRadius: 40.0,
+                                offset: Offset(0, 2),
+                                blurRadius: 3.0,
                                 color: Color(0xFF8B8DA3).withOpacity(0.3),
                               )
                             ],
@@ -356,47 +361,86 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                 ),
                           ),
                         ),
-                        SizedBox(height: 15.0),
+                        SizedBox(height: 30.0),
+                        Divider(
+                          height: 50.0,
+                          thickness: 0.3,
+                          indent: 5,
+                          endIndent: 5,
+                          color: Colors.grey,
+                        ),
+                        Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: const [
+                                  Color(0xffeb7c91),
+                                  Color(0xffec6882),
+                                ],
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: Offset(5, 10),
+                                  blurRadius: 20.0,
+                                  color:
+                                      const Color(0xffec6882).withOpacity(0.4),
+                                )
+                              ],
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10.0))),
+                          child: TextButton(
+                            onPressed: () {
+                              _storeLibrary(context);
+                            },
+                            child: Text("Sumbit",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                )),
+                          ),
+                        ),
                       ],
                     )),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.symmetric(
-                          horizontal: 20.0.w, vertical: 20.0.h),
-                      padding: EdgeInsets.symmetric(horizontal: 20.0.w),
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            colors: const [
-                              Color(0xffeb7c91),
-                              Color(0xffec6882),
-                            ],
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              offset: Offset(5, 10),
-                              blurRadius: 20.0,
-                              color: const Color(0xffec6882).withOpacity(0.4),
-                            )
-                          ],
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(10.0))),
-                      child: TextButton(
-                        onPressed: () {
-                          _storeLibrary(context);
-                        },
-                        child: Text("Sumbit",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                            )),
-                      ),
-                    ),
-                  ],
-                )
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.end,
+                //   children: <Widget>[
+                //     Container(
+                //       margin: EdgeInsets.symmetric(
+                //           horizontal: 20.0.w, vertical: 20.0.h),
+                //       padding: EdgeInsets.symmetric(horizontal: 20.0.w),
+                //       decoration: BoxDecoration(
+                //           gradient: LinearGradient(
+                //             begin: Alignment.topLeft,
+                //             end: Alignment.bottomRight,
+                //             colors: const [
+                //               Color(0xffeb7c91),
+                //               Color(0xffec6882),
+                //             ],
+                //           ),
+                //           boxShadow: [
+                //             BoxShadow(
+                //               offset: Offset(5, 10),
+                //               blurRadius: 20.0,
+                //               color: const Color(0xffec6882).withOpacity(0.4),
+                //             )
+                //           ],
+                //           borderRadius:
+                //               BorderRadius.all(Radius.circular(10.0))),
+                //       child: TextButton(
+                //         onPressed: () {
+                //           _storeLibrary(context);
+                //         },
+                //         child: Text("Sumbit",
+                //             style: TextStyle(
+                //               color: Colors.white,
+                //               fontWeight: FontWeight.w600,
+                //             )),
+                //       ),
+                //     ),
+                //   ],
+                // )
               ],
             ),
           ),

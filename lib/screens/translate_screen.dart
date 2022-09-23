@@ -39,7 +39,11 @@ class _TranslateScreenState extends State<TranslateScreen> {
       try {
         var payload = {'language': _originLang.name, 'search': search};
 
-        final response = await CallApi().post(payload, "library/translate");
+        final headers = {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        };
+        final response = await CallApi().post('/library/translate', headers, payload);
         if (response.statusCode == 200) {
           return json.decode(response.body);
         }
@@ -86,10 +90,8 @@ class _TranslateScreenState extends State<TranslateScreen> {
                       padding: EdgeInsets.symmetric(horizontal: 10.0.w),
                       child: IconButton(
                           onPressed: () => screenC.openDrawer(),
-                          icon: SvgPicture.asset(
-                            'assets/icons/menu.svg',
-                            semanticsLabel: 'Menu'
-                          )),
+                          icon: SvgPicture.asset('assets/icons/menu.svg',
+                              semanticsLabel: 'Menu')),
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20.0.w),
@@ -107,8 +109,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
                               BoxShadow(
                                 offset: Offset(5, 10),
                                 blurRadius: 20.0,
-                                color:
-                                    const Color(0xffec6882).withOpacity(0.4),
+                                color: const Color(0xffec6882).withOpacity(0.4),
                               )
                             ],
                             borderRadius:
@@ -153,8 +154,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
                       horizontal: 20.0.w, vertical: 20.0.h),
                   child: Container(
                     padding: EdgeInsets.symmetric(
-                        horizontal: 20.0.w,
-                        vertical: 5.0.h // 5 top and bottom
+                        horizontal: 20.0.w, vertical: 5.0.h // 5 top and bottom
                         ),
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -163,10 +163,9 @@ class _TranslateScreenState extends State<TranslateScreen> {
                       borderRadius: BorderRadius.circular(12),
                       boxShadow: [
                         BoxShadow(
-                          offset: Offset(5, 10),
-                          blurRadius: 40.0,
-                          color: Color.fromARGB(255, 139, 141, 163)
-                              .withOpacity(0.4),
+                          offset: Offset(0, 2),
+                          blurRadius: 3.0,
+                          color: Color(0xFF8B8DA3).withOpacity(0.3),
                         )
                       ],
                     ),
@@ -217,8 +216,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
                                 UnDraw(
                                   height: 200.0.h,
                                   color: Color(0xff343090),
-                                  illustration:
-                                      UnDrawIllustration.bibliophile,
+                                  illustration: UnDrawIllustration.bibliophile,
                                   errorWidget: Column(
                                     children: [
                                       Icon(Icons.perm_scan_wifi_outlined),
@@ -234,8 +232,8 @@ class _TranslateScreenState extends State<TranslateScreen> {
                           return Column(
                             children: <Widget>[
                               Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 20.0.w),
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 20.0.w),
                                   child: Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -288,8 +286,8 @@ class _TranslateScreenState extends State<TranslateScreen> {
                           return Column(
                             children: <Widget>[
                               Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 20.0.w),
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 20.0.w),
                                   child: Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
