@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:iconly/iconly.dart';
 import 'package:platform_device_id/platform_device_id.dart';
 
 import '../utils/call_api.dart';
@@ -11,6 +12,7 @@ import 'package:digital_jahai/models/user.dart';
 
 class AuthController extends GetxController {
   var isLoggedIn = false.obs;
+  var loginFailedMsg = '';
 
   var token = Rx<String?>(null);
   var user = Rx<User?>(null);
@@ -66,6 +68,36 @@ class AuthController extends GetxController {
       if (response.statusCode == 200) {
         token.value = json.decode(response.body);
         tryToken(token.value);
+      } else {
+        loginFailedMsg = json.decode(response.body)['message'];
+        
+        Get.snackbar('Login Failed', loginFailedMsg,
+            icon: Icon(
+              IconlyBold.shield_fail,
+              color: Colors.white,
+            ),
+            shouldIconPulse: false,
+            snackPosition: SnackPosition.BOTTOM,
+            duration: Duration(milliseconds: 1500),
+            isDismissible: true,
+            backgroundColor: Color(0xffec6882),
+            backgroundGradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: const [
+                  Color(0xffeb7c91),
+                  Color(0xffec6882),
+                ]),
+            boxShadows: [
+              BoxShadow(
+                offset: Offset(5, 10),
+                blurRadius: 20.0,
+                color: const Color(0xffec6882).withOpacity(0.4),
+              )
+            ],
+            colorText: Colors.white);
+
+        loginFailedMsg = '';
       }
     } catch (e) {
       if (kDebugMode) {

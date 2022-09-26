@@ -59,7 +59,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
 
   void _onSearchChanged(String search) {
     if (_debounce?.isActive ?? false) _debounce!.cancel();
-    _debounce = Timer(const Duration(milliseconds: 1500), () {
+    _debounce = Timer(Duration(milliseconds: 1500), () {
       // do something with searchText
       if (search != '') {
         _getTranslation(search);
@@ -69,7 +69,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
 
   @override
   void dispose() {
-    _debounce?.cancel();
+    _debounce!.cancel();
     super.dispose();
   }
 
@@ -90,7 +90,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
                       padding: EdgeInsets.symmetric(horizontal: 10.0.w),
                       child: IconButton(
                           onPressed: () => screenC.openDrawer(),
-                          icon: SvgPicture.asset('assets/icons/menu.svg',
+                          icon: SvgPicture.asset('assets/images/menu.svg',
                               semanticsLabel: 'Menu')),
                     ),
                     Padding(

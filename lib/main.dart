@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/services.dart';
 
 import 'package:digital_jahai/screens/main_screen.dart';
+import 'package:get/get.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       designSize: const Size(390, 844),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: () => MaterialApp(
+      builder: () => GetMaterialApp(
         title: "Digital Jahai",
         debugShowCheckedModeBanner: false,
         builder: (context, widget) {

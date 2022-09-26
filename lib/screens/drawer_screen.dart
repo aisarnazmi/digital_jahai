@@ -1,11 +1,14 @@
+import 'dart:async';
 import 'package:digital_jahai/controllers/auth_controller.dart';
 import 'package:digital_jahai/controllers/screen_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:lottie/lottie.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 final authC = Get.put(AuthController());
 final screenC = Get.put(ScreenController());
@@ -15,6 +18,8 @@ class DrawerScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Future.delayed(Duration(milliseconds: 700),
+    //     () => {KeyboardDialogModal._openKeyboardDialog(context)});
     return Container(
       padding: EdgeInsets.only(top: 75.h, left: 25.w, bottom: 40.h),
       decoration: const BoxDecoration(
@@ -96,23 +101,40 @@ class DrawerScreen extends StatelessWidget {
                     )
                   ],
                   Column(
-                    children: menuStatic
-                        .map((element) => Padding(
-                              padding: EdgeInsets.only(bottom: 5.0.h),
-                              child: TextButton(
-                                onPressed: () => {},
-                                child: Row(children: [
-                                  Icon(element['icon'],
-                                      color: Colors.white54, size: 24),
-                                  SizedBox(width: 15.w),
-                                  Text(element['label'],
-                                      style: TextStyle(
-                                          color: Colors.white54,
-                                          fontWeight: FontWeight.w600))
-                                ]),
-                              ),
-                            ))
-                        .toList(),
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 5.0.h),
+                        child: TextButton(
+                          onPressed: () => {},
+                          child: Row(children: [
+                            Icon(IconlyBold.setting,
+                                color: Colors.white54, size: 24),
+                            SizedBox(width: 15.w),
+                            Text('Setting',
+                                style: TextStyle(
+                                    color: Colors.white54,
+                                    fontWeight: FontWeight.w600))
+                          ]),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 5.0.h),
+                        child: TextButton(
+                          onPressed: () => {
+                            KeyboardDialogModal._openKeyboardDialog(context)
+                          },
+                          child: Row(children: [
+                            Icon(IconlyBold.info_square,
+                                color: Colors.white54, size: 24),
+                            SizedBox(width: 15.w),
+                            Text('How to Use?',
+                                style: TextStyle(
+                                    color: Colors.white54,
+                                    fontWeight: FontWeight.w600))
+                          ]),
+                        ),
+                      )
+                    ],
                   )
                 ],
               ),
@@ -120,6 +142,8 @@ class DrawerScreen extends StatelessWidget {
                 TextButton(
                   onPressed: () {
                     authC.logout();
+
+                    screenC.closeDrawer();
                   },
                   child: Row(
                     children: [
@@ -164,11 +188,36 @@ class DrawerScreen extends StatelessWidget {
   }
 }
 
-class LoginModal extends StatelessWidget {
+class LoginModal extends StatefulWidget {
   const LoginModal({Key? key}) : super(key: key);
 
   @override
+  State<LoginModal> createState() => _LoginModalState();
+}
+
+class _LoginModalState extends State<LoginModal> {
+  Timer? _debounce;
+
+  void _onLoginSuccess(context) {
+    if (_debounce?.isActive ?? false) _debounce!.cancel();
+    _debounce = Timer(Duration(milliseconds: 2000), () {
+      Navigator.of(context).pop();
+    });
+  }
+
+  @override
+  void dispose() {
+    _debounce!.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    once(authC.isLoggedIn, (value) => {
+      if(authC.isLoggedIn.value == true) {
+        _onLoginSuccess(context)
+      }
+    });
     return Material(
         child: SafeArea(
       top: false,
@@ -179,8 +228,19 @@ class LoginModal extends StatelessWidget {
                 children: <Widget>[
                   if (authC.isLoggedIn.value) ...[
                     Center(
-                      child: Lottie.network(
-                          'https://raw.githubusercontent.com/xvrh/lottie-flutter/master/example/assets/Mobilo/A.json'),
+                      child: Column(
+                        children: [
+                          Lottie.asset(
+                              'assets/lottie/bluewallet-success-animation.json',
+                              repeat: false,
+                              height: 260.h),
+                          Text('Login Success',
+                              style: TextStyle(
+                                  color: Colors.grey[600],
+                                  fontSize: 18.sp,
+                                  fontWeight: FontWeight.w500))
+                        ],
+                      ),
                     ),
                   ] else ...[
                     Container(
@@ -332,9 +392,99 @@ class LoginModal extends StatelessWidget {
                             ),
                           ],
                         ))
-                  ]
+                  ],
                 ],
               )),
+        ),
+      ),
+    ));
+  }
+}
+
+class KeyboardDialogModal extends StatelessWidget {
+  const KeyboardDialogModal({Key? key}) : super(key: key);
+
+  static Future<void> _onOpenUrl(LinkableElement link) async {
+    if (await canLaunch(link.url)) {
+      await launch(link.url);
+    } else {
+      throw 'Could not launch $link';
+    }
+  }
+
+  static void _openKeyboardDialog(context) {
+    showCupertinoModalBottomSheet(
+        context: context,
+        backgroundColor: Colors.white,
+        builder: (context) => KeyboardDialogModal());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+        child: SafeArea(
+      top: false,
+      child: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.fromLTRB(25.0.w, 10.0.h, 25.0.w, 20.0.h),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("How to Use?",
+                      style: TextStyle(
+                          color: Colors.grey[600],
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w600)),
+                  IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(Icons.close)),
+                ],
+              ),
+              SizedBox(
+                height: 25.0.h,
+              ),
+              Text(
+                  "Digital Jahai application required International Phonetic Alphabet (IPA) Keyboard to be used with Jahai terms."),
+              SizedBox(
+                height: 20.0.h,
+              ),
+              Text(
+                  "Please install IPA keyboard using link below and, follow the installation steps: ",
+                  style: TextStyle(fontWeight: FontWeight.w600)),
+              SizedBox(
+                height: 15.0.h,
+              ),
+              Linkify(
+                onOpen: KeyboardDialogModal._onOpenUrl,
+                options: LinkifyOptions(humanize: false),
+                text:
+                    "Android Platform: https://play.google.com/store/apps/details?id=com.google.android.inputmethod.latin",
+              ),
+              Text(
+                  "\nStep to add IPA language on Gboard:-\n\n1. Open the Settings app.\n2. System > Languages & input > Keyboard > Virtual keyboard\n3. Tap Gboard and then Languages\n4. Pick International Phonetic Alphabet (IPA) language."),
+              SizedBox(
+                height: 15.0.h,
+              ),
+              Linkify(
+                  onOpen: KeyboardDialogModal._onOpenUrl,
+                  options: LinkifyOptions(humanize: false),
+                  text:
+                      "IOS Platform: https://apps.apple.com/my/app/ipa-phonetic-keyboard/id1440241497"),
+              Text(
+                  "\nStep to add IPA language on IOS Keyboard:-\n\n1. Open the Settings app\n2. Go to General > Keyboard > Keyboards\n3. Tap on 'Add New Keyboard'.\n4. Add 'IPA Keyboard' from the 'Third-Party Keyboards list'."),
+              SizedBox(
+                height: 15.0.h,
+              ),
+              Text(
+                  "* Now you can use IPA language while typing by switching keyboard language to IPA.")
+            ],
+          ),
         ),
       ),
     ));
@@ -344,9 +494,4 @@ class LoginModal extends StatelessWidget {
 List<Map> menuLogged = [
   {'icon': IconlyBold.profile, 'label': 'My Account', 'route': ''},
   {'icon': IconlyBold.category, 'label': 'Manage Terms', 'route': ''}
-];
-
-List<Map> menuStatic = [
-  {'icon': IconlyBold.setting, 'label': 'Setting', 'route': ''},
-  {'icon': IconlyBold.info_square, 'label': 'How to Use?', 'route': ''}
 ];
