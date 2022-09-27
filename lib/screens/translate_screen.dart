@@ -14,6 +14,8 @@ import 'package:skeleton_text/skeleton_text.dart';
 import 'package:iconly/iconly.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../utils/debounce.dart';
+
 enum Language { jahai, malay, english }
 
 class TranslateScreen extends StatefulWidget {
@@ -43,7 +45,8 @@ class _TranslateScreenState extends State<TranslateScreen> {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         };
-        final response = await CallApi().post('/library/translate', headers, payload);
+        final response =
+            await CallApi().post('/library/translate', headers, payload);
         if (response.statusCode == 200) {
           return json.decode(response.body);
         }
@@ -55,23 +58,25 @@ class _TranslateScreenState extends State<TranslateScreen> {
 
   String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
 
-  Timer? _debounce;
+  final debouncer = Debouncer(milliseconds: 1500);
 
-  void _onSearchChanged(String search) {
-    if (_debounce?.isActive ?? false) _debounce!.cancel();
-    _debounce = Timer(Duration(milliseconds: 1500), () {
-      // do something with searchText
-      if (search != '') {
-        _getTranslation(search);
-      }
-    });
-  }
+  // Timer? _debounce;
 
-  @override
-  void dispose() {
-    _debounce!.cancel();
-    super.dispose();
-  }
+  // void _onSearchChanged(String search) {
+  //   if (_debounce?.isActive ?? false) _debounce?.cancel();
+  //   _debounce = Timer(Duration(milliseconds: 1500), () {
+  //     // do something with searchText
+  //     if (search != '') {
+  //       _getTranslation(search);
+  //     }
+  //   });
+  // }
+
+  // @override
+  // void dispose() {
+  //   _debounce?.cancel();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -172,10 +177,18 @@ class _TranslateScreenState extends State<TranslateScreen> {
                     child: TextFormField(
                       controller: _searchController,
                       onTap: () => screenC.closeDrawer(),
-                      onChanged: (val) {
+                      onChanged: (value) {
+                        // setState(() {
+                        // _searchController.text = val;
+                        // _onSearchChanged(_searchController.text);
+                        // });
                         setState(() {
-                          // _searchController.text = val;
-                          _onSearchChanged(_searchController.text);
+                          debouncer.run(() {
+                            if (value != '') {
+                              _getTranslation(value);
+                              print(value);
+                            }
+                          });
                         });
                       },
                       decoration: InputDecoration(

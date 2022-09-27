@@ -1,25 +1,18 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'term.g.dart';
+
+@JsonSerializable()
 class Term {
-  int id = 0;
-  String jahaiTerm = "",
-      malayTerm = "",
-      englishTerm = "",
-      description = "",
-      termCategory = "";
+  Term();
 
-  Term(
-    this.id,
-    this.jahaiTerm,
-    this.malayTerm,
-    this.englishTerm,
-    this.description,
-    this.termCategory,
-  );
-
-  Term.fromJson(dynamic json)
-      : id = json['id'],
-        jahaiTerm = json['jahai_term'],
-        malayTerm = json['malay_term'],
-        englishTerm = json['english_term'],
-        description = json['description'],
-        termCategory = json['term_category'];
+  late String id;
+  late String jahai_term;
+  late String malay_term;
+  late String english_term;
+  late String description;
+  late String term_category;
+  
+  factory Term.fromJson(Map<String,dynamic> json) => _$TermFromJson(json);
+  Map<String, dynamic> toJson() => _$TermToJson(this);
 }

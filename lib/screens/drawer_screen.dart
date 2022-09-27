@@ -199,7 +199,7 @@ class _LoginModalState extends State<LoginModal> {
   Timer? _debounce;
 
   void _onLoginSuccess(context) {
-    if (_debounce?.isActive ?? false) _debounce!.cancel();
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
     _debounce = Timer(Duration(milliseconds: 2000), () {
       Navigator.of(context).pop();
     });
@@ -207,7 +207,7 @@ class _LoginModalState extends State<LoginModal> {
 
   @override
   void dispose() {
-    _debounce!.cancel();
+    _debounce?.cancel();
     super.dispose();
   }
 
