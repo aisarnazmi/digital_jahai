@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'package:digital_jahai/controllers/auth_controller.dart';
-import 'package:digital_jahai/controllers/screen_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:lottie/lottie.dart';
@@ -10,181 +8,183 @@ import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-final authC = Get.put(AuthController());
-final screenC = Get.put(ScreenController());
+import '../controllers/auth_controller.dart';
+import '../controllers/menu_controller.dart';
 
 class DrawerScreen extends StatelessWidget {
-  const DrawerScreen({Key? key}) : super(key: key);
+  DrawerScreen({Key? key}) : super(key: key);
+
+  final authC = Get.find<AuthController>();
+  final menuC = Get.find<MenuController>();
 
   @override
   Widget build(BuildContext context) {
     // Future.delayed(Duration(milliseconds: 700),
     //     () => {KeyboardDialogModal._openKeyboardDialog(context)});
-    return Container(
-      padding: EdgeInsets.only(top: 75.h, left: 25.w, bottom: 40.h),
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Color(0xff181d5f),
-            Color(0xff112043),
-          ],
-        ),
-      ),
-      child: Obx(
-        () => AnimatedContainer(
-          transform: Matrix4.translationValues(
-              (screenC.isDrawerOpen.value
-                  ? 0
-                  : -MediaQuery.of(context).size.width),
-              0,
-              0),
-          duration: Duration(milliseconds: 200),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                children: [
-                  if (authC.isLoggedIn.value) ...[
-                    Row(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              authC.user.value!.name,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 22.sp),
-                            ),
-                            SizedBox(height: 5.0.h),
-                            Text(
-                              authC.user.value!.email,
-                              style: TextStyle(
-                                  color: Colors.white70,
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 13.sp),
-                            )
-                          ],
-                        ),
-                      ],
-                    )
-                  ] else ...[
-                    SizedBox(
-                      height: 50.0.h,
-                    )
-                  ],
-                  SizedBox(height: 45.0.h),
-                  if (authC.isLoggedIn.value) ...[
-                    Column(
-                      children: menuLogged
-                          .map((element) => Padding(
-                                padding: EdgeInsets.only(bottom: 5.0.h),
-                                child: TextButton(
-                                  onPressed: () {
-                                    // Respond to button press
-                                  },
-                                  child: Row(children: [
-                                    Icon(element['icon'],
-                                        color: Colors.white54, size: 24),
-                                    SizedBox(width: 15.w),
-                                    Text(element['label'],
-                                        style: TextStyle(
-                                            color: Colors.white54,
-                                            fontWeight: FontWeight.w600))
-                                  ]),
-                                ),
-                              ))
-                          .toList(),
-                    )
-                  ],
-                  Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(bottom: 5.0.h),
-                        child: TextButton(
-                          onPressed: () => {},
-                          child: Row(children: [
-                            Icon(IconlyBold.setting,
-                                color: Colors.white54, size: 24),
-                            SizedBox(width: 15.w),
-                            Text('Setting',
+    return Obx(() => Container(
+          padding: EdgeInsets.only(top: 75.h, left: 25.w, bottom: 40.h),
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Color(0xff181d5f),
+                Color(0xff112043),
+              ],
+            ),
+          ),
+          child: AnimatedContainer(
+            transform: Matrix4.translationValues(
+                (menuC.isDrawerOpen.value
+                    ? 0
+                    : -MediaQuery.of(context).size.width),
+                0,
+                0),
+            duration: Duration(milliseconds: 200),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  children: [
+                    if (authC.isLoggedIn.value) ...[
+                      Row(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                authC.user.value!.name,
                                 style: TextStyle(
-                                    color: Colors.white54,
-                                    fontWeight: FontWeight.w600))
-                          ]),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(bottom: 5.0.h),
-                        child: TextButton(
-                          onPressed: () => {
-                            KeyboardDialogModal._openKeyboardDialog(context)
-                          },
-                          child: Row(children: [
-                            Icon(IconlyBold.info_square,
-                                color: Colors.white54, size: 24),
-                            SizedBox(width: 15.w),
-                            Text('How to Use?',
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 22.sp),
+                              ),
+                              SizedBox(height: 5.0.h),
+                              Text(
+                                authC.user.value!.email,
                                 style: TextStyle(
-                                    color: Colors.white54,
-                                    fontWeight: FontWeight.w600))
-                          ]),
-                        ),
+                                    color: Colors.white70,
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 13.sp),
+                              )
+                            ],
+                          ),
+                        ],
+                      )
+                    ] else ...[
+                      SizedBox(
+                        height: 50.0.h,
                       )
                     ],
+                    SizedBox(height: 45.0.h),
+                    if (authC.isLoggedIn.value) ...[
+                      Column(
+                        children: menuLogged
+                            .map((element) => Padding(
+                                  padding: EdgeInsets.only(bottom: 5.0.h),
+                                  child: TextButton(
+                                    onPressed: () {
+                                      // Respond to button press
+                                    },
+                                    child: Row(children: [
+                                      Icon(element['icon'],
+                                          color: Colors.white54, size: 24),
+                                      SizedBox(width: 15.w),
+                                      Text(element['label'],
+                                          style: TextStyle(
+                                              color: Colors.white54,
+                                              fontWeight: FontWeight.w600))
+                                    ]),
+                                  ),
+                                ))
+                            .toList(),
+                      )
+                    ],
+                    Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 5.0.h),
+                          child: TextButton(
+                            onPressed: () => {},
+                            child: Row(children: [
+                              Icon(IconlyBold.setting,
+                                  color: Colors.white54, size: 24),
+                              SizedBox(width: 15.w),
+                              Text('Setting',
+                                  style: TextStyle(
+                                      color: Colors.white54,
+                                      fontWeight: FontWeight.w600))
+                            ]),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 5.0.h),
+                          child: TextButton(
+                            onPressed: () => {
+                              KeyboardDialogModal._openKeyboardDialog(context)
+                            },
+                            child: Row(children: [
+                              Icon(IconlyBold.info_square,
+                                  color: Colors.white54, size: 24),
+                              SizedBox(width: 15.w),
+                              Text('How to Use?',
+                                  style: TextStyle(
+                                      color: Colors.white54,
+                                      fontWeight: FontWeight.w600))
+                            ]),
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+                if (authC.isLoggedIn.value == true) ...[
+                  TextButton(
+                    onPressed: () {
+                      authC.logout();
+
+                      menuC.closeDrawer();
+                    },
+                    child: Row(
+                      children: [
+                        Icon(IconlyBold.logout,
+                            color: Colors.white54, size: 24),
+                        SizedBox(width: 15.w),
+                        Text("Logout",
+                            style: TextStyle(
+                                color: Colors.white54,
+                                fontWeight: FontWeight.w600))
+                      ],
+                    ),
                   )
-                ],
-              ),
-              if (authC.isLoggedIn.value == true) ...[
-                TextButton(
-                  onPressed: () {
-                    authC.logout();
+                ] else ...[
+                  TextButton(
+                    onPressed: () {
+                      menuC.closeDrawer();
 
-                    screenC.closeDrawer();
-                  },
-                  child: Row(
-                    children: [
-                      Icon(IconlyBold.logout, color: Colors.white54, size: 24),
-                      SizedBox(width: 15.w),
-                      Text("Logout",
-                          style: TextStyle(
-                              color: Colors.white54,
-                              fontWeight: FontWeight.w600))
-                    ],
-                  ),
-                )
-              ] else ...[
-                TextButton(
-                  onPressed: () {
-                    screenC.closeDrawer();
-
-                    showCupertinoModalBottomSheet(
-                        context: context,
-                        backgroundColor: Colors.white,
-                        builder: (context) {
-                          return LoginModal();
-                        });
-                  },
-                  child: Row(
-                    children: [
-                      Icon(IconlyBold.login, color: Colors.white54, size: 24),
-                      SizedBox(width: 15.w),
-                      Text("Admin Login",
-                          style: TextStyle(
-                              color: Colors.white54,
-                              fontWeight: FontWeight.w600))
-                    ],
-                  ),
-                )
-              ]
-            ],
+                      showCupertinoModalBottomSheet(
+                          context: context,
+                          backgroundColor: Colors.white,
+                          builder: (context) {
+                            return LoginModal();
+                          });
+                    },
+                    child: Row(
+                      children: [
+                        Icon(IconlyBold.login, color: Colors.white54, size: 24),
+                        SizedBox(width: 15.w),
+                        Text("Admin Login",
+                            style: TextStyle(
+                                color: Colors.white54,
+                                fontWeight: FontWeight.w600))
+                      ],
+                    ),
+                  )
+                ]
+              ],
+            ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }
 
@@ -196,6 +196,8 @@ class LoginModal extends StatefulWidget {
 }
 
 class _LoginModalState extends State<LoginModal> {
+  final authC = Get.find<AuthController>();
+
   Timer? _debounce;
 
   void _onLoginSuccess(context) {
@@ -213,11 +215,11 @@ class _LoginModalState extends State<LoginModal> {
 
   @override
   Widget build(BuildContext context) {
-    once(authC.isLoggedIn, (value) => {
-      if(authC.isLoggedIn.value == true) {
-        _onLoginSuccess(context)
-      }
-    });
+    once(
+        authC.isLoggedIn,
+        (value) => {
+              if (authC.isLoggedIn.value == true) {_onLoginSuccess(context)}
+            });
     return Material(
         child: SafeArea(
       top: false,

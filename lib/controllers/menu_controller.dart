@@ -2,7 +2,7 @@ import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 
-class ScreenController extends GetxController {
+class MenuController extends GetxController {
   var isDrawerOpen = false.obs;
   var isDragging = false.obs;
 

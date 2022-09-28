@@ -1,3 +1,4 @@
+import 'package:digital_jahai/bindings/controller_binding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/services.dart';
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
           );
         },
         home: MainScreen(),
+        initialBinding: ControllerBinding(),
       ),
     );
   }

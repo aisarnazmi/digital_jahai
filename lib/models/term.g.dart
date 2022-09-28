@@ -7,12 +7,12 @@ part of 'term.dart';
 // **************************************************************************
 
 Term _$TermFromJson(Map<String, dynamic> json) => Term()
-  ..id = json['id'] as String
-  ..jahai_term = json['jahai_term'] as String
-  ..malay_term = json['malay_term'] as String
-  ..english_term = json['english_term'] as String
-  ..description = json['description'] as String
-  ..term_category = json['term_category'] as String;
+  ..id = json['id'] as num
+  ..jahai_term = json['jahai_term'] as String?
+  ..malay_term = json['malay_term'] as String?
+  ..english_term = json['english_term'] as String?
+  ..description = json['description'] as String?
+  ..term_category = json['term_category'] as String?;
 
 Map<String, dynamic> _$TermToJson(Term instance) => <String, dynamic>{
       'id': instance.id,
