@@ -6,7 +6,7 @@ import 'package:ms_undraw/ms_undraw.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 
 import '../models/terms.dart';
-import '../utils/call_api.dart';
+import '../utils/http_service.dart';
 import '../utils/debounce.dart';
 
 class TranslateController extends GetxController {
@@ -45,7 +45,7 @@ class TranslateController extends GetxController {
   Future getTranslation() async {
     var search = searchController.text;
 
-    terms!.terms = List.empty();
+    // terms!.terms = List.empty();
 
     if (search == "") {
       return terms;
@@ -58,7 +58,7 @@ class TranslateController extends GetxController {
           'Accept': 'application/json'
         };
         final response =
-            await CallApi().post('/library/translate', headers, payload);
+            await HttpService().post('/library/translate', headers, payload);
         if (response.statusCode == 200) {
           return Terms.parseTerms(response.body);
         } else {

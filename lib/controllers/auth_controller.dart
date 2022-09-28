@@ -6,7 +6,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:iconly/iconly.dart';
 import 'package:platform_device_id/platform_device_id.dart';
 
-import '../utils/call_api.dart';
+import '../utils/http_service.dart';
 
 import 'package:digital_jahai/models/user.dart';
 
@@ -63,7 +63,7 @@ class AuthController extends GetxController {
         'device_id': deviceId
       };
 
-      final response = await CallApi().post('/sanctum/token', headers, payload);
+      final response = await HttpService().post('/sanctum/token', headers, payload);
 
       if (response.statusCode == 200) {
         token.value = json.decode(response.body);
@@ -117,7 +117,7 @@ class AuthController extends GetxController {
           'Authorization': 'Bearer $val',
         };
 
-        final response = await CallApi().get('/user', headers);
+        final response = await HttpService().get('/user', headers);
 
         if (response.statusCode == 200) {
           isLoggedIn.value = true;
@@ -141,7 +141,7 @@ class AuthController extends GetxController {
         'Authorization': 'Bearer $token',
       };
 
-      final response = await CallApi().get('/user/revoke', headers);
+      final response = await HttpService().get('/user/revoke', headers);
 
       if (response.statusCode == 200) {
         isLoggedIn.value = false;

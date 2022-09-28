@@ -4,7 +4,7 @@ import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:digital_jahai/utils/call_api.dart';
+import 'package:digital_jahai/utils/http_service.dart';
 import 'package:iconly/iconly.dart';
 
 class LibraryScreen extends StatefulWidget {
@@ -41,7 +41,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
         'Accept': 'application/json'
       };
 
-    final response = await CallApi().post('/library/store', headers, payload);
+    final response = await HttpService().post('/library/store', headers, payload);
 
     if (response.statusCode == 200) {
       if (!mounted) return;

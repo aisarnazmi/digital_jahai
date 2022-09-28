@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
-class CallApi {
+class HttpService {
   final String _baseUrl = kDebugMode ? 'http://127.0.0.1:8000/api' : 'https://digital-jahai-backend.000webhostapp.com/api';
 
   post(path, headers, payload) async {
