@@ -39,15 +39,17 @@ class TranslateController extends GetxController {
     super.onInit();
   }
 
+  String capitalize(s) => s[0].toUpperCase() + s.substring(1);
+
   void switchLang() {
     var temp = originLang.value;
     originLang.value = transLang.value;
     transLang.value = temp;
+
+    initGetTranslationFuture();
   }
-
-  String capitalize(s) => s[0].toUpperCase() + s.substring(1);
-
-  initGetTranslationFuture() {
+  
+  void initGetTranslationFuture() {
     getTranslationFuture = getTranslation();
   }
 
