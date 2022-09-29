@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/services.dart';
 
-import 'package:digital_jahai/views/main_view.dart';
+import 'package:digital_jahai/views/home_view.dart';
 import 'package:get/get.dart';
 
 void main() {
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
             child: widget as Widget,
           );
         },
-        home: MainView(),
+        home: HomeView(),
         initialBinding: ControllerBinding(),
       ),
     );
