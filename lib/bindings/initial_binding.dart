@@ -3,7 +3,7 @@ import 'package:digital_jahai/controllers/menu_controller.dart';
 import 'package:digital_jahai/controllers/translate_controller.dart';
 import 'package:get/get.dart';
 
-class ControllerBinding implements Bindings {
+class InitialBinding implements Bindings {
 // default dependency
  @override
  void dependencies() {

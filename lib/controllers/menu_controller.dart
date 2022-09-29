@@ -1,6 +1,8 @@
 import 'package:flutter/services.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MenuController extends GetxController {
   var isDrawerOpen = false.obs;
@@ -28,5 +30,13 @@ class MenuController extends GetxController {
     scaleFactorDrawer.value = 0.1;
     isDrawerOpen.value = false;
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+  }
+
+  Future onOpenUrl(LinkableElement link) async {
+    if (await canLaunch(link.url)) {
+      await launch(link.url);
+    } else {
+      throw 'Could not launch $link';
+    }
   }
 }

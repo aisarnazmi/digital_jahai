@@ -32,7 +32,7 @@ class TranslateScreen extends StatelessWidget {
           onTap: () => menuC.closeDrawer(),
           onHorizontalDragStart: (details) => menuC.isDragging.value = true,
           onHorizontalDragUpdate: (details) {
-            if (!menuC.isDragging.value) {
+            if (menuC.isDragging.isFalse) {
               return;
             }
             const delta = 1;

@@ -54,7 +54,7 @@ class TranslateView extends GetView<TranslateController> {
                       borderRadius: BorderRadius.all(Radius.circular(50.0))),
                   child: IconButton(
                     onPressed: () {
-                      Get.to(LibraryView());
+                      Get.to(() => LibraryView());
                     },
                     color: Colors.white,
                     icon: Icon(
