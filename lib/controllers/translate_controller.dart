@@ -21,6 +21,8 @@ class TranslateController extends GetxController {
 
   Terms? terms;
 
+  late Future getTranslationFuture;
+
   @override
   void onInit() {
     super.onInit();
@@ -31,6 +33,7 @@ class TranslateController extends GetxController {
 
     terms = Terms();
 
+    initFuture();
     // terms!.terms = List.empty();
   }
 
@@ -42,10 +45,14 @@ class TranslateController extends GetxController {
 
   String capitalize(s) => s[0].toUpperCase() + s.substring(1);
 
+  void initFuture() {
+    getTranslationFuture = getTranslation();
+  }
+
   Future getTranslation() async {
     var search = searchController.text;
 
-    // terms!.terms = List.empty();
+    terms!.terms = List.empty();
 
     if (search == "") {
       return terms;
@@ -60,10 +67,9 @@ class TranslateController extends GetxController {
         final response =
             await HttpService().post('/library/translate', headers, payload);
         if (response.statusCode == 200) {
-          return Terms.parseTerms(response.body);
-        } else {
-          return terms;
+          terms = Terms.parseTerms(response.body);
         }
+        return terms;
       } catch (e) {
         return terms;
       }
@@ -72,7 +78,7 @@ class TranslateController extends GetxController {
 
   Widget translationList() {
     return FutureBuilder<dynamic>(
-      future: getTranslation(),
+      future: getTranslationFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           if (searchController.text == "") {

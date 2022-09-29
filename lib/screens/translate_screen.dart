@@ -159,16 +159,10 @@ class _TranslateScreenState extends State<TranslateScreen> {
                                 child: TextFormField(
                                   controller: translateC.searchController,
                                   onTap: () => menuC.closeDrawer(),
-                                  onChanged: (value) {
-                                    // setState(() {
-                                    // _searchController.text = val;
-                                    // _onSearchChanged(_searchController.text);
-                                    // });
-                                    setState(() {
-                                      translateC.debouncer.run(() {
-                                        if (value != '') {
-                                          translateC.getTranslation();
-                                        }
+                                  onChanged: (_) {
+                                    translateC.debouncer.run(() {
+                                      setState(() {
+                                          translateC.initFuture();
                                       });
                                     });
                                   },
