@@ -15,9 +15,11 @@ class TranslateController extends GetxController {
   var originLang = "".obs;
   var transLang = "".obs;
 
+  var isTyping = false.obs;
+
   late TextEditingController searchController;
 
-  final debouncer = Debouncer(milliseconds: 500);
+  final debouncer = Debouncer(milliseconds: 1500);
 
   Terms? terms;
 
@@ -25,7 +27,6 @@ class TranslateController extends GetxController {
 
   @override
   void onInit() {
-    super.onInit();
     originLang.value = language.elementAt(0);
     transLang.value = language.elementAt(1);
 
@@ -33,8 +34,9 @@ class TranslateController extends GetxController {
 
     terms = Terms();
 
-    initFuture();
-    // terms!.terms = List.empty();
+    initGetTranslationFuture();
+
+    super.onInit();
   }
 
   void switchLang() {
@@ -45,7 +47,7 @@ class TranslateController extends GetxController {
 
   String capitalize(s) => s[0].toUpperCase() + s.substring(1);
 
-  void initFuture() {
+  initGetTranslationFuture() {
     getTranslationFuture = getTranslation();
   }
 
@@ -80,7 +82,8 @@ class TranslateController extends GetxController {
     return FutureBuilder<dynamic>(
       future: getTranslationFuture,
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
+        if (isTyping.value ||
+            snapshot.connectionState == ConnectionState.waiting) {
           if (searchController.text == "") {
             return Padding(
               padding: EdgeInsets.only(top: 70.0.h),

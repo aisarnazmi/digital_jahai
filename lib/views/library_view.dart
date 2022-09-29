@@ -7,14 +7,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:digital_jahai/utils/http_service.dart';
 import 'package:iconly/iconly.dart';
 
-class LibraryScreen extends StatefulWidget {
-  const LibraryScreen({Key? key}) : super(key: key);
+class LibraryView extends StatefulWidget {
+  const LibraryView({Key? key}) : super(key: key);
 
   @override
-  State<LibraryScreen> createState() => _LibraryScreenState();
+  State<LibraryView> createState() => _LibraryViewState();
 }
 
-class _LibraryScreenState extends State<LibraryScreen> {
+class _LibraryViewState extends State<LibraryView> {
   final TextEditingController jahaiTermController = TextEditingController();
   final TextEditingController malayTermController = TextEditingController();
   final TextEditingController englishTermController = TextEditingController();

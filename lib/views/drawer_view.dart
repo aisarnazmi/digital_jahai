@@ -11,8 +11,8 @@ import 'package:url_launcher/url_launcher.dart';
 import '../controllers/auth_controller.dart';
 import '../controllers/menu_controller.dart';
 
-class DrawerScreen extends StatelessWidget {
-  DrawerScreen({Key? key}) : super(key: key);
+class DrawerView extends StatelessWidget {
+  DrawerView({Key? key}) : super(key: key);
 
   final authC = Get.find<AuthController>();
   final menuC = Get.find<MenuController>();

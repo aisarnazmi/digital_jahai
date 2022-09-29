@@ -3,19 +3,20 @@ import 'package:digital_jahai/controllers/translate_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:digital_jahai/screens/library_screen.dart';
+import 'package:digital_jahai/views/library_view.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconly/iconly.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lottie/lottie.dart';
 
-class TranslateScreen extends StatefulWidget {
-  const TranslateScreen({Key? key}) : super(key: key);
+class TranslateView extends StatefulWidget {
+  const TranslateView({Key? key}) : super(key: key);
 
   @override
-  State<TranslateScreen> createState() => _TranslateScreenState();
+  State<TranslateView> createState() => _TranslateViewState();
 }
 
-class _TranslateScreenState extends State<TranslateScreen> {
+class _TranslateViewState extends State<TranslateView> {
   final menuC = Get.find<MenuController>();
   final translateC = Get.find<TranslateController>();
 
@@ -105,7 +106,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
                                             MaterialPageRoute(
                                                 builder:
                                                     (BuildContext context) =>
-                                                        const LibraryScreen()));
+                                                        const LibraryView()));
                                       },
                                       color: Colors.white,
                                       icon: Icon(
@@ -160,9 +161,14 @@ class _TranslateScreenState extends State<TranslateScreen> {
                                   controller: translateC.searchController,
                                   onTap: () => menuC.closeDrawer(),
                                   onChanged: (_) {
-                                    translateC.debouncer.run(() {
-                                      setState(() {
-                                          translateC.initFuture();
+                                    setState(() {
+                                      translateC.isTyping.value = true;
+
+                                      translateC.debouncer.run(() {
+                                        setState(() {
+                                          translateC.isTyping.value = false;
+                                          translateC.initGetTranslationFuture();
+                                        });
                                       });
                                     });
                                   },
@@ -177,19 +183,27 @@ class _TranslateScreenState extends State<TranslateScreen> {
                                     hintText:
                                         "Enter ${translateC.originLang.value} term...",
                                     hintStyle: TextStyle(color: Colors.black54),
-                                    suffixIcon:
-                                        translateC.searchController.text == ""
-                                            ? null
-                                            : IconButton(
-                                                color: Colors.black54,
-                                                iconSize: 24,
-                                                icon: Icon(Icons.close),
-                                                onPressed: () {
-                                                  setState(() {
-                                                    translateC.searchController
-                                                        .clear();
-                                                  });
-                                                }),
+                                    suffixIcon: translateC
+                                                .searchController.text ==
+                                            ""
+                                        ? null
+                                        : IconButton(
+                                            color: Colors.black54,
+                                            iconSize: 24,
+                                            icon: translateC.isTyping.value
+                                                ? Lottie.asset(
+                                                    'assets/lottie/typing-animation.json')
+                                                : Icon(Icons.close),
+                                            onPressed: () {
+                                              setState(() {
+                                                translateC.searchController
+                                                    .clear();
+                                                translateC.isTyping.value =
+                                                    false;
+                                                translateC
+                                                    .initGetTranslationFuture();
+                                              });
+                                            }),
                                   ),
                                 ),
                               ),
