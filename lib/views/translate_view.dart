@@ -1,15 +1,18 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-
 import 'package:get/get.dart';
-
 import 'package:iconly/iconly.dart';
 import 'package:lottie/lottie.dart';
 
-import 'package:digital_jahai/controllers/menu_controller.dart';
-import 'package:digital_jahai/controllers/translate_controller.dart';
-import 'package:digital_jahai/views/library_view.dart';
+// Project imports:
+import '../controllers/menu_controller.dart';
+import '../controllers/translate_controller.dart';
+import '../views/library_view.dart';
+
 class TranslateView extends GetView<TranslateController> {
   TranslateView({Key? key}) : super(key: key);
 

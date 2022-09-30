@@ -1,7 +1,12 @@
+// Dart imports:
 import 'dart:convert';
 
+// Package imports:
 import 'package:json_annotation/json_annotation.dart';
+
+// Project imports:
 import "term.dart";
+
 part 'terms.g.dart';
 
 @JsonSerializable()

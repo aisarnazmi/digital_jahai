@@ -1,13 +1,17 @@
-import 'package:digital_jahai/models/index.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:ms_undraw/ms_undraw.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 
+// Project imports:
+import '../models/index.dart';
 import '../models/terms.dart';
-import '../utils/http_service.dart';
 import '../utils/debounce.dart';
+import '../utils/http_service.dart';
 
 class TranslateController extends GetxController {
   List<String> language = ["jahai", "malay", "english"];

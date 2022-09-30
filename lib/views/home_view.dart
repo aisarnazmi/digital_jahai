@@ -1,30 +1,75 @@
-import 'package:digital_jahai/controllers/translate_controller.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 
-import 'package:digital_jahai/views/menu_view.dart';
-import 'package:digital_jahai/views/translate_view.dart';
+// Package imports:
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
+// Project imports:
 import '../controllers/menu_controller.dart';
-class HomeView extends StatelessWidget {
+import '../controllers/translate_controller.dart';
+import '../views/menu_view.dart';
+import '../views/translate_view.dart';
 
+class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Stack(
-      children: [MenuView(), TranslateScreen()],
+      children: [MenuScreen(), TranslateScreen()],
     ));
   }
 }
 
-class TranslateScreen extends StatelessWidget {
-   TranslateScreen({Key? key}) : super(key: key);
-
+class MenuScreen extends StatelessWidget {
   final menuC = Get.find<MenuController>();
   final translateC = Get.find<TranslateController>();
+
+  MenuScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+
+    Future.delayed(Duration(milliseconds: 700), () {
+      showCupertinoModalBottomSheet(
+          context: context,
+          backgroundColor: Colors.white,
+          builder: (context) => menuC.keyboardDialogModal());
+    });
+
+    return Obx(() => Container(
+          padding: EdgeInsets.only(top: 75.h, left: 25.w, bottom: 40.h),
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Color(0xff181d5f),
+                Color(0xff112043),
+              ],
+            ),
+          ),
+          child: AnimatedContainer(
+              transform: Matrix4.translationValues(
+                  (menuC.isDrawerOpen.value
+                      ? 0
+                      : -MediaQuery.of(context).size.width),
+                  0,
+                  0),
+              duration: Duration(milliseconds: 200),
+              child: MenuView()),
+        ));
+  }
+}
+
+class TranslateScreen extends StatelessWidget {
+  final menuC = Get.find<MenuController>();
+  final translateC = Get.find<TranslateController>();
+
+  TranslateScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -67,9 +112,9 @@ class TranslateScreen extends StatelessWidget {
                   body: SafeArea(
                     child: SingleChildScrollView(
                       child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 8.0.h),
-                        child: TranslateView() //TranslateView
-                      ),
+                          padding: EdgeInsets.symmetric(vertical: 8.0.h),
+                          child: TranslateView() //TranslateView
+                          ),
                     ),
                   ),
                   bottomSheet: Container(
@@ -132,7 +177,7 @@ class TranslateScreen extends StatelessWidget {
                               child: IconButton(
                                 onPressed: () {
                                   // setState(() {
-                                    translateC.switchLang();
+                                  translateC.switchLang();
                                   // });
                                 },
                                 color: Colors.white,
@@ -163,7 +208,3 @@ class TranslateScreen extends StatelessWidget {
         ));
   }
 }
-
-
-
-
