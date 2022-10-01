@@ -54,7 +54,7 @@ class MenuScreen extends StatelessWidget {
           ),
           child: AnimatedContainer(
               transform: Matrix4.translationValues(
-                  (menuC.isDrawerOpen.value
+                  (menuC.isDrawerOpen.isTrue
                       ? 0
                       : -MediaQuery.of(context).size.width),
                   0,
@@ -106,7 +106,7 @@ class TranslateScreen extends StatelessWidget {
             ),
             child: ClipRRect(
                 borderRadius:
-                    BorderRadius.circular(menuC.isDrawerOpen.value ? 35 : 0),
+                    BorderRadius.circular(menuC.isDrawerOpen.isTrue ? 35 : 0),
                 child: Scaffold(
                   backgroundColor: const Color(0xfffafafa),
                   body: SafeArea(

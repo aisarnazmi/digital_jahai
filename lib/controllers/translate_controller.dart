@@ -31,6 +31,7 @@ class TranslateController extends GetxController {
 
   @override
   void onInit() {
+    super.onInit();
     originLang.value = language.elementAt(0);
     transLang.value = language.elementAt(1);
 
@@ -39,8 +40,14 @@ class TranslateController extends GetxController {
     terms = Terms();
 
     initGetTranslationFuture();
+  }
 
-    super.onInit();
+
+
+  @override
+  void onClose() {
+    searchController.dispose();
+    super.onClose();
   }
 
   String capitalize(s) => s[0].toUpperCase() + s.substring(1);
@@ -52,7 +59,7 @@ class TranslateController extends GetxController {
 
     initGetTranslationFuture();
   }
-  
+
   void initGetTranslationFuture() {
     getTranslationFuture = getTranslation();
   }
@@ -88,8 +95,7 @@ class TranslateController extends GetxController {
     return FutureBuilder<dynamic>(
       future: getTranslationFuture,
       builder: (context, snapshot) {
-        if (isTyping.value ||
-            snapshot.connectionState == ConnectionState.waiting) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
           if (searchController.text == "") {
             return Padding(
               padding: EdgeInsets.only(top: 70.0.h),
@@ -167,9 +173,10 @@ class TranslateController extends GetxController {
                   UnDraw(
                       height: 200.0.h,
                       color: Color(0xff343090),
-                      illustration: searchController.text != ""
-                          ? UnDrawIllustration.void_
-                          : UnDrawIllustration.bibliophile,
+                      illustration:
+                          (isTyping.isFalse && searchController.text != "")
+                              ? UnDrawIllustration.void_
+                              : UnDrawIllustration.bibliophile,
                       errorWidget: Column(
                         children: [
                           Icon(Icons.perm_scan_wifi_outlined),
@@ -178,7 +185,7 @@ class TranslateController extends GetxController {
                         ],
                       )),
                   SizedBox(height: 10.0.h),
-                  Text(searchController.text != ""
+                  Text((isTyping.isFalse && searchController.text != "")
                       ? "Sorry! No translation found.."
                       : ''),
                 ],

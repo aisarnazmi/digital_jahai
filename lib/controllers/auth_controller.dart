@@ -34,8 +34,6 @@ class AuthController extends GetxController {
 
   late GetStorage box;
 
-  final debouncer = Debouncer(milliseconds: 2000);
-
   @override
   void onInit() async {
     super.onInit();
@@ -77,8 +75,7 @@ class AuthController extends GetxController {
         'device_id': deviceId
       };
 
-      final response =
-          await HttpService().post('/sanctum/token', headers, payload);
+      final response = await HttpService().post('/login', headers, payload);
 
       if (response.statusCode == 200) {
         token.value = json.decode(response.body);
@@ -119,7 +116,10 @@ class AuthController extends GetxController {
           clearAuth();
         }
 
-        isLogin.value = false;
+        Debouncer(milliseconds: 1300).run(() {
+          isLogin.value = false;
+        });
+
       } catch (e) {
         if (kDebugMode) {
           print(e.toString());
@@ -136,7 +136,7 @@ class AuthController extends GetxController {
         'Authorization': 'Bearer $token',
       };
 
-      final response = await HttpService().get('/user/revoke', headers);
+      final response = await HttpService().get('/logout', headers);
 
       if (response.statusCode == 200) {
         clearAuth();
@@ -156,7 +156,7 @@ class AuthController extends GetxController {
   }
 
   void onLoginSuccess() {
-    debouncer.run(() {
+    Debouncer(milliseconds: 2000).run(() {
       Get.back();
     });
   }
@@ -189,7 +189,9 @@ class AuthController extends GetxController {
         colorText: Colors.white);
 
     loginFailedMsg = '';
-    isLogin.value = false;
+    Debouncer(milliseconds: 1300).run(() {
+      isLogin.value = false;
+    });
   }
 
   Widget loginModal() {
