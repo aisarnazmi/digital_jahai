@@ -31,22 +31,19 @@ class TranslateController extends GetxController {
 
   @override
   void onInit() {
-    super.onInit();
     originLang.value = language.elementAt(0);
     transLang.value = language.elementAt(1);
-
     searchController = TextEditingController();
-
     terms = Terms();
-
     initGetTranslationFuture();
+    
+    super.onInit();
   }
-
-
 
   @override
   void onClose() {
     searchController.dispose();
+
     super.onClose();
   }
 
@@ -94,7 +91,7 @@ class TranslateController extends GetxController {
   Widget translationList() {
     return FutureBuilder<dynamic>(
       future: getTranslationFuture,
-      builder: (context, snapshot) {
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           if (searchController.text == "") {
             return Padding(

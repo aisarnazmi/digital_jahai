@@ -156,7 +156,7 @@ class AuthController extends GetxController {
   }
 
   void onLoginSuccess() {
-    Debouncer(milliseconds: 2000).run(() {
+    Debouncer(milliseconds: 2500).run(() {
       Get.back();
     });
   }
@@ -212,10 +212,14 @@ class AuthController extends GetxController {
                     Center(
                       child: Column(
                         children: [
-                          Lottie.asset(
-                              'assets/lottie/bluewallet-success-animation.json',
-                              repeat: false,
-                              height: 260.h),
+                          SizedBox(
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 120.w, vertical: 50.h),
+                              child: Lottie.asset(
+                                  'assets/lottie/loading-success.json',
+                                  repeat: false),
+                            ),
+                          ),
                           Text('Login Success',
                               style: TextStyle(
                                   color: Colors.grey[600],

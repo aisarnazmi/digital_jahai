@@ -224,7 +224,7 @@ class _LibraryViewState extends State<LibraryView> {
                           SizedBox(height: 20.0),
                           Container(
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: Color.fromRGBO(255, 255, 255, 1),
                               borderRadius: BorderRadius.circular(10),
                               boxShadow: [
                                 BoxShadow(
