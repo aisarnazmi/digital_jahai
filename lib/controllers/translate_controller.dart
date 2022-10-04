@@ -31,13 +31,13 @@ class TranslateController extends GetxController {
 
   @override
   void onInit() {
+    super.onInit();
+    
     originLang.value = language.elementAt(0);
     transLang.value = language.elementAt(1);
     searchController = TextEditingController();
     terms = Terms();
     initGetTranslationFuture();
-    
-    super.onInit();
   }
 
   @override

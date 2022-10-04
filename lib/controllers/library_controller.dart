@@ -24,13 +24,13 @@ class LibraryController extends GetxController {
 
   @override
   void onInit() {
+    super.onInit();
+
     jahaiTermController = TextEditingController();
     malayTermController = TextEditingController();
     englishTermController = TextEditingController();
     descriptionController = TextEditingController();
     termCategoryController = TextEditingController();
-
-    super.onInit();
   }
 
   @override
