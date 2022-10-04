@@ -119,7 +119,6 @@ class AuthController extends GetxController {
         Debouncer(milliseconds: 1300).run(() {
           isLogin.value = false;
         });
-
       } catch (e) {
         if (kDebugMode) {
           print(e.toString());
@@ -202,200 +201,204 @@ class AuthController extends GetxController {
             });
     return Material(
         child: SafeArea(
-      top: false,
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 8.0.h),
-          child: Obx(() => Column(
-                children: <Widget>[
-                  if (isLoggedIn.isTrue) ...[
-                    Center(
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 120.w, vertical: 50.h),
-                              child: Lottie.asset(
-                                  'assets/lottie/loading-success.json',
-                                  repeat: false),
-                            ),
-                          ),
-                          Text('Login Success',
-                              style: TextStyle(
-                                  color: Colors.grey[600],
-                                  fontSize: 18.sp,
-                                  fontWeight: FontWeight.w500))
-                        ],
-                      ),
-                    ),
-                  ] else ...[
-                    Container(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 10.0.h, horizontal: 25.0.w),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text("Admin Login",
-                                    style: TextStyle(
-                                        color: Colors.grey[600],
-                                        fontSize: 20.sp,
-                                        fontWeight: FontWeight.w600)),
-                                IconButton(
-                                    onPressed: () {
-                                      Get.back();
-                                    },
-                                    icon: Icon(Icons.close)),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 30.0,
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    offset: Offset(0, 2),
-                                    blurRadius: 3.0,
-                                    color: Color(0xFF8B8DA3).withOpacity(0.3),
-                                  )
-                                ],
-                              ),
-                              child: TextFormField(
-                                controller: email,
-                                decoration: InputDecoration(
-                                    labelText: 'Email',
-                                    labelStyle: TextStyle(
-                                      color: Colors.grey,
-                                      // backgroundColor: Colors.white,
-                                    ),
-                                    // errorText: 'Error message',
-                                    enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(10.0)),
-                                        borderSide:
-                                            BorderSide(color: Colors.white)),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(10.0)),
-                                        borderSide:
-                                            BorderSide(color: Colors.grey))
-                                    // suffixIcon: Icon(
-                                    //   Icons.error,
-                                    // ),
-                                    ),
-                              ),
-                            ),
-                            SizedBox(height: 20.0),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    offset: Offset(0, 2),
-                                    blurRadius: 3.0,
-                                    color: Color(0xFF8B8DA3).withOpacity(0.3),
-                                  )
-                                ],
-                              ),
-                              child: TextFormField(
-                                controller: password,
-                                obscureText: showPassword.value,
-                                decoration: InputDecoration(
-                                  labelText: 'Password',
-                                  labelStyle: TextStyle(
-                                    color: Colors.grey,
-                                    // backgroundColor: Colors.white,
-                                  ),
-                                  // errorText: 'Error message',
-                                  enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(10.0)),
-                                      borderSide:
-                                          BorderSide(color: Colors.white)),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(10.0)),
-                                      borderSide:
-                                          BorderSide(color: Colors.grey)),
-                                  suffixIcon: IconButton(
-                                      onPressed: () {
-                                        showPassword.value =
-                                            !showPassword.value;
-                                      },
-                                      icon: Icon(
-                                        showPassword.value
-                                            ? IconlyBold.show
-                                            : IconlyBold.hide,
-                                        color: Colors.grey.shade400,
-                                      )),
+          top: false,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 8.0.h),
+              child: Obx(() => Column(
+                    children: <Widget>[
+                      if (isLoggedIn.isTrue) ...[
+                        Center(
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                child: Padding(
+                                  padding: EdgeInsets.only(top: 40, bottom: 20, left: 100, right: 100),
+                                  child: Lottie.asset(
+                                      'assets/lottie/loading-success.json',
+                                      repeat: false),
                                 ),
                               ),
-                            ),
-                            Divider(
-                              height: 50.0,
-                              thickness: 0.3,
-                              indent: 5,
-                              endIndent: 5,
-                              color: Colors.grey,
-                            ),
-                            Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                    colors: const [
-                                      Color(0xffeb7c91),
-                                      Color(0xffec6882),
+                              Text('Login Success',
+                                  style: TextStyle(
+                                      color: Colors.grey[600],
+                                      fontSize: 18.sp,
+                                      fontWeight: FontWeight.w500))
+                            ],
+                          ),
+                        ),
+                      ] else ...[
+                        Container(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 10.0.h, horizontal: 25.0.w),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text("Admin Login",
+                                        style: TextStyle(
+                                            color: Colors.grey[600],
+                                            fontSize: 20.sp,
+                                            fontWeight: FontWeight.w600)),
+                                    IconButton(
+                                        onPressed: () {
+                                          Get.back();
+                                        },
+                                        icon: Icon(Icons.close)),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 30.0,
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(10),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        offset: Offset(0, 2),
+                                        blurRadius: 3.0,
+                                        color:
+                                            Color(0xFF8B8DA3).withOpacity(0.3),
+                                      )
                                     ],
                                   ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      offset: Offset(5, 10),
-                                      blurRadius: 20.0,
-                                      color: const Color(0xffec6882)
-                                          .withOpacity(0.4),
-                                    )
-                                  ],
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10.0))),
-                              child: TextButton(
-                                onPressed: () {
-                                  if (isLogin.isTrue) {
-                                    return;
-                                  }
-
-                                  login();
-                                },
-                                child: isLogin.isFalse
-                                    ? Text("Login",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w600,
-                                        ))
-                                    : SizedBox(
-                                        height: 18,
-                                        width: 18,
-                                        child: const CircularProgressIndicator(
-                                          color: Colors.white,
-                                          strokeWidth: 3.0,
+                                  child: TextFormField(
+                                    controller: email,
+                                    decoration: InputDecoration(
+                                        labelText: 'Email',
+                                        labelStyle: TextStyle(
+                                          color: Colors.grey,
+                                          // backgroundColor: Colors.white,
                                         ),
+                                        // errorText: 'Error message',
+                                        enabledBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10.0)),
+                                            borderSide: BorderSide(
+                                                color: Colors.white)),
+                                        focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10.0)),
+                                            borderSide:
+                                                BorderSide(color: Colors.grey))
+                                        // suffixIcon: Icon(
+                                        //   Icons.error,
+                                        // ),
+                                        ),
+                                  ),
+                                ),
+                                SizedBox(height: 20.0),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(10),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        offset: Offset(0, 2),
+                                        blurRadius: 3.0,
+                                        color:
+                                            Color(0xFF8B8DA3).withOpacity(0.3),
+                                      )
+                                    ],
+                                  ),
+                                  child: TextFormField(
+                                    controller: password,
+                                    obscureText: showPassword.value,
+                                    decoration: InputDecoration(
+                                      labelText: 'Password',
+                                      labelStyle: TextStyle(
+                                        color: Colors.grey,
+                                        // backgroundColor: Colors.white,
                                       ),
-                              ),
-                            ),
-                          ],
-                        ))
-                  ],
-                ],
-              )),
-        ),
-      ),
-    ));
+                                      // errorText: 'Error message',
+                                      enabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10.0)),
+                                          borderSide:
+                                              BorderSide(color: Colors.white)),
+                                      focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10.0)),
+                                          borderSide:
+                                              BorderSide(color: Colors.grey)),
+                                      suffixIcon: IconButton(
+                                          onPressed: () {
+                                            showPassword.value =
+                                                !showPassword.value;
+                                          },
+                                          icon: Icon(
+                                            showPassword.value
+                                                ? IconlyBold.show
+                                                : IconlyBold.hide,
+                                            color: Colors.grey.shade400,
+                                          )),
+                                    ),
+                                  ),
+                                ),
+                                Divider(
+                                  height: 50.0,
+                                  thickness: 0.3,
+                                  indent: 5,
+                                  endIndent: 5,
+                                  color: Colors.grey,
+                                ),
+                                Container(
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                        colors: const [
+                                          Color(0xffeb7c91),
+                                          Color(0xffec6882),
+                                        ],
+                                      ),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          offset: Offset(5, 10),
+                                          blurRadius: 20.0,
+                                          color: const Color(0xffec6882)
+                                              .withOpacity(0.4),
+                                        )
+                                      ],
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10.0))),
+                                  child: TextButton(
+                                    onPressed: () {
+                                      if (isLogin.isTrue) {
+                                        return;
+                                      }
+
+                                      login();
+                                    },
+                                    child: isLogin.isFalse
+                                        ? Text("Login",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w600,
+                                            ))
+                                        : SizedBox(
+                                            height: 18,
+                                            width: 18,
+                                            child:
+                                                const CircularProgressIndicator(
+                                              color: Colors.white,
+                                              strokeWidth: 3.0,
+                                            ),
+                                          ),
+                                  ),
+                                ),
+                              ],
+                            ))
+                      ],
+                    ],
+                  )),
+            ),
+          ),
+        ));
   }
 }

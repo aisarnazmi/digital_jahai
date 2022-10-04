@@ -22,7 +22,7 @@ class TranslateView extends GetView<TranslateController> {
   Widget build(BuildContext context) {
     return GetBuilder<TranslateController>(
       init: TranslateController(),
-      builder: (context) {
+      builder: (controller) {
       return Column(
         children: <Widget>[
           Row(
@@ -106,17 +106,17 @@ class TranslateView extends GetView<TranslateController> {
                 ],
               ),
               child: TextFormField(
-                controller: context.searchController,
+                controller: controller.searchController,
                 onTap: () => menuC.closeDrawer(),
                 onChanged: (_) {
-                  context.isTyping.value = true;
-                  context.update();
+                  controller.isTyping.value = true;
+                  controller.update();
 
-                  context.debouncer.run(() {
-                    context.update();
-                    context.isTyping.value = false;
-                    context.initGetTranslationFuture();
-                    context.update();
+                  controller.debouncer.run(() {
+                    controller.update();
+                    controller.isTyping.value = false;
+                    controller.initGetTranslationFuture();
+                    controller.update();
                   });
                 },
                 decoration: InputDecoration(
@@ -127,29 +127,29 @@ class TranslateView extends GetView<TranslateController> {
                     color: Colors.black54,
                     size: 22,
                   ),
-                  hintText: "Enter ${context.originLang.value} term...",
+                  hintText: "Enter ${controller.originLang.value} term...",
                   hintStyle: TextStyle(color: Colors.black54),
-                  suffixIcon: context.searchController.text == ""
+                  suffixIcon: controller.searchController.text == ""
                       ? null
                       : IconButton(
                           color: Colors.black54,
                           iconSize: 24,
-                          icon: context.isTyping.value
+                          icon: controller.isTyping.value
                               ? Lottie.asset(
                                   'assets/lottie/typing-animation.json')
                               : Icon(Icons.close),
                           onPressed: () {
-                            context.searchController.clear();
-                            context.isTyping.value = false;
-                            context.update();
-                            context.initGetTranslationFuture();
-                            context.update();
+                            controller.searchController.clear();
+                            controller.isTyping.value = false;
+                            controller.update();
+                            controller.initGetTranslationFuture();
+                            controller.update();
                           }),
                 ),
               ),
             ),
           ),
-          context.translationList()
+          controller.translationList()
         ],
       );
     });
