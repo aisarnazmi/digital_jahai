@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -32,7 +33,7 @@ class TranslateController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    
+
     originLang.value = language.elementAt(0);
     transLang.value = language.elementAt(1);
     searchController = TextEditingController();
@@ -83,12 +84,15 @@ class TranslateController extends GetxController {
         }
         return terms;
       } catch (e) {
+        if (kDebugMode) {
+          print(e.toString());
+        }
         return terms;
       }
     }
   }
 
-  Widget translationList() {
+  Widget translationListBuilder() {
     return FutureBuilder<dynamic>(
       future: getTranslationFuture,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -200,184 +204,187 @@ class TranslateController extends GetxController {
     return ListView.builder(
         primary: false,
         shrinkWrap: true,
+        padding: EdgeInsets.symmetric(horizontal: 20.0.w),
         itemCount: data.terms != null ? data.terms.length : 0,
         itemBuilder: (BuildContext context, int index) {
-          return Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.0.w),
-            child: Container(
-              margin: EdgeInsets.only(bottom: 20.0.h),
-              decoration: BoxDecoration(
-                  // color: Color(0xff5969e3),
-                  // color: Color(0xff112043),
-                  gradient: const LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Color(0xff181d5f),
-                      Color(0xff112043),
+          return Container(
+            margin: EdgeInsets.only(bottom: 20.0.h),
+            decoration: BoxDecoration(
+                // color: Color(0xff5969e3),
+                // color: Color(0xff112043),
+                gradient: const LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Color(0xff181d5f),
+                    Color(0xff112043),
+                  ],
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    offset: Offset(5, 10),
+                    blurRadius: 20.0,
+                    color: const Color(0xff181d5f).withOpacity(0.5),
+                  )
+                ],
+                borderRadius: BorderRadius.all(Radius.circular(25))),
+            padding: EdgeInsets.fromLTRB(20.0.w, 30.0.h, 20.0.w, 40.0.h),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  originLang.value == language.elementAt(0)
+                      ? (data.terms[index].jahai_term ?? '')
+                      : (data.terms[index].malay_term ?? ''), //Search term
+                  style: TextStyle(
+                      fontFamily: 'Times New Roman',
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 36.sp,
+                      color: Colors.white),
+                ),
+                SizedBox(height: 25.0.h),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      vertical: 13.0.h, horizontal: 10.0.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                              originLang.value == language.elementAt(0)
+                                  ? 'Malay Term'
+                                  : 'Jahai Term',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16.sp,
+                                  color: Colors.white)),
+                        ],
+                      ),
+                      SizedBox(height: 10.h),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(left: 10.0.w),
+                            child: Text(
+                              originLang.value == language.elementAt(0)
+                                  ? "- ${data.terms[index].malay_term}"
+                                  : "- ${data.terms[index].jahai_term}",
+                              style: TextStyle(
+                                  fontFamily: 'Times New Roman',
+                                  fontStyle: FontStyle.italic,
+                                  fontSize: 20.sp,
+                                  color: Colors.white),
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      offset: Offset(5, 10),
-                      blurRadius: 20.0,
-                      color: const Color(0xff181d5f).withOpacity(0.5),
-                    )
-                  ],
-                  borderRadius: BorderRadius.all(Radius.circular(25))),
-              padding: EdgeInsets.fromLTRB(20.0.w, 30.0.h, 20.0.w, 40.0.h),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    originLang.value == language.elementAt(0)
-                        ? (data.terms[index].jahai_term ?? '')
-                        : (data.terms[index].malay_term ?? ''), //Search term
-                    style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 30.sp,
-                        color: Colors.white),
-                  ),
-                  SizedBox(height: 25.0.h),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        vertical: 13.0.h, horizontal: 10.0.w),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                                originLang.value == language.elementAt(0)
-                                    ? 'Malay Term'
-                                    : 'Jahai Term',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16.sp,
-                                    color: Colors.white)),
-                          ],
-                        ),
-                        SizedBox(height: 10.h),
-                        Row(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(left: 10.0.w),
-                              child: Text(
-                                originLang.value == language.elementAt(0)
-                                    ? "- ${data.terms[index].malay_term}"
-                                    : "- ${data.terms[index].jahai_term}",
-                                style: TextStyle(
-                                    // fontStyle: FontStyle.italic,
-                                    color: Colors.white),
-                              ),
+                ),
+                SizedBox(height: 10.0.h),
+                // Padding(
+                //   padding: EdgeInsets.symmetric(
+                //       vertical: 13.0.h, horizontal: 10.0.w),
+                //   child: Column(
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     children: [
+                //       Row(
+                //         children: [
+                //           Text('English Term',
+                //               style: TextStyle(
+                //                   fontWeight: FontWeight.w600,
+                //                   fontSize: 16.sp,
+                //                   color: Colors.white)),
+                //         ],
+                //       ),
+                //       SizedBox(height: 10.h),
+                //       Row(
+                //         children: [
+                //           Padding(
+                //             padding: EdgeInsets.only(left: 10.0.w),
+                //             child: Text(
+                //               "- ${ data.terms[index].english_term }",
+                //               style: TextStyle(
+                //                   fontFamily: 'Times New Roman',
+                //                   fontStyle: FontStyle.italic,
+                //                   fontSize: 20.sp,
+                //                   color: Colors.white),
+                //             ),
+                //           ),
+                //         ],
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                // SizedBox(height: 10.0.h),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      vertical: 13.0.h, horizontal: 10.0.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text('Description',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16.sp,
+                                  color: Colors.white)),
+                        ],
+                      ),
+                      SizedBox(height: 10.h),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              (data.terms[index].description ?? ''),
+                              overflow: TextOverflow.visible,
+                              softWrap: true,
+                              style: TextStyle(
+                                  height: 1.5,
+                                  color: Colors.white),
+                              textAlign: TextAlign.left,
                             ),
-                          ],
-                        ),
-                      ],
-                    ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                  SizedBox(height: 10.0.h),
-                  // Padding(
-                  //   padding: EdgeInsets.symmetric(
-                  //       vertical: 13.0.h, horizontal: 10.0.w),
-                  //   child: Column(
-                  //     crossAxisAlignment: CrossAxisAlignment.start,
-                  //     children: [
-                  //       Row(
-                  //         children: [
-                  //           Text('English Term',
-                  //               style: TextStyle(
-                  //                   fontWeight: FontWeight.w600,
-                  //                   fontSize: 16.sp,
-                  //                   color: Colors.white)),
-                  //         ],
-                  //       ),
-                  //       SizedBox(height: 10.h),
-                  //       Row(
-                  //         children: [
-                  //           Padding(
-                  //             padding: EdgeInsets.only(left: 10.0.w),
-                  //             child: Text(
-                  //               "- ${ data.terms[index].english_term }",
-                  //               style: TextStyle(
-                  //                   // fontStyle: FontStyle.italic,
-                  //                   color: Colors.white),
-                  //             ),
-                  //           ),
-                  //         ],
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
-                  // SizedBox(height: 10.0.h),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        vertical: 13.0.h, horizontal: 10.0.w),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Text('Description',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16.sp,
-                                    color: Colors.white)),
-                          ],
-                        ),
-                        SizedBox(height: 10.h),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                (data.terms[index].description ?? ''),
-                                overflow: TextOverflow.visible,
-                                softWrap: true,
-                                style: TextStyle(
-                                    height: 1.5,
-                                    fontStyle: FontStyle.italic,
-                                    color: Colors.white),
-                                textAlign: TextAlign.left,
-                              ),
+                ),
+                SizedBox(height: 10.0.h),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      vertical: 13.0.h, horizontal: 10.0.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text('Category',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16.sp,
+                                  color: Colors.white)),
+                        ],
+                      ),
+                      SizedBox(height: 10.h),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(left: 10.0.w),
+                            child: Text(
+                              "- ${data.terms[index].term_category}",
+                              style: TextStyle(color: Colors.white),
                             ),
-                          ],
-                        ),
-                      ],
-                    ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                  SizedBox(height: 10.0.h),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        vertical: 13.0.h, horizontal: 10.0.w),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Text('Category',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16.sp,
-                                    color: Colors.white)),
-                          ],
-                        ),
-                        SizedBox(height: 10.h),
-                        Row(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(left: 10.0.w),
-                              child: Text(
-                                "- ${data.terms[index].term_category}",
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           );
         });

@@ -20,154 +20,148 @@ class MenuView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  children: [
-                    if (authC.isLoggedIn.isTrue) ...[
-                      Row(
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                authC.user.value!.name,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 22.sp),
-                              ),
-                              SizedBox(height: 5.0.h),
-                              Text(
-                                authC.user.value!.email,
-                                style: TextStyle(
-                                    color: Colors.white70,
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 13.sp),
-                              )
-                            ],
-                          ),
-                        ],
-                      )
-                    ] else ...[
-                      SizedBox(
-                        height: 50.0.h,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Column(
+          children: [
+            if (authC.isLoggedIn.isTrue) ...[
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                      margin: EdgeInsets.fromLTRB(0, 1, 15, 0),
+                      child: Icon(IconlyBold.profile,
+                          color: Colors.white60, size: 30)),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        authC.user.value!.name,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 22.sp),
+                      ),
+                      SizedBox(height: 5.0.h),
+                      Text(
+                        authC.user.value!.email,
+                        style: TextStyle(
+                            color: Colors.white70,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 13.sp),
                       )
                     ],
-                    SizedBox(height: 45.0.h),
-                    if (authC.isLoggedIn.isTrue) ...[
-                      Column(
-                        children: menuLogged
-                            .map((element) => Padding(
-                                  padding: EdgeInsets.only(bottom: 5.0.h),
-                                  child: TextButton(
-                                    onPressed: () {
-                                      // Respond to button press
-                                    },
-                                    child: Row(children: [
-                                      Icon(element['icon'],
-                                          color: Colors.white54, size: 24),
-                                      SizedBox(width: 15.w),
-                                      Text(element['label'],
-                                          style: TextStyle(
-                                              color: Colors.white54,
-                                              fontWeight: FontWeight.w600))
-                                    ]),
-                                  ),
-                                ))
-                            .toList(),
-                      )
-                    ],
-                    Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 5.0.h),
-                          child: TextButton(
-                            onPressed: () => {},
-                            child: Row(children: [
-                              Icon(IconlyBold.setting,
-                                  color: Colors.white54, size: 24),
-                              SizedBox(width: 15.w),
-                              Text('Setting',
-                                  style: TextStyle(
-                                      color: Colors.white54,
-                                      fontWeight: FontWeight.w600))
-                            ]),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 5.0.h),
-                          child: TextButton(
-                            onPressed: () {
-                              showCupertinoModalBottomSheet(
-                                  context: context,
-                                  backgroundColor: Colors.white,
-                                  builder: (context) => menuC.keyboardDialogModal());
-                            },
-                            child: Row(children: [
-                              Icon(IconlyBold.info_square,
-                                  color: Colors.white54, size: 24),
-                              SizedBox(width: 15.w),
-                              Text('How to Use?',
-                                  style: TextStyle(
-                                      color: Colors.white54,
-                                      fontWeight: FontWeight.w600))
-                            ]),
-                          ),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-                if (authC.isLoggedIn.isTrue) ...[
-                  TextButton(
-                    onPressed: () {
-                      authC.logout();
-
-                      menuC.closeDrawer();
-                    },
-                    child: Row(
-                      children: [
-                        Icon(IconlyBold.logout,
+                  ),
+                ],
+              )
+            ] else ...[
+              SizedBox(
+                height: 50.0.h,
+              )
+            ],
+            SizedBox(height: 45.0.h),
+            if (authC.isLoggedIn.isTrue) ...[
+              Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 5.0.h),
+                    child: TextButton(
+                      onPressed: () => {Get.toNamed('/manage-term')},
+                      child: Row(children: [
+                        Icon(IconlyBold.category,
                             color: Colors.white54, size: 24),
                         SizedBox(width: 15.w),
-                        Text("Logout",
+                        Text('Manage Terms',
                             style: TextStyle(
                                 color: Colors.white54,
                                 fontWeight: FontWeight.w600))
-                      ],
+                      ]),
                     ),
                   )
-                ] else ...[
-                  TextButton(
+                ],
+              )
+            ],
+            Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(bottom: 5.0.h),
+                  child: TextButton(
+                    onPressed: () => {},
+                    child: Row(children: [
+                      Icon(IconlyBold.setting, color: Colors.white54, size: 24),
+                      SizedBox(width: 15.w),
+                      Text('Setting',
+                          style: TextStyle(
+                              color: Colors.white54,
+                              fontWeight: FontWeight.w600))
+                    ]),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(bottom: 5.0.h),
+                  child: TextButton(
                     onPressed: () {
-                      menuC.closeDrawer();
-
                       showCupertinoModalBottomSheet(
                           context: context,
                           backgroundColor: Colors.white,
-                          builder: (context) {
-                            return authC.loginModal();
-                          });
+                          builder: (context) => menuC.keyboardDialogModal());
                     },
-                    child: Row(
-                      children: [
-                        Icon(IconlyBold.login, color: Colors.white54, size: 24),
-                        SizedBox(width: 15.w),
-                        Text("Admin Login",
-                            style: TextStyle(
-                                color: Colors.white54,
-                                fontWeight: FontWeight.w600))
-                      ],
-                    ),
-                  )
-                ]
+                    child: Row(children: [
+                      Icon(IconlyBold.info_square,
+                          color: Colors.white54, size: 24),
+                      SizedBox(width: 15.w),
+                      Text('How to Use?',
+                          style: TextStyle(
+                              color: Colors.white54,
+                              fontWeight: FontWeight.w600))
+                    ]),
+                  ),
+                )
               ],
-            );
+            )
+          ],
+        ),
+        if (authC.isLoggedIn.isTrue) ...[
+          TextButton(
+            onPressed: () {
+              authC.logout();
+
+              menuC.closeDrawer();
+            },
+            child: Row(
+              children: [
+                Icon(IconlyBold.logout, color: Colors.white54, size: 24),
+                SizedBox(width: 15.w),
+                Text("Logout",
+                    style: TextStyle(
+                        color: Colors.white54, fontWeight: FontWeight.w600))
+              ],
+            ),
+          )
+        ] else ...[
+          TextButton(
+            onPressed: () {
+              menuC.closeDrawer();
+
+              showCupertinoModalBottomSheet(
+                  context: context,
+                  backgroundColor: Colors.white,
+                  builder: (context) {
+                    return authC.loginModal();
+                  });
+            },
+            child: Row(
+              children: [
+                Icon(IconlyBold.login, color: Colors.white54, size: 24),
+                SizedBox(width: 15.w),
+                Text("Admin Login",
+                    style: TextStyle(
+                        color: Colors.white54, fontWeight: FontWeight.w600))
+              ],
+            ),
+          )
+        ]
+      ],
+    );
   }
 }
-
-List<Map> menuLogged = [
-  {'icon': IconlyBold.profile, 'label': 'My Account', 'route': ''},
-  {'icon': IconlyBold.category, 'label': 'Manage Terms', 'route': ''}
-];

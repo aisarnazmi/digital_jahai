@@ -68,27 +68,27 @@ class LibraryView extends GetView<LibraryController> {
                         ],
                       ),
                       SizedBox(height: 20.h),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[
-                          Padding(
-                            padding: EdgeInsets.only(right: 20.0.w),
-                            child: Text(
-                              "Jahai Language\nRepository",
-                              textAlign: TextAlign.right,
-                              style: TextStyle(
-                                  color: const Color(0xff181d5f),
-                                  // color: const Color(0xfffafafa),
-                                  fontSize: 36.sp,
-                                  fontWeight: FontWeight.w800,
-                                  letterSpacing: -1),
-                            ),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: 15.0.h,
-                      ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.end,
+                      //   children: <Widget>[
+                      //     Padding(
+                      //       padding: EdgeInsets.only(right: 20.0.w),
+                      //       child: Text(
+                      //         "Jahai Language\nRepository",
+                      //         textAlign: TextAlign.right,
+                      //         style: TextStyle(
+                      //             color: const Color(0xff181d5f),
+                      //             // color: const Color(0xfffafafa),
+                      //             fontSize: 36.sp,
+                      //             fontWeight: FontWeight.w800,
+                      //             letterSpacing: -1),
+                      //       ),
+                      //     )
+                      //   ],
+                      // ),
+                      // SizedBox(
+                      //   height: 15.0.h,
+                      // ),
                       Container(
                           // margin: EdgeInsets.symmetric(horizontal: 15.0.w),
                           padding: EdgeInsets.symmetric(
@@ -114,7 +114,6 @@ class LibraryView extends GetView<LibraryController> {
                               children: <Widget>[
                                 Text("Add New Term to Repository",
                                     style: TextStyle(
-                                        color: Colors.grey[600],
                                         fontSize: 20.sp,
                                         fontWeight: FontWeight.w600)),
                                 SizedBox(
