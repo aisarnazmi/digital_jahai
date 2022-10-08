@@ -83,20 +83,20 @@ class MenuView extends StatelessWidget {
             ],
             Column(
               children: [
-                Padding(
-                  padding: EdgeInsets.only(bottom: 5.0.h),
-                  child: TextButton(
-                    onPressed: () => {},
-                    child: Row(children: [
-                      Icon(IconlyBold.setting, color: Colors.white54, size: 24),
-                      SizedBox(width: 15.w),
-                      Text('Setting',
-                          style: TextStyle(
-                              color: Colors.white54,
-                              fontWeight: FontWeight.w600))
-                    ]),
-                  ),
-                ),
+                // Padding(
+                //   padding: EdgeInsets.only(bottom: 5.0.h),
+                //   child: TextButton(
+                //     onPressed: () => {},
+                //     child: Row(children: [
+                //       Icon(IconlyBold.setting, color: Colors.white54, size: 24),
+                //       SizedBox(width: 15.w),
+                //       Text('Setting',
+                //           style: TextStyle(
+                //               color: Colors.white54,
+                //               fontWeight: FontWeight.w600))
+                //     ]),
+                //   ),
+                // ),
                 Padding(
                   padding: EdgeInsets.only(bottom: 5.0.h),
                   child: TextButton(
@@ -125,7 +125,6 @@ class MenuView extends StatelessWidget {
           TextButton(
             onPressed: () {
               authC.logout();
-
               menuC.closeDrawer();
             },
             child: Row(

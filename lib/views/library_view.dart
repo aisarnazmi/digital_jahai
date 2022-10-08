@@ -114,6 +114,7 @@ class LibraryView extends GetView<LibraryController> {
                               children: <Widget>[
                                 Text("Add New Term to Repository",
                                     style: TextStyle(
+                                        color: const Color(0xff181d5f),
                                         fontSize: 20.sp,
                                         fontWeight: FontWeight.w600)),
                                 SizedBox(
@@ -327,8 +328,8 @@ class LibraryView extends GetView<LibraryController> {
                                   width: double.infinity,
                                   decoration: BoxDecoration(
                                       gradient: LinearGradient(
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
+                                        begin: Alignment.bottomLeft,
+                                        end: Alignment.topRight,
                                         colors: const [
                                           Color(0xffeb7c91),
                                           Color(0xffec6882),
