@@ -12,10 +12,10 @@ class InitialBinding implements Bindings {
 // default dependency
   @override
   void dependencies() {
-    Get.lazyPut(() => AuthController(), fenix: false);
-    Get.lazyPut(() => MenuController(), fenix: false);
-    Get.lazyPut(() => TranslateController(), fenix: false);
-    Get.lazyPut(() => LibraryController(), fenix: false);
-    Get.lazyPut(() => ManageTermController(), fenix: false);
+    Get.lazyPut(() => AuthController(), fenix: true);
+    Get.lazyPut(() => MenuController(), fenix: true);
+    Get.lazyPut(() => TranslateController(), fenix: true);
+    Get.lazyPut(() => LibraryController(), fenix: true);
+    Get.lazyPut(() => ManageTermController(), fenix: true);
   }
 }

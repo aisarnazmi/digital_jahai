@@ -140,7 +140,7 @@ class ManageTermView extends GetView<ManageTermController> {
                             children: [
                               Container(
                                   margin: EdgeInsets.fromLTRB(
-                                      25.w, 25.h, 25.w, 10.h),
+                                      25.w, 25.h, 25.w, 0),
                                   decoration: BoxDecoration(
                                       border: Border(
                                           bottom: BorderSide(

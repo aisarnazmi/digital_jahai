@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
 
@@ -94,58 +95,80 @@ class ManageTermController extends GetxController {
   }
 
   Widget termList(data) {
-    return ListView.builder(
-        primary: false,
-        shrinkWrap: true,
-        padding: EdgeInsets.symmetric(horizontal: 25.w),
-        itemCount: data.terms != null ? data.terms.length : 0,
-        itemBuilder: (BuildContext context, int index) {
-          return Column(
-            children: [
-              ListTile(
-                contentPadding:
-                    EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
-                title: Container(
-                    margin: EdgeInsets.only(bottom: 10),
-                    child: Text(
-                      data.terms[index].jahai_term ?? "",
-                      style: TextStyle(
-                          color: Colors.grey.shade700,
-                          fontWeight: FontWeight.w600),
-                    )),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+    return SlidableAutoCloseBehavior(
+      closeWhenTapped: true,
+      child: ListView.builder(
+          primary: false,
+          shrinkWrap: true,
+          padding: EdgeInsets.symmetric(horizontal: 25.w),
+          itemCount: data.terms != null ? data.terms.length : 0,
+          itemBuilder: (BuildContext context, int index) {
+            return Slidable(
+                groupTag: "terms",
+                key: ValueKey(index),
+                endActionPane: ActionPane(
+                  extentRatio: 0.25,
+                  motion: BehindMotion(),
                   children: [
-                    Text('Malay: ${data.terms[index].malay_term ?? '-'}'),
-                    SizedBox(height: 10.h),
-                    Text('English: ${data.terms[index].english_term ?? ''}'),
-                  ],
-                ),
-                trailing: Column(
-                  children: const [
-                    Expanded(
-                      child: Icon(
-                        IconlyLight.arrow_right_2,
-                        size: 22,
-                      ),
+                    SlidableAction(
+                      onPressed: (context) {
+                      },
+                      backgroundColor: Color(0xffec6882),
+                      foregroundColor: Colors.white,
+                      icon: IconlyBold.delete,
+                      label: 'Delete',
+                      autoClose: false,
                     ),
                   ],
                 ),
-              ),
-              Row(
-                children: List.generate(
-                    1000 ~/ 15,
-                    (index) => Expanded(
-                          child: Container(
-                            color: index % 2 == 0
-                                ? Colors.transparent
-                                : Colors.black54,
-                            height: 0.3,
+                child: Column(
+                  children: [
+                    ListTile(
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+                      title: Container(
+                          margin: EdgeInsets.only(bottom: 10.h),
+                          child: Text(
+                            data.terms[index].jahai_term ?? "",
+                            style: TextStyle(
+                                color: Colors.grey.shade700,
+                                fontWeight: FontWeight.w600),
+                          )),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Malay: ${data.terms[index].malay_term ?? '-'}'),
+                          SizedBox(height: 10.h),
+                          Text(
+                              'English: ${data.terms[index].english_term ?? ''}'),
+                        ],
+                      ),
+                      trailing: Column(
+                        children: const [
+                          Expanded(
+                            child: Icon(
+                              IconlyLight.arrow_right_2,
+                              size: 22,
+                            ),
                           ),
-                        )),
-              ),
-            ],
-          );
-        });
+                        ],
+                      ),
+                    ),
+                    Row(
+                      children: List.generate(
+                          1000 ~/ 15,
+                          (index) => Expanded(
+                                child: Container(
+                                  color: index % 2 == 0
+                                      ? Colors.transparent
+                                      : Colors.black54,
+                                  height: 0.3,
+                                ),
+                              )),
+                    ),
+                  ],
+                ));
+          }),
+    );
   }
 }
