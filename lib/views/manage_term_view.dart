@@ -11,6 +11,7 @@ import 'package:sticky_headers/sticky_headers.dart';
 // Project imports:
 import '../controllers/manage_term_controller.dart';
 import '../controllers/menu_controller.dart';
+import '../utils/debounce.dart';
 
 class ManageTermView extends GetView<ManageTermController> {
   ManageTermView({Key? key}) : super(key: key);
@@ -26,6 +27,7 @@ class ManageTermView extends GetView<ManageTermController> {
             backgroundColor: const Color(0xfffafafa),
             body: SafeArea(
               child: SingleChildScrollView(
+                controller: controller.scrollController,
                 child: Padding(
                   padding: EdgeInsets.symmetric(vertical: 8.0.h),
                   child: Column(
@@ -33,37 +35,35 @@ class ManageTermView extends GetView<ManageTermController> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 20.0.w),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                    colors: const [
-                                      Color(0xffeb7c91),
-                                      Color(0xffec6882),
-                                    ],
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      offset: Offset(5, 10),
-                                      blurRadius: 20.0,
-                                      color: const Color(0xffec6882)
-                                          .withOpacity(0.4),
-                                    )
+                          Container(
+                            margin: EdgeInsets.symmetric(horizontal: 20.0.w),
+                            decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: const [
+                                    Color(0xffeb7c91),
+                                    Color(0xffec6882),
                                   ],
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(50.0))),
-                              child: IconButton(
-                                onPressed: () {
-                                  Get.back();
-                                },
-                                color: Colors.white,
-                                icon: Icon(
-                                  IconlyLight.arrow_left_2,
-                                  size: 22,
                                 ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    offset: Offset(5, 10),
+                                    blurRadius: 20.0,
+                                    color: const Color(0xffec6882)
+                                        .withOpacity(0.4),
+                                  )
+                                ],
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(50.0))),
+                            child: IconButton(
+                              onPressed: () {
+                                Get.back();
+                              },
+                              color: Colors.white,
+                              icon: Icon(
+                                IconlyLight.arrow_left_2,
+                                size: 22,
                               ),
                             ),
                           ),
@@ -97,10 +97,11 @@ class ManageTermView extends GetView<ManageTermController> {
                                   controller.isTyping.value = true;
                                   controller.update();
 
-                                  controller.debouncer.run(() {
+                                  Debouncer(milliseconds: 1500).run(() {
                                     controller.update();
                                     controller.isTyping.value = false;
-                                    controller.initGetTermListFuture();
+                                    controller.terms = [];
+                                    controller.getTermList();
                                     controller.update();
                                   });
                                 },
@@ -129,7 +130,8 @@ class ManageTermView extends GetView<ManageTermController> {
                                             controller.searchController.clear();
                                             controller.isTyping.value = false;
                                             controller.update();
-                                            controller.initGetTermListFuture();
+                                            controller.terms = [];
+                                            controller.getTermList();
                                             controller.update();
                                           }),
                                 ),
@@ -139,14 +141,24 @@ class ManageTermView extends GetView<ManageTermController> {
                           content: Column(
                             children: [
                               Container(
-                                  margin: EdgeInsets.fromLTRB(
-                                      25.w, 25.h, 25.w, 0),
+                                  margin:
+                                      EdgeInsets.fromLTRB(25.w, 25.h, 25.w, 0),
                                   decoration: BoxDecoration(
                                       border: Border(
                                           bottom: BorderSide(
                                               color: Colors.grey.shade300,
                                               width: 1)))),
                               controller.termListBuilder(),
+                              if (controller.currentPage <
+                                  controller.lastPage) ...[
+                                Container(
+                                  padding:
+                                      EdgeInsets.only(top: 30.h, bottom: 30),
+                                  child: Lottie.asset(
+                                      'assets/lottie/typing-animation.json',
+                                      height: 36),
+                                )
+                              ]
                             ],
                           )),
                     ],
@@ -154,6 +166,48 @@ class ManageTermView extends GetView<ManageTermController> {
                 ),
               ),
             ),
+            floatingActionButton: AnimatedOpacity(
+                duration: Duration(milliseconds: 1000),
+                opacity: controller.scrollTop.isTrue ? 1.0 : 0.0,
+                child: Container(
+                  margin: EdgeInsets.only(bottom: 8.h, right: 10.w),
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: const [
+                          Color(0xffeb7c91),
+                          Color(0xffec6882),
+                        ],
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          offset: Offset(5, 10),
+                          blurRadius: 20.0,
+                          color: const Color(0xffec6882).withOpacity(0.4),
+                        )
+                      ],
+                      borderRadius: BorderRadius.all(Radius.circular(50.0))),
+                  child: IconButton(
+                    onPressed: () {
+                      controller.scrollController.animateTo(0,
+                          duration:
+                              Duration(milliseconds: 500), //duration of scroll
+                          curve: Curves.fastOutSlowIn //scroll type
+                          );
+
+                      Debouncer(milliseconds: 500).run(() {
+                        controller.update();
+                        controller.scrollTop.value = false;
+                      });
+                    },
+                    color: Colors.white,
+                    icon: Icon(
+                      IconlyLight.arrow_up_2,
+                      size: 22,
+                    ),
+                  ),
+                )),
           );
         });
   }

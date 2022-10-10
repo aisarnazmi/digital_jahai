@@ -34,36 +34,34 @@ class TranslateView extends GetView<TranslateController> {
                         icon: SvgPicture.asset('assets/images/menu.svg',
                             semanticsLabel: 'Menu')),
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.0.w),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            colors: const [
-                              Color(0xffeb7c91),
-                              Color(0xffec6882),
-                            ],
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              offset: Offset(5, 10),
-                              blurRadius: 20.0,
-                              color: const Color(0xffec6882).withOpacity(0.4),
-                            )
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 20.0.w),
+                    decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: const [
+                            Color(0xffeb7c91),
+                            Color(0xffec6882),
                           ],
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(50.0))),
-                      child: IconButton(
-                        onPressed: () {
-                          Get.toNamed('/library');
-                        },
-                        color: Colors.white,
-                        icon: Icon(
-                          Icons.menu_book,
-                          size: 22.w,
                         ),
+                        boxShadow: [
+                          BoxShadow(
+                            offset: Offset(5, 10),
+                            blurRadius: 20.0,
+                            color: const Color(0xffec6882).withOpacity(0.4),
+                          )
+                        ],
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(50.0))),
+                    child: IconButton(
+                      onPressed: () {
+                        Get.toNamed('/library');
+                      },
+                      color: Colors.white,
+                      icon: Icon(
+                        Icons.menu_book,
+                        size: 22.w,
                       ),
                     ),
                   ),

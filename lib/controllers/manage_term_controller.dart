@@ -1,3 +1,6 @@
+// Dart imports:
+import 'dart:convert';
+
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -10,20 +13,23 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 // Project imports:
 import '../models/index.dart';
-import '../models/terms.dart';
-import '../utils/debounce.dart';
 import '../utils/http_service.dart';
 
 class ManageTermController extends GetxController {
   var isTyping = false.obs;
+  var isLoading = false.obs;
+
+  late ScrollController scrollController;
+  var scrollTop = false.obs;
+  var currentPage = 1;
+  var prevPage = 0;
+  var lastPage = 1;
 
   late TextEditingController searchController;
 
-  final debouncer = Debouncer(milliseconds: 1500);
+  List<Term> terms = [];
 
-  Terms? terms;
-
-  late Future getTermListFuture;
+  // late Future getTermListFuture;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -37,22 +43,36 @@ class ManageTermController extends GetxController {
   void onInit() {
     super.onInit();
 
-    searchController = TextEditingController();
+    scrollController = ScrollController();
 
+    scrollController.addListener(() {
+      if (scrollController.offset > 10.0 && scrollTop.isFalse) {
+        update();
+        scrollTop.value = true;
+      }
+
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
+        if (currentPage <= lastPage) {
+          getTermList();
+        }
+      }
+    });
+
+    searchController = TextEditingController();
     jahaiTermController = TextEditingController();
     malayTermController = TextEditingController();
     englishTermController = TextEditingController();
     descriptionController = TextEditingController();
     termCategoryController = TextEditingController();
 
-    terms = Terms();
-    initGetTermListFuture();
+    getTermList();
   }
 
   @override
   void onClose() {
+    scrollController.dispose();
     searchController.dispose();
-
     jahaiTermController.dispose();
     malayTermController.dispose();
     englishTermController.dispose();
@@ -62,65 +82,52 @@ class ManageTermController extends GetxController {
     super.onClose();
   }
 
-  void initGetTermListFuture() {
-    getTermListFuture = getTermList();
-  }
+  // void initGetTermListFuture() {
+  //   getTermListFuture = getTermList();
+  // }
 
-  Future getTermList() async {
+  Future<void> getTermList() async {
+    isLoading.value = true;
+    update();
+
     var search = searchController.text;
-
-    terms!.terms = List.empty();
 
     try {
       final headers = {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       };
-      final response =
-          await HttpService().get('/library?search=$search', headers);
+      await HttpService()
+          .get('/library?page=$currentPage&search=$search', headers)
+          .then((response) {
+        if (response.statusCode == 200) {
+          var res = jsonDecode(response.body);
 
-      if (response.statusCode == 200) {
-        terms = Terms.parseTerms(response.body);
-      }
-      return terms;
+          if (res['current_page'] > prevPage) {
+            currentPage++;
+            prevPage = res['current_page'];
+            lastPage = res['last_page'];
+
+            terms.addAll(Terms.parseTerms(jsonEncode(res['data'])).terms);
+          }
+        }
+      });
+      isLoading.value = false;
     } catch (e) {
       if (kDebugMode) {
         print(e.toString());
       }
-      return terms;
+      isLoading.value = false;
     }
+    update();
   }
 
   Widget termListBuilder() {
-    return FutureBuilder<dynamic>(
-      future: getTermListFuture,
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Column(
-            children: const <Widget>[
-              //   skeletonList()
-              CircularProgressIndicator()
-            ],
-          );
-        } else if (snapshot.connectionState == ConnectionState.done) {
-          if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          } else {
-            return termList(snapshot.data);
-          }
-        } else {
-          return Text('State: ${snapshot.connectionState}');
-        }
-      },
-    );
-  }
-
-  Widget termList(data) {
     return ListView.builder(
         primary: false,
         shrinkWrap: true,
         padding: EdgeInsets.symmetric(horizontal: 25.w),
-        itemCount: data.terms != null ? data.terms.length : 0,
+        itemCount: terms.isEmpty ? 0 : terms.length,
         itemBuilder: (BuildContext context, int index) {
           return Column(
             children: [
@@ -130,7 +137,7 @@ class ManageTermController extends GetxController {
                 title: Container(
                     margin: EdgeInsets.only(bottom: 10.h),
                     child: Text(
-                      data.terms[index].jahai_term ?? "",
+                      terms[index].jahai_term ?? "",
                       style: TextStyle(
                           color: Colors.grey.shade700,
                           fontWeight: FontWeight.w600),
@@ -138,9 +145,9 @@ class ManageTermController extends GetxController {
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Malay: ${data.terms[index].malay_term ?? '-'}'),
+                    Text('Malay: ${terms[index].malay_term ?? '-'}'),
                     SizedBox(height: 10.h),
-                    Text('English: ${data.terms[index].english_term ?? ''}'),
+                    Text('English: ${terms[index].english_term ?? ''}'),
                   ],
                 ),
                 trailing: Column(
@@ -157,7 +164,7 @@ class ManageTermController extends GetxController {
                       context: context,
                       backgroundColor: Colors.white,
                       isDismissible: true,
-                      builder: (context) => detailModal(data.terms[index]));
+                      builder: (context) => detailModal(terms[index]));
                 },
               ),
               Row(
@@ -194,11 +201,21 @@ class ManageTermController extends GetxController {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text("Manage Term",
-                        style: TextStyle(
-                            color: const Color(0xff181d5f),
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.w600)),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Manage Term",
+                            style: TextStyle(
+                                color: const Color(0xff181d5f),
+                                fontSize: 20.sp,
+                                fontWeight: FontWeight.w600)),
+                        IconButton(
+                            onPressed: () {
+                              Get.back();
+                            },
+                            icon: Icon(Icons.close)),
+                      ],
+                    ),
                     SizedBox(
                       height: 30.0,
                     ),
