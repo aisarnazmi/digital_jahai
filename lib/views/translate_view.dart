@@ -86,67 +86,64 @@ class TranslateView extends GetView<TranslateController> {
                   )
                 ],
               ),
-              Padding(
-                padding:
-                    EdgeInsets.symmetric(horizontal: 20.0.w, vertical: 20.0.h),
-                child: Container(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: 20.0.w, vertical: 5.0.h // 5 top and bottom
-                      ),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    // color: Colors.grey[100],
-                    border: Border.all(color: Colors.grey.shade300),
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                        offset: Offset(0, 2),
-                        blurRadius: 3.0,
-                        color: Color(0xFF8B8DA3).withOpacity(0.3),
-                      )
-                    ],
-                  ),
-                  child: TextFormField(
-                    controller: controller.searchController,
-                    onTap: () => menuC.closeDrawer(),
-                    onChanged: (_) {
-                      controller.isTyping.value = true;
-                      controller.update();
-
-                      controller.debouncer.run(() {
-                        controller.update();
-                        controller.isTyping.value = false;
-                        controller.initGetTranslationFuture();
-                        controller.update();
-                      });
-                    },
-                    decoration: InputDecoration(
-                      enabledBorder: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      icon: Icon(
-                        IconlyBroken.search,
-                        color: Colors.black54,
-                        size: 22,
-                      ),
-                      hintText: "Enter ${controller.originLang.value} term...",
-                      hintStyle: TextStyle(color: Colors.black54),
-                      suffixIcon: controller.searchController.text == ""
-                          ? null
-                          : IconButton(
-                              color: Colors.black54,
-                              iconSize: 24,
-                              icon: controller.isTyping.value
-                                  ? Lottie.asset(
-                                      'assets/lottie/typing-animation.json')
-                                  : Icon(Icons.close),
-                              onPressed: () {
-                                controller.searchController.clear();
-                                controller.isTyping.value = false;
-                                controller.update();
-                                controller.initGetTranslationFuture();
-                                controller.update();
-                              }),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 20.0.w, vertical: 20.0.h),
+                padding: EdgeInsets.symmetric(
+                    horizontal: 20.0.w, vertical: 5.0.h // 5 top and bottom
                     ),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  // color: Colors.grey[100],
+                  border: Border.all(color: Colors.grey.shade300),
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      offset: Offset(0, 2),
+                      blurRadius: 3.0,
+                      color: Color(0xFF8B8DA3).withOpacity(0.3),
+                    )
+                  ],
+                ),
+                child: TextFormField(
+                  controller: controller.searchController,
+                  onTap: () => menuC.closeDrawer(),
+                  onChanged: (_) {
+                    controller.isTyping.value = true;
+                    controller.update();
+
+                    controller.debouncer.run(() {
+                      controller.update();
+                      controller.isTyping.value = false;
+                      controller.initGetTranslationFuture();
+                      controller.update();
+                    });
+                  },
+                  decoration: InputDecoration(
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    icon: Icon(
+                      IconlyBroken.search,
+                      color: Colors.black54,
+                      size: 22,
+                    ),
+                    hintText: "Enter ${controller.originLang.value} term...",
+                    hintStyle: TextStyle(color: Colors.black54),
+                    suffixIcon: controller.searchController.text == ""
+                        ? null
+                        : IconButton(
+                            color: Colors.black54,
+                            iconSize: 24,
+                            icon: controller.isTyping.value
+                                ? Lottie.asset(
+                                    'assets/lottie/typing-animation.json')
+                                : Icon(Icons.close),
+                            onPressed: () {
+                              controller.searchController.clear();
+                              controller.isTyping.value = false;
+                              controller.update();
+                              controller.initGetTranslationFuture();
+                              controller.update();
+                            }),
                   ),
                 ),
               ),

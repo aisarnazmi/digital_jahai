@@ -24,41 +24,37 @@ class MenuView extends StatelessWidget {
       children: [
         Column(
           children: [
-            if (authC.isLoggedIn.isTrue) ...[
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                      margin: EdgeInsets.fromLTRB(0, 1, 15, 0),
-                      child: Icon(IconlyBold.profile,
-                          color: Colors.white60, size: 30)),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        authC.user.value!.name,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 22.sp),
-                      ),
-                      SizedBox(height: 5.0.h),
-                      Text(
-                        authC.user.value!.email,
-                        style: TextStyle(
-                            color: Colors.white70,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 13.sp),
-                      )
-                    ],
-                  ),
-                ],
-              )
-            ] else ...[
-              SizedBox(
-                height: 50.0.h,
-              )
-            ],
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                    margin: EdgeInsets.fromLTRB(0, 1, 15, 0),
+                    child: Icon(IconlyBold.profile,
+                        color: Colors.white60, size: 30)),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      authC.isLoggedIn.isTrue
+                          ? authC.user.value!.name
+                          : 'Guest',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 22.sp),
+                    ),
+                    SizedBox(height: 5.0.h),
+                    Text(
+                      authC.isLoggedIn.isTrue ? authC.user.value!.email : '',
+                      style: TextStyle(
+                          color: Colors.white70,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 13.sp),
+                    )
+                  ],
+                ),
+              ],
+            ),
             SizedBox(height: 45.0.h),
             if (authC.isLoggedIn.isTrue) ...[
               Column(
@@ -153,7 +149,7 @@ class MenuView extends StatelessWidget {
               children: [
                 Icon(IconlyBold.login, color: Colors.white54, size: 24),
                 SizedBox(width: 15.w),
-                Text("Admin Login",
+                Text("Admin",
                     style: TextStyle(
                         color: Colors.white54, fontWeight: FontWeight.w600))
               ],
