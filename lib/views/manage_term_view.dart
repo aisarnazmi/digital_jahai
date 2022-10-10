@@ -71,70 +71,68 @@ class ManageTermView extends GetView<ManageTermController> {
                       ),
                       SizedBox(height: 30.h),
                       StickyHeader(
-                          header: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 20.w),
-                            child: Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 20.0.w,
-                                  vertical: 5.0.h // 5 top and bottom
-                                  ),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                // color: Colors.grey[100],
-                                border: Border.all(color: Colors.grey.shade300),
-                                borderRadius: BorderRadius.circular(12),
-                                boxShadow: [
-                                  BoxShadow(
-                                    offset: Offset(0, 2),
-                                    blurRadius: 3.0,
-                                    color: Color(0xFF8B8DA3).withOpacity(0.3),
-                                  )
-                                ],
-                              ),
-                              child: TextFormField(
-                                controller: controller.searchController,
-                                onChanged: (_) {
-                                  controller.isTyping.value = true;
-                                  controller.update();
-
-                                  Debouncer(milliseconds: 1500).run(() {
-                                    controller.update();
-                                    controller.isTyping.value = false;
-                                    controller.terms = [];
-                                    controller.getTermList();
-                                    controller.update();
-                                  });
-                                },
-                                decoration: InputDecoration(
-                                  enabledBorder: InputBorder.none,
-                                  focusedBorder: InputBorder.none,
-                                  icon: Icon(
-                                    IconlyBroken.search,
-                                    color: Colors.black54,
-                                    size: 22,
-                                  ),
-                                  hintText: "Search...",
-                                  hintStyle: TextStyle(color: Colors.black54),
-                                  suffixIcon: controller
-                                              .searchController.text ==
-                                          ""
-                                      ? null
-                                      : IconButton(
-                                          color: Colors.black54,
-                                          iconSize: 24,
-                                          icon: controller.isTyping.value
-                                              ? Lottie.asset(
-                                                  'assets/lottie/typing-animation.json')
-                                              : Icon(Icons.close),
-                                          onPressed: () {
-                                            controller.searchController.clear();
-                                            controller.isTyping.value = false;
-                                            controller.update();
-                                            controller.terms = [];
-                                            controller.getTermList();
-                                            controller.update();
-                                          }),
+                          header: Container(
+                            margin: EdgeInsets.symmetric(horizontal: 20.w),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 20.0.w,
+                                vertical: 5.0.h // 5 top and bottom
                                 ),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              // color: Colors.grey[100],
+                              border: Border.all(color: Colors.grey.shade300),
+                              borderRadius: BorderRadius.circular(12),
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: Offset(0, 2),
+                                  blurRadius: 3.0,
+                                  color: Color(0xFF8B8DA3).withOpacity(0.3),
+                                )
+                              ],
+                            ),
+                            child: TextFormField(
+                              controller: controller.searchController,
+                              onChanged: (_) {
+                                controller.isTyping.value = true;
+                                controller.update();
+
+                                Debouncer(milliseconds: 1500).run(() {
+                                  controller.update();
+                                  controller.isTyping.value = false;
+                                  controller.terms = [];
+                                  controller.getTermList();
+                                  controller.update();
+                                });
+                              },
+                              decoration: InputDecoration(
+                                enabledBorder: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                icon: Icon(
+                                  IconlyBroken.search,
+                                  color: Colors.black54,
+                                  size: 22,
+                                ),
+                                hintText: "Search...",
+                                hintStyle: TextStyle(color: Colors.black54),
+                                suffixIcon: controller
+                                            .searchController.text ==
+                                        ""
+                                    ? null
+                                    : IconButton(
+                                        color: Colors.black54,
+                                        iconSize: 24,
+                                        icon: controller.isTyping.value
+                                            ? Lottie.asset(
+                                                'assets/lottie/typing-animation.json')
+                                            : Icon(Icons.close),
+                                        onPressed: () {
+                                          controller.searchController.clear();
+                                          controller.isTyping.value = false;
+                                          controller.update();
+                                          controller.terms = [];
+                                          controller.getTermList();
+                                          controller.update();
+                                        }),
                               ),
                             ),
                           ),

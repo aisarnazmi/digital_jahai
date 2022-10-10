@@ -98,30 +98,28 @@ class TranslateController extends GetxController {
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           if (searchController.text == "") {
-            return Padding(
-              padding: EdgeInsets.only(top: 70.0.h),
-              child: Column(
-                children: [
-                  UnDraw(
-                    height: 200.0.h,
-                    color: Color(0xff343090),
-                    illustration: UnDrawIllustration.bibliophile,
-                    errorWidget: Column(
-                      children: [
-                        Icon(Icons.perm_scan_wifi_outlined),
-                        SizedBox(height: 10.0.w),
-                        Text("No internet connection"),
-                      ],
-                    ),
+            return Center(
+              child: Padding(
+                padding: EdgeInsets.only(top: 70.0.h),
+                child: UnDraw(
+                  height: 200.0.h,
+                  color: Color.fromRGBO(52, 48, 144, 1),
+                  illustration: UnDrawIllustration.bibliophile,
+                  errorWidget: Column(
+                    children: [
+                      Icon(Icons.perm_scan_wifi_outlined),
+                      SizedBox(height: 10.0.w),
+                      Text("No internet connection"),
+                    ],
                   ),
-                ],
+                ),
               ),
             );
           } else {
             return Column(
               children: <Widget>[
                 Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.0.w),
+                    padding: EdgeInsets.symmetric(horizontal: 25.0.w),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
@@ -146,7 +144,7 @@ class TranslateController extends GetxController {
             return Column(
               children: <Widget>[
                 Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.0.w),
+                    padding: EdgeInsets.symmetric(horizontal: 25.0.w),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
@@ -169,27 +167,29 @@ class TranslateController extends GetxController {
           } else {
             return Padding(
               padding: EdgeInsets.only(top: 70.0.h),
-              child: Column(
-                children: [
-                  UnDraw(
-                      height: 200.0.h,
-                      color: Color(0xff343090),
-                      illustration:
-                          (isTyping.isFalse && searchController.text != "")
-                              ? UnDrawIllustration.void_
-                              : UnDrawIllustration.bibliophile,
-                      errorWidget: Column(
-                        children: [
-                          Icon(Icons.perm_scan_wifi_outlined),
-                          SizedBox(height: 10.0.w),
-                          Text("No internet connection"),
-                        ],
-                      )),
-                  SizedBox(height: 10.0.h),
-                  Text((isTyping.isFalse && searchController.text != "")
-                      ? "Sorry! No translation found.."
-                      : ''),
-                ],
+              child: Center(
+                child: Column(
+                  children: [
+                    UnDraw(
+                        height: 200.0.h,
+                        color: Color(0xff343090),
+                        illustration:
+                            (isTyping.isFalse && searchController.text != "")
+                                ? UnDrawIllustration.void_
+                                : UnDrawIllustration.bibliophile,
+                        errorWidget: Column(
+                          children: [
+                            Icon(Icons.perm_scan_wifi_outlined),
+                            SizedBox(height: 10.0.w),
+                            Text("No internet connection"),
+                          ],
+                        )),
+                    SizedBox(height: 10.0.h),
+                    Text((isTyping.isFalse && searchController.text != "")
+                        ? "Sorry! No translation found.."
+                        : ''),
+                  ],
+                ),
               ),
             );
           }
@@ -204,7 +204,7 @@ class TranslateController extends GetxController {
     return ListView.builder(
         primary: false,
         shrinkWrap: true,
-        padding: EdgeInsets.symmetric(horizontal: 20.0.w),
+        padding: EdgeInsets.symmetric(horizontal: 25.0.w),
         itemCount: data.terms != null ? data.terms.length : 0,
         itemBuilder: (BuildContext context, int index) {
           return Container(
@@ -342,9 +342,8 @@ class TranslateController extends GetxController {
                               (data.terms[index].description ?? ''),
                               overflow: TextOverflow.visible,
                               softWrap: true,
-                              style: TextStyle(
-                                  height: 1.5,
-                                  color: Colors.white),
+                              style:
+                                  TextStyle(height: 1.5, color: Colors.white),
                               textAlign: TextAlign.left,
                             ),
                           ),
@@ -391,267 +390,264 @@ class TranslateController extends GetxController {
   }
 
   Widget skeletonCard() {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20.0.w),
-      child: Container(
-        margin: EdgeInsets.only(bottom: 20.0.h),
-        decoration: BoxDecoration(
-            // color: Color(0xff5969e3),
-            // color: Color(0xff112043),
-            gradient: const LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Color(0xff181d5f),
-                Color(0xff112043),
+    return Container(
+      margin: EdgeInsets.fromLTRB(25.w, 0, 25.w, 20.h),
+      decoration: BoxDecoration(
+          // color: Color(0xff5969e3),
+          // color: Color(0xff112043),
+          gradient: const LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color(0xff181d5f),
+              Color(0xff112043),
+            ],
+          ),
+          boxShadow: [
+            BoxShadow(
+              offset: Offset(5, 10),
+              blurRadius: 20.0,
+              color: const Color(0xff181d5f).withOpacity(0.5),
+            )
+          ],
+          borderRadius: BorderRadius.all(Radius.circular(25))),
+      padding: EdgeInsets.fromLTRB(20.0.w, 30.0.h, 20.0.w, 40.0.h),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          SkeletonAnimation(
+            shimmerColor: Colors.white10.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(6),
+            shimmerDuration: 800,
+            child: Container(
+              height: 33.0.h,
+              width: 120.0.w,
+              decoration: BoxDecoration(
+                color: Colors.white12,
+                borderRadius: BorderRadius.circular(6),
+                //  boxShadow: shadowList,
+              ),
+            ),
+          ),
+          SizedBox(height: 25.0.h),
+          Padding(
+            padding:
+                EdgeInsets.symmetric(vertical: 13.0.h, horizontal: 10.0.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    SkeletonAnimation(
+                      shimmerColor: Colors.white10.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(5),
+                      shimmerDuration: 800,
+                      child: Container(
+                        height: 20.0.h,
+                        width: 90.0.w,
+                        decoration: BoxDecoration(
+                          color: Colors.white12,
+                          borderRadius: BorderRadius.circular(5),
+                          //  boxShadow: shadowList,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10.h),
+                Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 10.0.w),
+                      child: SkeletonAnimation(
+                        shimmerColor: Colors.white10.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(5),
+                        shimmerDuration: 800,
+                        child: Container(
+                          height: 20.0.h,
+                          width: 110.0.w,
+                          decoration: BoxDecoration(
+                            color: Colors.white12,
+                            borderRadius: BorderRadius.circular(5),
+                            //  boxShadow: shadowList,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
-            boxShadow: [
-              BoxShadow(
-                offset: Offset(5, 10),
-                blurRadius: 20.0,
-                color: const Color(0xff181d5f).withOpacity(0.5),
-              )
-            ],
-            borderRadius: BorderRadius.all(Radius.circular(25))),
-        padding: EdgeInsets.fromLTRB(20.0.w, 30.0.h, 20.0.w, 40.0.h),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            SkeletonAnimation(
-              shimmerColor: Colors.white10.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(6),
-              shimmerDuration: 800,
-              child: Container(
-                height: 33.0.h,
-                width: 120.0.w,
-                decoration: BoxDecoration(
-                  color: Colors.white12,
-                  borderRadius: BorderRadius.circular(6),
-                  //  boxShadow: shadowList,
+          ),
+          SizedBox(height: 10.0.h),
+          // Padding(
+          //   padding:
+          //       EdgeInsets.symmetric(vertical: 13.0.h, horizontal: 10.0.w),
+          //   child: Column(
+          //     crossAxisAlignment: CrossAxisAlignment.start,
+          //     children: [
+          //       Row(
+          //         children: [
+          //           SkeletonAnimation(
+          //             shimmerColor: Colors.white10.withOpacity(0.1),
+          //             borderRadius: BorderRadius.circular(5),
+          //             shimmerDuration: 800,
+          //             child: Container(
+          //               height: 20.0.h,
+          //               width: 90.0.w,
+          //               decoration: BoxDecoration(
+          //                 color: Colors.white12,
+          //                 borderRadius: BorderRadius.circular(5),
+          //                 //  boxShadow: shadowList,
+          //               ),
+          //             ),
+          //           ),
+          //         ],
+          //       ),
+          //       SizedBox(height: 10.h),
+          //       Row(
+          //         children: [
+          //           Padding(
+          //             padding: EdgeInsets.only(left: 10.0.w),
+          //             child: SkeletonAnimation(
+          //               shimmerColor: Colors.white10.withOpacity(0.1),
+          //               borderRadius: BorderRadius.circular(5),
+          //               shimmerDuration: 800,
+          //               child: Container(
+          //                 height: 20.0.h,
+          //                 width: 110.0.w,
+          //                 decoration: BoxDecoration(
+          //                   color: Colors.white12,
+          //                   borderRadius: BorderRadius.circular(5),
+          //                   //  boxShadow: shadowList,
+          //                 ),
+          //               ),
+          //             ),
+          //           ),
+          //         ],
+          //       ),
+          //     ],
+          //   ),
+          // ),
+          // SizedBox(height: 10.0.h),
+          Padding(
+            padding:
+                EdgeInsets.symmetric(vertical: 13.0.h, horizontal: 10.0.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    SkeletonAnimation(
+                      shimmerColor: Colors.white10.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(5),
+                      shimmerDuration: 800,
+                      child: Container(
+                        height: 20.0.h,
+                        width: 90.0.w,
+                        decoration: BoxDecoration(
+                          color: Colors.white12,
+                          borderRadius: BorderRadius.circular(5),
+                          //  boxShadow: shadowList,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ),
-            SizedBox(height: 25.0.h),
-            Padding(
-              padding:
-                  EdgeInsets.symmetric(vertical: 13.0.h, horizontal: 10.0.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      SkeletonAnimation(
-                        shimmerColor: Colors.white10.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(5),
-                        shimmerDuration: 800,
-                        child: Container(
-                          height: 20.0.h,
-                          width: 90.0.w,
-                          decoration: BoxDecoration(
-                            color: Colors.white12,
-                            borderRadius: BorderRadius.circular(5),
-                            //  boxShadow: shadowList,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 10.h),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 10.0.w),
-                        child: SkeletonAnimation(
-                          shimmerColor: Colors.white10.withOpacity(0.1),
+                SizedBox(height: 10.h),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SkeletonAnimation(
+                      shimmerColor: Colors.white10.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(5),
+                      shimmerDuration: 800,
+                      child: Container(
+                        height: 20.0.h,
+                        width: 270.0.w,
+                        decoration: BoxDecoration(
+                          color: Colors.white12,
                           borderRadius: BorderRadius.circular(5),
-                          shimmerDuration: 800,
-                          child: Container(
-                            height: 20.0.h,
-                            width: 110.0.w,
-                            decoration: BoxDecoration(
-                              color: Colors.white12,
-                              borderRadius: BorderRadius.circular(5),
-                              //  boxShadow: shadowList,
-                            ),
-                          ),
+                          //  boxShadow: shadowList,
                         ),
                       ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 10.0.h),
-            // Padding(
-            //   padding:
-            //       EdgeInsets.symmetric(vertical: 13.0.h, horizontal: 10.0.w),
-            //   child: Column(
-            //     crossAxisAlignment: CrossAxisAlignment.start,
-            //     children: [
-            //       Row(
-            //         children: [
-            //           SkeletonAnimation(
-            //             shimmerColor: Colors.white10.withOpacity(0.1),
-            //             borderRadius: BorderRadius.circular(5),
-            //             shimmerDuration: 800,
-            //             child: Container(
-            //               height: 20.0.h,
-            //               width: 90.0.w,
-            //               decoration: BoxDecoration(
-            //                 color: Colors.white12,
-            //                 borderRadius: BorderRadius.circular(5),
-            //                 //  boxShadow: shadowList,
-            //               ),
-            //             ),
-            //           ),
-            //         ],
-            //       ),
-            //       SizedBox(height: 10.h),
-            //       Row(
-            //         children: [
-            //           Padding(
-            //             padding: EdgeInsets.only(left: 10.0.w),
-            //             child: SkeletonAnimation(
-            //               shimmerColor: Colors.white10.withOpacity(0.1),
-            //               borderRadius: BorderRadius.circular(5),
-            //               shimmerDuration: 800,
-            //               child: Container(
-            //                 height: 20.0.h,
-            //                 width: 110.0.w,
-            //                 decoration: BoxDecoration(
-            //                   color: Colors.white12,
-            //                   borderRadius: BorderRadius.circular(5),
-            //                   //  boxShadow: shadowList,
-            //                 ),
-            //               ),
-            //             ),
-            //           ),
-            //         ],
-            //       ),
-            //     ],
-            //   ),
-            // ),
-            // SizedBox(height: 10.0.h),
-            Padding(
-              padding:
-                  EdgeInsets.symmetric(vertical: 13.0.h, horizontal: 10.0.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      SkeletonAnimation(
-                        shimmerColor: Colors.white10.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(5),
-                        shimmerDuration: 800,
-                        child: Container(
-                          height: 20.0.h,
-                          width: 90.0.w,
-                          decoration: BoxDecoration(
-                            color: Colors.white12,
-                            borderRadius: BorderRadius.circular(5),
-                            //  boxShadow: shadowList,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 10.h),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SkeletonAnimation(
-                        shimmerColor: Colors.white10.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(5),
-                        shimmerDuration: 800,
-                        child: Container(
-                          height: 20.0.h,
-                          width: 270.0.w,
-                          decoration: BoxDecoration(
-                            color: Colors.white12,
-                            borderRadius: BorderRadius.circular(5),
-                            //  boxShadow: shadowList,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 5.0.h,
-                      ),
-                      SkeletonAnimation(
-                        shimmerColor: Colors.white10.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(5),
-                        shimmerDuration: 800,
-                        child: Container(
-                          height: 20.0.h,
-                          width: 200.0.w,
-                          decoration: BoxDecoration(
-                            color: Colors.white12,
-                            borderRadius: BorderRadius.circular(5),
-                            //  boxShadow: shadowList,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 5.0.h,
-                      )
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 10.0.h),
-            Padding(
-              padding:
-                  EdgeInsets.symmetric(vertical: 13.0.h, horizontal: 10.0.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      SkeletonAnimation(
-                        shimmerColor: Colors.white10.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(5),
-                        shimmerDuration: 800,
-                        child: Container(
-                          height: 20.0.h,
-                          width: 80.0.w,
-                          decoration: BoxDecoration(
-                            color: Colors.white12,
-                            borderRadius: BorderRadius.circular(5),
-                            //  boxShadow: shadowList,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 10.h),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 10.0.w),
-                        child: SkeletonAnimation(
-                          shimmerColor: Colors.white10.withOpacity(0.1),
+                    ),
+                    SizedBox(
+                      height: 5.0.h,
+                    ),
+                    SkeletonAnimation(
+                      shimmerColor: Colors.white10.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(5),
+                      shimmerDuration: 800,
+                      child: Container(
+                        height: 20.0.h,
+                        width: 200.0.w,
+                        decoration: BoxDecoration(
+                          color: Colors.white12,
                           borderRadius: BorderRadius.circular(5),
-                          shimmerDuration: 800,
-                          child: Container(
-                            height: 20.0.h,
-                            width: 110.0.w,
-                            decoration: BoxDecoration(
-                              color: Colors.white12,
-                              borderRadius: BorderRadius.circular(5),
-                              //  boxShadow: shadowList,
-                            ),
+                          //  boxShadow: shadowList,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5.0.h,
+                    )
+                  ],
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 10.0.h),
+          Padding(
+            padding:
+                EdgeInsets.symmetric(vertical: 13.0.h, horizontal: 10.0.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    SkeletonAnimation(
+                      shimmerColor: Colors.white10.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(5),
+                      shimmerDuration: 800,
+                      child: Container(
+                        height: 20.0.h,
+                        width: 80.0.w,
+                        decoration: BoxDecoration(
+                          color: Colors.white12,
+                          borderRadius: BorderRadius.circular(5),
+                          //  boxShadow: shadowList,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10.h),
+                Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 10.0.w),
+                      child: SkeletonAnimation(
+                        shimmerColor: Colors.white10.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(5),
+                        shimmerDuration: 800,
+                        child: Container(
+                          height: 20.0.h,
+                          width: 110.0.w,
+                          decoration: BoxDecoration(
+                            color: Colors.white12,
+                            borderRadius: BorderRadius.circular(5),
+                            //  boxShadow: shadowList,
                           ),
                         ),
                       ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
