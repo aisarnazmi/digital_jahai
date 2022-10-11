@@ -97,6 +97,7 @@ class ManageTermController extends GetxController {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       };
+      
       await HttpService()
           .get('/library?page=$currentPage&search=$search', headers)
           .then((response) {

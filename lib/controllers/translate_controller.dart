@@ -77,11 +77,14 @@ class TranslateController extends GetxController {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         };
-        final response =
-            await HttpService().post('/library/translate', headers, payload);
-        if (response.statusCode == 200) {
-          terms = Terms.parseTerms(response.body);
-        }
+
+        await HttpService()
+            .post('/library/translate', headers, payload)
+            .then((response) {
+          if (response.statusCode == 200) {
+            terms = Terms.parseTerms(response.body);
+          }
+        });
         return terms;
       } catch (e) {
         if (kDebugMode) {

@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -52,35 +53,39 @@ class LibraryController extends GetxController {
     isLoading.value = true;
     isSuccess.value = false;
 
-    var payload = {
-      "jahai_term": jahaiTermController.text,
-      "malay_term": malayTermController.text,
-      "english_term": englishTermController.text,
-      "description": descriptionController.text,
-      "term_category": termCategoryController.text
-    };
+    try {
+      var payload = {
+        "jahai_term": jahaiTermController.text,
+        "malay_term": malayTermController.text,
+        "english_term": englishTermController.text,
+        "description": descriptionController.text,
+        "term_category": termCategoryController.text
+      };
 
-    final headers = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    };
+      final headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      };
 
-    final response =
-        await HttpService().post('/library/store', headers, payload);
+      await HttpService().post('/library', headers, payload).then((response) {
+        if (response.statusCode == 200) {
+          jahaiTermController.text = "";
+          malayTermController.text = "";
+          englishTermController.text = "";
+          descriptionController.text = "";
+          termCategoryController.text = "";
 
-    if (response.statusCode == 200) {
-      jahaiTermController.text = "";
-      malayTermController.text = "";
-      englishTermController.text = "";
-      descriptionController.text = "";
-      termCategoryController.text = "";
-
-      isSuccess.value = true;
+          isSuccess.value = true;
+        }
+      });
+      isLoading.value = false;
+      return;
+    } catch (e) {
+      if (kDebugMode) {
+        print(e.toString());
+      }
+      isLoading.value = false;
     }
-
-    isLoading.value = false;
-
-    return;
   }
 
   void onSubmitSuccess() {
