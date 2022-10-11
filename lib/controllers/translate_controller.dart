@@ -228,7 +228,7 @@ class TranslateController extends GetxController {
                   )
                 ],
                 borderRadius: BorderRadius.all(Radius.circular(25))),
-            padding: EdgeInsets.fromLTRB(20.0.w, 30.0.h, 20.0.w, 40.0.h),
+            padding: EdgeInsets.fromLTRB(20.0.w, 10.0.h, 20.0.w, 40.0.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -237,16 +237,14 @@ class TranslateController extends GetxController {
                       ? (data.terms[index].jahai_term ?? '')
                       : (data.terms[index].malay_term ?? ''), //Search term
                   style: TextStyle(
-                      fontFamily: 'Times New Roman',
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 36.sp,
+                      fontWeight: FontWeight.w800,
+                      fontSize: 32.sp,
                       color: Colors.white),
                 ),
-                SizedBox(height: 25.0.h),
+                SizedBox(height: 15.h),
                 Padding(
-                  padding: EdgeInsets.symmetric(
-                      vertical: 13.0.h, horizontal: 10.0.w),
+                  padding:
+                      EdgeInsets.symmetric(vertical: 13.h, horizontal: 10.w),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -265,17 +263,18 @@ class TranslateController extends GetxController {
                       SizedBox(height: 10.h),
                       Row(
                         children: [
-                          Padding(
-                            padding: EdgeInsets.only(left: 10.0.w),
-                            child: Text(
-                              originLang.value == language.elementAt(0)
-                                  ? "- ${data.terms[index].malay_term}"
-                                  : "- ${data.terms[index].jahai_term}",
-                              style: TextStyle(
-                                  fontFamily: 'Times New Roman',
-                                  fontStyle: FontStyle.italic,
-                                  fontSize: 20.sp,
-                                  color: Colors.white),
+                          Flexible(
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 10.0.w),
+                              child: Flexible(
+                                child: Text(
+                                  originLang.value == language.elementAt(0)
+                                      ? "- ${data.terms[index].malay_term}"
+                                      : "- ${data.terms[index].jahai_term}",
+                                  style: TextStyle(
+                                      fontSize: 16.sp, color: Colors.white),
+                                ),
+                              ),
                             ),
                           ),
                         ],
@@ -286,7 +285,7 @@ class TranslateController extends GetxController {
                 SizedBox(height: 10.0.h),
                 // Padding(
                 //   padding: EdgeInsets.symmetric(
-                //       vertical: 13.0.h, horizontal: 10.0.w),
+                //       vertical: 13.h, horizontal: 10.w),
                 //   child: Column(
                 //     crossAxisAlignment: CrossAxisAlignment.start,
                 //     children: [
@@ -307,9 +306,7 @@ class TranslateController extends GetxController {
                 //             child: Text(
                 //               "- ${ data.terms[index].english_term }",
                 //               style: TextStyle(
-                //                   fontFamily: 'Times New Roman',
-                //                   fontStyle: FontStyle.italic,
-                //                   fontSize: 20.sp,
+                //                   fontSize: 16.sp,
                 //                   color: Colors.white),
                 //             ),
                 //           ),
@@ -320,8 +317,8 @@ class TranslateController extends GetxController {
                 // ),
                 // SizedBox(height: 10.0.h),
                 Padding(
-                  padding: EdgeInsets.symmetric(
-                      vertical: 13.0.h, horizontal: 10.0.w),
+                  padding:
+                      EdgeInsets.symmetric(vertical: 13.h, horizontal: 10.w),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -342,8 +339,10 @@ class TranslateController extends GetxController {
                               (data.terms[index].description ?? ''),
                               overflow: TextOverflow.visible,
                               softWrap: true,
-                              style:
-                                  TextStyle(height: 1.5, color: Colors.white),
+                              style: TextStyle(
+                                  height: 1.5,
+                                  fontSize: 16.sp,
+                                  color: Colors.white),
                               textAlign: TextAlign.left,
                             ),
                           ),
@@ -354,8 +353,8 @@ class TranslateController extends GetxController {
                 ),
                 SizedBox(height: 10.0.h),
                 Padding(
-                  padding: EdgeInsets.symmetric(
-                      vertical: 13.0.h, horizontal: 10.0.w),
+                  padding:
+                      EdgeInsets.symmetric(vertical: 13.h, horizontal: 10.w),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -375,7 +374,8 @@ class TranslateController extends GetxController {
                             padding: EdgeInsets.only(left: 10.0.w),
                             child: Text(
                               "- ${data.terms[index].term_category}",
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(
+                                  fontSize: 16.sp, color: Colors.white),
                             ),
                           ),
                         ],
@@ -429,10 +429,9 @@ class TranslateController extends GetxController {
               ),
             ),
           ),
-          SizedBox(height: 25.0.h),
+          SizedBox(height: 15.0.h),
           Padding(
-            padding:
-                EdgeInsets.symmetric(vertical: 13.0.h, horizontal: 10.0.w),
+            padding: EdgeInsets.symmetric(vertical: 13.h, horizontal: 10.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -482,7 +481,7 @@ class TranslateController extends GetxController {
           SizedBox(height: 10.0.h),
           // Padding(
           //   padding:
-          //       EdgeInsets.symmetric(vertical: 13.0.h, horizontal: 10.0.w),
+          //       EdgeInsets.symmetric(vertical: 13.h, horizontal: 10.w),
           //   child: Column(
           //     crossAxisAlignment: CrossAxisAlignment.start,
           //     children: [
@@ -531,8 +530,7 @@ class TranslateController extends GetxController {
           // ),
           // SizedBox(height: 10.0.h),
           Padding(
-            padding:
-                EdgeInsets.symmetric(vertical: 13.0.h, horizontal: 10.0.w),
+            padding: EdgeInsets.symmetric(vertical: 13.h, horizontal: 10.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -599,8 +597,7 @@ class TranslateController extends GetxController {
           ),
           SizedBox(height: 10.0.h),
           Padding(
-            padding:
-                EdgeInsets.symmetric(vertical: 13.0.h, horizontal: 10.0.w),
+            padding: EdgeInsets.symmetric(vertical: 13.h, horizontal: 10.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

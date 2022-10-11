@@ -139,6 +139,7 @@ class ManageTermController extends GetxController {
                     child: Text(
                       terms[index].jahai_term ?? "",
                       style: TextStyle(
+                          fontSize: 18.sp,
                           color: Colors.grey.shade700,
                           fontWeight: FontWeight.w600),
                     )),
