@@ -269,14 +269,12 @@ class TranslateController extends GetxController {
                           Flexible(
                             child: Padding(
                               padding: EdgeInsets.only(left: 10.0.w),
-                              child: Flexible(
-                                child: Text(
-                                  originLang.value == language.elementAt(0)
-                                      ? "- ${data.terms[index].malay_term}"
-                                      : "- ${data.terms[index].jahai_term}",
-                                  style: TextStyle(
-                                      fontSize: 16.sp, color: Colors.white),
-                                ),
+                              child: Text(
+                                originLang.value == language.elementAt(0)
+                                    ? "- ${data.terms[index].malay_term}"
+                                    : "- ${data.terms[index].jahai_term}",
+                                style: TextStyle(
+                                    fontSize: 16.sp, color: Colors.white),
                               ),
                             ),
                           ),
