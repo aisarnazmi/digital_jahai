@@ -231,7 +231,7 @@ class TranslateController extends GetxController {
                   )
                 ],
                 borderRadius: BorderRadius.all(Radius.circular(25))),
-            padding: EdgeInsets.fromLTRB(20.0.w, 10.0.h, 20.0.w, 40.0.h),
+            padding: EdgeInsets.fromLTRB(20.0.w, 20.0.h, 20.0.w, 40.0.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[

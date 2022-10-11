@@ -32,17 +32,16 @@ class ManageTermController extends GetxController {
   var prevPage = 0;
   var lastPage = 1;
 
-  late TextEditingController searchController;
-
   List<Term> terms = [];
 
-  final _formKey = GlobalKey<FormState>();
-
+  late TextEditingController searchController;
   late TextEditingController jahaiTermController;
   late TextEditingController malayTermController;
   late TextEditingController englishTermController;
   late TextEditingController descriptionController;
   late TextEditingController termCategoryController;
+
+  final _formKey = GlobalKey<FormState>();
 
   late Future manageTermFuture;
 
@@ -102,9 +101,32 @@ class ManageTermController extends GetxController {
     super.onClose();
   }
 
+  void openDetailModal(data) {
+    showCupertinoModalBottomSheet(
+        context: Get.context as BuildContext,
+        backgroundColor: Colors.white,
+        isDismissible: true,
+        builder: (context) => detailModal(data));
+  }
+
+  void closeModal() {
+    Debouncer(milliseconds: 2000).run(() {
+      Get.back();
+    });
+  }
+
   void initManageTermFuture(action, id) {
+    Get.back();
+
+    showCupertinoModalBottomSheet(
+        context: Get.context as BuildContext,
+        backgroundColor: Colors.white,
+        builder: (context) {
+          return statusModal(action);
+        });
+    update();
+
     if (action == Action.update) {
-      // print('update');
       manageTermFuture = updateTerm(id);
     } else if (action == Action.delete) {
       manageTermFuture = deleteTerm(id);
@@ -170,15 +192,19 @@ class ManageTermController extends GetxController {
       final response =
           await HttpService().put('/library/$id', headers, payload);
 
+      var index = terms.indexWhere((element) => element.id == id);
+
       if (response.statusCode == 200) {
         var updatedData = jsonDecode(response.body);
 
-        terms[terms.indexWhere((element) => element.id == id)] =
-            Term.fromJson(updatedData);
+        terms[index] = Term.fromJson(updatedData);
         isSuccess.value = true;
+      } else {
+        Debouncer(milliseconds: 2300).run(() {
+          openDetailModal(terms[index]);
+        });
       }
       isLoading.value = false;
-
       update();
     } catch (e) {
       if (kDebugMode) {
@@ -201,13 +227,18 @@ class ManageTermController extends GetxController {
 
       final response = await HttpService().delete('/library/$id', headers);
 
+      var index = terms.indexWhere((element) => element.id == id);
+
       if (response.statusCode == 200) {
-        terms.removeWhere((element) => element.id == id);
+        terms.removeAt(index);
 
         isSuccess.value = true;
+      } else {
+        Debouncer(milliseconds: 2300).run(() {
+          openDetailModal(terms[index]);
+        });
       }
       isLoading.value = false;
-
       update();
     } catch (e) {
       if (kDebugMode) {
@@ -256,11 +287,7 @@ class ManageTermController extends GetxController {
                   ],
                 ),
                 onTap: () {
-                  showCupertinoModalBottomSheet(
-                      context: context,
-                      backgroundColor: Colors.white,
-                      isDismissible: true,
-                      builder: (context) => detailModal(terms[index]));
+                  openDetailModal(terms[index]);
                 },
               ),
               Row(
@@ -527,13 +554,6 @@ class ManageTermController extends GetxController {
                                   BorderRadius.all(Radius.circular(10.0))),
                           child: IconButton(
                             onPressed: () {
-                              showCupertinoModalBottomSheet(
-                                  context: Get.context as BuildContext,
-                                  backgroundColor: Colors.white,
-                                  builder: (context) {
-                                    return statusModal(Action.delete);
-                                  });
-                              update();
                               initManageTermFuture(Action.delete, data.id);
                               update();
                             },
@@ -567,13 +587,6 @@ class ManageTermController extends GetxController {
                                 // if (_formKey.currentState!.validate()) {
                                 //   storeLibrary(context);
                                 // }
-                                showCupertinoModalBottomSheet(
-                                    context: Get.context as BuildContext,
-                                    backgroundColor: Colors.white,
-                                    builder: (context) {
-                                      return statusModal(Action.update);
-                                    });
-                                update();
                                 initManageTermFuture(Action.update, data.id);
                                 update();
                               },
@@ -593,15 +606,6 @@ class ManageTermController extends GetxController {
         ),
       ),
     );
-  }
-
-  void closeModal() {
-    Debouncer(milliseconds: 2000).run(() {
-      Get.back();
-      if (isSuccess.isTrue) {
-        Get.back();
-      }
-    });
   }
 
   Widget statusModal(action) {
