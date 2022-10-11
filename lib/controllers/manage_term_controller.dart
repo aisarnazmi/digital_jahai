@@ -4,20 +4,27 @@ import 'dart:convert';
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:iconly/iconly.dart';
+import 'package:lottie/lottie.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 // Project imports:
 import '../models/index.dart';
+import '../utils/debounce.dart';
 import '../utils/http_service.dart';
+
+enum Action { update, delete }
 
 class ManageTermController extends GetxController {
   var isTyping = false.obs;
   var isLoading = false.obs;
+  var isSuccess = false.obs;
 
   late ScrollController scrollController;
   var scrollTop = false.obs;
@@ -29,8 +36,6 @@ class ManageTermController extends GetxController {
 
   List<Term> terms = [];
 
-  // late Future getTermListFuture;
-
   final _formKey = GlobalKey<FormState>();
 
   late TextEditingController jahaiTermController;
@@ -39,9 +44,16 @@ class ManageTermController extends GetxController {
   late TextEditingController descriptionController;
   late TextEditingController termCategoryController;
 
+  late Future manageTermFuture;
+
+  late GetStorage box;
+  String token = "";
+
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
+
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
 
     scrollController = ScrollController();
 
@@ -67,10 +79,18 @@ class ManageTermController extends GetxController {
     termCategoryController = TextEditingController();
 
     getTermList();
+
+    await GetStorage.init();
+    box = GetStorage();
+    if (box.read('token') != null) {
+      token = box.read('token');
+    }
   }
 
   @override
   void onClose() {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
+
     scrollController.dispose();
     searchController.dispose();
     jahaiTermController.dispose();
@@ -82,9 +102,14 @@ class ManageTermController extends GetxController {
     super.onClose();
   }
 
-  // void initGetTermListFuture() {
-  //   getTermListFuture = getTermList();
-  // }
+  void initManageTermFuture(action, id) {
+    if (action == Action.update) {
+      // print('update');
+      manageTermFuture = updateTerm(id);
+    } else if (action == Action.delete) {
+      manageTermFuture = deleteTerm(id);
+    }
+  }
 
   Future<void> getTermList() async {
     isLoading.value = true;
@@ -97,7 +122,7 @@ class ManageTermController extends GetxController {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       };
-      
+
       await HttpService()
           .get('/library?page=$currentPage&search=$search', headers)
           .then((response) {
@@ -121,6 +146,75 @@ class ManageTermController extends GetxController {
       isLoading.value = false;
     }
     update();
+  }
+
+  Future<void> updateTerm(id) async {
+    isLoading.value = true;
+    isSuccess.value = false;
+
+    try {
+      var payload = {
+        "jahai_term": jahaiTermController.text,
+        "malay_term": malayTermController.text,
+        "english_term": englishTermController.text,
+        "description": descriptionController.text,
+        "term_category": termCategoryController.text
+      };
+
+      final headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token'
+      };
+
+      final response =
+          await HttpService().put('/library/$id', headers, payload);
+
+      if (response.statusCode == 200) {
+        var updatedData = jsonDecode(response.body);
+
+        terms[terms.indexWhere((element) => element.id == id)] =
+            Term.fromJson(updatedData);
+        isSuccess.value = true;
+      }
+      isLoading.value = false;
+
+      update();
+    } catch (e) {
+      if (kDebugMode) {
+        print(e.toString());
+      }
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> deleteTerm(id) async {
+    isLoading.value = true;
+    isSuccess.value = false;
+
+    try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
+      final response = await HttpService().delete('/library/$id', headers);
+
+      if (response.statusCode == 200) {
+        terms.removeWhere((element) => element.id == id);
+
+        isSuccess.value = true;
+      }
+      isLoading.value = false;
+
+      update();
+    } catch (e) {
+      if (kDebugMode) {
+        print(e.toString());
+      }
+      isLoading.value = false;
+    }
   }
 
   Widget termListBuilder() {
@@ -192,6 +286,7 @@ class ManageTermController extends GetxController {
     englishTermController.text = data.english_term ?? "";
     descriptionController.text = data.description ?? "";
     termCategoryController.text = data.term_category ?? "";
+
     return Material(
       child: SafeArea(
         child: SingleChildScrollView(
@@ -431,7 +526,17 @@ class ManageTermController extends GetxController {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10.0))),
                           child: IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              showCupertinoModalBottomSheet(
+                                  context: Get.context as BuildContext,
+                                  backgroundColor: Colors.white,
+                                  builder: (context) {
+                                    return statusModal(Action.delete);
+                                  });
+                              update();
+                              initManageTermFuture(Action.delete, data.id);
+                              update();
+                            },
                             icon: Icon(IconlyBold.delete, color: Colors.white),
                           ),
                         ),
@@ -462,15 +567,15 @@ class ManageTermController extends GetxController {
                                 // if (_formKey.currentState!.validate()) {
                                 //   storeLibrary(context);
                                 // }
-                                // showCupertinoModalBottomSheet(
-                                //     context: context,
-                                //     backgroundColor: Colors.white,
-                                //     builder: (context) {
-                                //       return statusModal();
-                                //     });
-                                // update();
-                                // initStoreTermFuture();
-                                // update();
+                                showCupertinoModalBottomSheet(
+                                    context: Get.context as BuildContext,
+                                    backgroundColor: Colors.white,
+                                    builder: (context) {
+                                      return statusModal(Action.update);
+                                    });
+                                update();
+                                initManageTermFuture(Action.update, data.id);
+                                update();
                               },
                               child: Text("Save",
                                   style: TextStyle(
@@ -485,6 +590,111 @@ class ManageTermController extends GetxController {
                   ],
                 ),
               )),
+        ),
+      ),
+    );
+  }
+
+  void closeModal() {
+    Debouncer(milliseconds: 2000).run(() {
+      Get.back();
+      if (isSuccess.isTrue) {
+        Get.back();
+      }
+    });
+  }
+
+  Widget statusModal(action) {
+    once(
+        isLoading,
+        (value) => {
+              if (isLoading.isFalse) {closeModal()}
+            });
+    return Material(
+      child: SafeArea(
+        top: false,
+        child: SingleChildScrollView(
+          child: FutureBuilder<dynamic>(
+            future: manageTermFuture,
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (isLoading.isTrue ||
+                  snapshot.connectionState == ConnectionState.waiting ||
+                  snapshot.connectionState == ConnectionState.none) {
+                return Center(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              top: 40, bottom: 20, left: 100, right: 100),
+                          child: Lottie.asset('assets/lottie/loading.json',
+                              repeat: false),
+                        ),
+                      ),
+                      Text('Loading ...',
+                          style: TextStyle(
+                              color: Colors.grey[600],
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w500))
+                    ],
+                  ),
+                );
+              } else if (snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.hasError) {
+                  return Center(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                top: 40, bottom: 20, left: 100, right: 100),
+                            child: Lottie.asset(
+                                'assets/lottie/loading-failed.json',
+                                repeat: false),
+                          ),
+                        ),
+                        Text('Opps.. Something went wrong!',
+                            style: TextStyle(
+                                color: Colors.grey[600],
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.w500))
+                      ],
+                    ),
+                  );
+                } else {
+                  return Center(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                top: 40, bottom: 20, left: 100, right: 100),
+                            child: Lottie.asset(
+                                (isSuccess.isTrue
+                                    ? 'assets/lottie/loading-success.json'
+                                    : 'assets/lottie/loading-failed.json'),
+                                repeat: false),
+                          ),
+                        ),
+                        Text(
+                            (isSuccess.isTrue
+                                ? (action == Action.update
+                                    ? 'Term has been updated.'
+                                    : 'Term has been deleted.')
+                                : 'Opps.. Something went wrong!'),
+                            style: TextStyle(
+                                color: Colors.grey[600],
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.w500))
+                      ],
+                    ),
+                  );
+                }
+              } else {
+                return Text('State: ${snapshot.connectionState}');
+              }
+            },
+          ),
         ),
       ),
     );

@@ -49,7 +49,7 @@ class LibraryController extends GetxController {
     storeTermFuture = storeTerm();
   }
 
-  Future storeTerm() async {
+  Future<void> storeTerm() async {
     isLoading.value = true;
     isSuccess.value = false;
 
@@ -79,7 +79,6 @@ class LibraryController extends GetxController {
         }
       });
       isLoading.value = false;
-      return;
     } catch (e) {
       if (kDebugMode) {
         print(e.toString());
@@ -88,7 +87,7 @@ class LibraryController extends GetxController {
     }
   }
 
-  void onSubmitSuccess() {
+  void closeModal() {
     Debouncer(milliseconds: 2000).run(() {
       Get.back();
     });
@@ -98,7 +97,7 @@ class LibraryController extends GetxController {
     once(
         isLoading,
         (value) => {
-              if (isLoading.isFalse) {onSubmitSuccess()}
+              if (isLoading.isFalse) {closeModal()}
             });
     return Material(
       child: SafeArea(

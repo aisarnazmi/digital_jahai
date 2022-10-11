@@ -27,6 +27,7 @@ class MenuController extends GetxController {
     super.onInit();
 
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+    
 
     await GetStorage.init();
     box = GetStorage();
