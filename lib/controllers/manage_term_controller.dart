@@ -43,6 +43,7 @@ class ManageTermController extends GetxController {
 
   final _formKey = GlobalKey<FormState>();
 
+  late Future getTermListFuture;
   late Future manageTermFuture;
 
   late GetStorage box;
@@ -65,7 +66,7 @@ class ManageTermController extends GetxController {
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
         if (currentPage <= lastPage) {
-          getTermList();
+          initGetTermListFuture();
         }
       }
     });
@@ -77,7 +78,7 @@ class ManageTermController extends GetxController {
     descriptionController = TextEditingController();
     termCategoryController = TextEditingController();
 
-    getTermList();
+    initGetTermListFuture();
 
     await GetStorage.init();
     box = GetStorage();
@@ -113,6 +114,10 @@ class ManageTermController extends GetxController {
     Debouncer(milliseconds: 2000).run(() {
       Get.back();
     });
+  }
+
+  void initGetTermListFuture() {
+    getTermListFuture = getTermList();
   }
 
   void initManageTermFuture(action, id) {
@@ -249,62 +254,86 @@ class ManageTermController extends GetxController {
   }
 
   Widget termListBuilder() {
-    return ListView.builder(
-        primary: false,
-        shrinkWrap: true,
-        padding: EdgeInsets.symmetric(horizontal: 25.w),
-        itemCount: terms.isEmpty ? 0 : terms.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Column(
-            children: [
-              ListTile(
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
-                title: Container(
-                    margin: EdgeInsets.only(bottom: 10.h),
-                    child: Text(
-                      terms[index].jahai_term ?? "",
-                      style: TextStyle(
-                          fontSize: 18.sp,
-                          color: Colors.grey.shade700,
-                          fontWeight: FontWeight.w600),
-                    )),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Malay: ${terms[index].malay_term ?? '-'}'),
-                    SizedBox(height: 10.h),
-                    Text('English: ${terms[index].english_term ?? ''}'),
-                  ],
-                ),
-                trailing: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(
-                      IconlyLight.arrow_right_2,
-                      size: 22,
-                    ),
-                  ],
-                ),
-                onTap: () {
-                  openDetailModal(terms[index]);
-                },
-              ),
-              Row(
-                children: List.generate(
-                    1000 ~/ 15,
-                    (index) => Expanded(
-                          child: Container(
-                            color: index % 2 == 0
-                                ? Colors.transparent
-                                : Colors.black54,
-                            height: 0.3,
-                          ),
-                        )),
-              ),
-            ],
+    return FutureBuilder<dynamic>(
+      future: getTermListFuture,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (terms.isEmpty) {
+          return Center(
+            child: Container(
+              padding: EdgeInsets.only(top: 30.h, bottom: 30),
+              child: Lottie.asset('assets/lottie/typing-animation.json',
+                  height: 36),
+            ),
           );
-        });
+        } else {
+          if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            return ListView.builder(
+                primary: false,
+                shrinkWrap: true,
+                padding: EdgeInsets.symmetric(horizontal: 25.w),
+                itemCount: terms.isEmpty ? 0 : terms.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Column(
+                    children: [
+                      ListTile(
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: 10.w, vertical: 10.h),
+                        title: Container(
+                            margin: EdgeInsets.only(bottom: 10.h),
+                            child: Text(
+                              terms[index].jahai_term ?? "",
+                              style: TextStyle(
+                                  fontSize: 18.sp,
+                                  color: Colors.grey.shade700,
+                                  fontWeight: FontWeight.w600),
+                            )),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                                'Malay: ${terms[index].malay_term ?? '-'}'),
+                            SizedBox(height: 10.h),
+                            Text(
+                                'English: ${terms[index].english_term ?? ''}'),
+                          ],
+                        ),
+                        trailing: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Icon(
+                              IconlyLight.arrow_right_2,
+                              size: 22,
+                            ),
+                          ],
+                        ),
+                        onTap: () {
+                          openDetailModal(terms[index]);
+                        },
+                      ),
+                      Row(
+                        children: List.generate(
+                            1000 ~/ 15,
+                            (index) => Expanded(
+                                  child: Container(
+                                    color: index % 2 == 0
+                                        ? Colors.transparent
+                                        : Colors.black54,
+                                    height: 0.3,
+                                  ),
+                                )),
+                      ),
+                    ],
+                  );
+                });
+          }
+        }
+        //else {
+        //   return Text('State: ${snapshot.connectionState}');
+        // }
+      },
+    );
   }
 
   Widget detailModal(data) {
