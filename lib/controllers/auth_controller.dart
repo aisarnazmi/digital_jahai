@@ -15,23 +15,23 @@ import 'package:platform_device_id/platform_device_id.dart';
 
 // Project imports:
 import '../models/user.dart';
-import '../utils/debounce.dart';
+import '../utils/debouncer.dart';
 import '../utils/http_service.dart';
 
 class AuthController extends GetxController {
+  String loginFailedMsg = '';
+
   var isLogin = false.obs;
   var isLoggedIn = false.obs;
-
-  var loginFailedMsg = '';
-
+  var showPassword = true.obs;
   var token = Rx<String?>(null);
   var user = Rx<User?>(null);
+  
+  final successDebouncer = Debouncer(milliseconds: 2500);
+  final errorDebouncer = Debouncer(milliseconds: 1300);
 
   late TextEditingController email;
   late TextEditingController password;
-
-  var showPassword = true.obs;
-
   late GetStorage box;
 
   @override
@@ -117,7 +117,7 @@ class AuthController extends GetxController {
           clearAuth();
         }
 
-        Debouncer(milliseconds: 1300).run(() {
+        errorDebouncer.run(() {
           isLogin.value = false;
         });
       } catch (e) {
@@ -156,7 +156,7 @@ class AuthController extends GetxController {
   }
 
   void onLoginSuccess() {
-    Debouncer(milliseconds: 2500).run(() {
+    successDebouncer.run(() {
       Get.back();
     });
   }
@@ -189,7 +189,7 @@ class AuthController extends GetxController {
         colorText: Colors.white);
 
     loginFailedMsg = '';
-    Debouncer(milliseconds: 1300).run(() {
+    errorDebouncer.run(() {
       isLogin.value = false;
     });
   }

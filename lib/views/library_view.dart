@@ -11,9 +11,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import '../controllers/library_controller.dart';
 
 class LibraryView extends GetView<LibraryController> {
-  LibraryView({Key? key}) : super(key: key);
-
-  final _formKey = GlobalKey<FormState>();
+  const LibraryView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +104,6 @@ class LibraryView extends GetView<LibraryController> {
                           //   ],
                           // ),
                           child: Form(
-                            key: _formKey,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[

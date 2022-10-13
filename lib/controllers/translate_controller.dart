@@ -10,39 +10,52 @@ import 'package:skeleton_text/skeleton_text.dart';
 
 // Project imports:
 import '../models/index.dart';
-import '../models/terms.dart';
-import '../utils/debounce.dart';
+import '../utils/debouncer.dart';
 import '../utils/http_service.dart';
 
 class TranslateController extends GetxController {
   List<String> language = ["jahai", "malay", "english"];
+  List<Term> terms = [];
 
   var originLang = "".obs;
   var transLang = "".obs;
-
   var isTyping = false.obs;
+  var scrollTop = false.obs;
+
+  final serchDebouncer = Debouncer(milliseconds: 1500);
+  final toTopDebouncer = Debouncer(milliseconds: 300);
 
   late TextEditingController searchController;
-
-  final debouncer = Debouncer(milliseconds: 1500);
-
-  Terms? terms;
-
+  late ScrollController scrollController;
   late Future getTranslationFuture;
 
   @override
   void onInit() {
     super.onInit();
 
+    scrollController = ScrollController();
+    scrollController.addListener(() {
+      if (scrollController.offset > 180.h && scrollTop.isFalse) {
+        update();
+        scrollTop.value = true;
+      }
+
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
+        print('bottom');
+      }
+    });
+
     originLang.value = language.elementAt(0);
     transLang.value = language.elementAt(1);
     searchController = TextEditingController();
-    terms = Terms();
+
     initGetTranslationFuture();
   }
 
   @override
   void onClose() {
+    scrollController.dispose();
     searchController.dispose();
 
     super.onClose();
@@ -54,21 +67,33 @@ class TranslateController extends GetxController {
     var temp = originLang.value;
     originLang.value = transLang.value;
     transLang.value = temp;
+    update();
 
+    toTop();
     initGetTranslationFuture();
+  }
+
+  void toTop() {
+    scrollController.animateTo(0,
+        duration: Duration(milliseconds: 300), curve: Curves.fastOutSlowIn);
+
+    toTopDebouncer.run(() {
+      update();
+      scrollTop.value = false;
+    });
   }
 
   void initGetTranslationFuture() {
     getTranslationFuture = getTranslation();
   }
 
-  Future getTranslation() async {
+  Future<void> getTranslation() async {
     var search = searchController.text;
 
-    terms!.terms = List.empty();
+    terms = [];
 
     if (search == "") {
-      return terms;
+      return;
     } else {
       try {
         var payload = {'language': originLang.value, 'search': search};
@@ -82,15 +107,15 @@ class TranslateController extends GetxController {
             .post('/library/translate', headers, payload)
             .then((response) {
           if (response.statusCode == 200) {
-            terms = Terms.parseTerms(response.body);
+            var res = response.body;
+
+            terms.addAll(Terms.parseTerms(res).terms);
           }
         });
-        return terms;
       } catch (e) {
         if (kDebugMode) {
           print(e.toString());
         }
-        return terms;
       }
     }
   }
@@ -143,7 +168,7 @@ class TranslateController extends GetxController {
         } else if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
-          } else if (snapshot.hasData && snapshot.data.terms.length > 0) {
+          } else if (terms.isNotEmpty) {
             return Column(
               children: <Widget>[
                 Padding(
@@ -161,7 +186,7 @@ class TranslateController extends GetxController {
                 SizedBox(
                   height: 15.0.h,
                 ),
-                termCard(snapshot.data),
+                termCard(terms),
                 SizedBox(
                   height: 100.0.h,
                 ),
@@ -203,12 +228,12 @@ class TranslateController extends GetxController {
     );
   }
 
-  Widget termCard(data) {
+  Widget termCard(List<Term> terms) {
     return ListView.builder(
         primary: false,
         shrinkWrap: true,
         padding: EdgeInsets.symmetric(horizontal: 25.0.w),
-        itemCount: data.terms != null ? data.terms.length : 0,
+        itemCount: terms.isNotEmpty ? terms.length : 0,
         itemBuilder: (BuildContext context, int index) {
           return Container(
             margin: EdgeInsets.only(bottom: 20.0.h),
@@ -237,8 +262,8 @@ class TranslateController extends GetxController {
               children: <Widget>[
                 Text(
                   originLang.value == language.elementAt(0)
-                      ? (data.terms[index].jahai_term ?? '')
-                      : (data.terms[index].malay_term ?? ''), //Search term
+                      ? (terms[index].jahai_term ?? '')
+                      : (terms[index].malay_term ?? ''), //Search term
                   style: TextStyle(
                       fontWeight: FontWeight.w800,
                       fontSize: 32.sp,
@@ -271,8 +296,8 @@ class TranslateController extends GetxController {
                               padding: EdgeInsets.only(left: 10.0.w),
                               child: Text(
                                 originLang.value == language.elementAt(0)
-                                    ? "- ${data.terms[index].malay_term}"
-                                    : "- ${data.terms[index].jahai_term}",
+                                    ? "- ${terms[index].malay_term}"
+                                    : "- ${terms[index].jahai_term}",
                                 style: TextStyle(
                                     fontSize: 16.sp, color: Colors.white),
                               ),
@@ -305,7 +330,7 @@ class TranslateController extends GetxController {
                 //           Padding(
                 //             padding: EdgeInsets.only(left: 10.0.w),
                 //             child: Text(
-                //               "- ${ data.terms[index].english_term }",
+                //               "- ${ terms[index].english_term }",
                 //               style: TextStyle(
                 //                   fontSize: 16.sp,
                 //                   color: Colors.white),
@@ -337,7 +362,7 @@ class TranslateController extends GetxController {
                         children: [
                           Expanded(
                             child: Text(
-                              (data.terms[index].description ?? ''),
+                              (terms[index].description ?? ''),
                               overflow: TextOverflow.visible,
                               softWrap: true,
                               style: TextStyle(
@@ -374,7 +399,7 @@ class TranslateController extends GetxController {
                           Padding(
                             padding: EdgeInsets.only(left: 10.0.w),
                             child: Text(
-                              "- ${data.terms[index].term_category}",
+                              "- ${terms[index].term_category}",
                               style: TextStyle(
                                   fontSize: 16.sp, color: Colors.white),
                             ),
@@ -645,6 +670,90 @@ class TranslateController extends GetxController {
               ],
             ),
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget languageSwitcher() {
+    return Container(
+      margin: EdgeInsets.only(bottom: 5.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        // borderRadius: const BorderRadius.only(
+        //   topLeft: Radius.circular(15),
+        //   topRight: Radius.circular(15),
+        // ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.white.withOpacity(0.5),
+            spreadRadius: 7,
+            blurRadius: 5,
+            offset: const Offset(7, 0), // changes position of shadow
+          ),
+        ],
+      ),
+      height: 80.0.h,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          const Spacer(),
+          Expanded(
+            child: Center(
+                child: Text(
+              capitalize(originLang.value),
+              style: TextStyle(
+                  color: Colors.grey[800],
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14.sp),
+            )),
+          ),
+          Expanded(
+            flex: 3,
+            child: Center(
+              child: Container(
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: const [
+                        Color(0xffeb7c91),
+                        Color(0xffec6882),
+                      ],
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        offset: Offset(5, 10),
+                        blurRadius: 20.0,
+                        color: const Color(0xffec6882).withOpacity(0.4),
+                      )
+                    ],
+                    borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                child: IconButton(
+                  onPressed: () {
+                    switchLang();
+                  },
+                  color: Colors.white,
+                  icon: Icon(
+                    Icons.swap_horiz,
+                    size: 24.w,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: Center(
+                child: Text(
+              capitalize(transLang.value),
+              style: TextStyle(
+                  color: Colors.grey[800],
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14.sp),
+            )),
+          ),
+          const Spacer()
         ],
       ),
     );

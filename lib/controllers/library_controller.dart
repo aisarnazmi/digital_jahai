@@ -8,19 +8,20 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
 // Project imports:
-import '../utils/debounce.dart';
+import '../utils/debouncer.dart';
 import '../utils/http_service.dart';
 
 class LibraryController extends GetxController {
   var isLoading = false.obs;
   var isSuccess = false.obs;
 
+  final closeModalDebouncer = Debouncer(milliseconds: 2000);
+
   late TextEditingController jahaiTermController;
   late TextEditingController malayTermController;
   late TextEditingController englishTermController;
   late TextEditingController descriptionController;
   late TextEditingController termCategoryController;
-
   late Future storeTermFuture;
 
   @override
@@ -88,7 +89,7 @@ class LibraryController extends GetxController {
   }
 
   void closeModal() {
-    Debouncer(milliseconds: 2000).run(() {
+    closeModalDebouncer.run(() {
       Get.back();
     });
   }

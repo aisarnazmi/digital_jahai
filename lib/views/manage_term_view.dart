@@ -11,7 +11,6 @@ import 'package:sticky_headers/sticky_headers.dart';
 // Project imports:
 import '../controllers/manage_term_controller.dart';
 import '../controllers/menu_controller.dart';
-import '../utils/debounce.dart';
 
 class ManageTermView extends GetView<ManageTermController> {
   ManageTermView({Key? key}) : super(key: key);
@@ -96,7 +95,7 @@ class ManageTermView extends GetView<ManageTermController> {
                                 controller.isTyping.value = true;
                                 controller.update();
 
-                                Debouncer(milliseconds: 1500).run(() {
+                                controller.serchDebouncer.run(() {
                                   controller.update();
                                   controller.isTyping.value = false;
                                   controller.terms = [];
@@ -114,8 +113,7 @@ class ManageTermView extends GetView<ManageTermController> {
                                 ),
                                 hintText: "Search...",
                                 hintStyle: TextStyle(color: Colors.black54),
-                                suffixIcon: controller
-                                            .searchController.text ==
+                                suffixIcon: controller.searchController.text ==
                                         ""
                                     ? null
                                     : IconButton(
@@ -188,16 +186,7 @@ class ManageTermView extends GetView<ManageTermController> {
                       borderRadius: BorderRadius.all(Radius.circular(50.0))),
                   child: IconButton(
                     onPressed: () {
-                      controller.scrollController.animateTo(0,
-                          duration:
-                              Duration(milliseconds: 500), //duration of scroll
-                          curve: Curves.fastOutSlowIn //scroll type
-                          );
-
-                      Debouncer(milliseconds: 500).run(() {
-                        controller.update();
-                        controller.scrollTop.value = false;
-                      });
+                      controller.toTop();
                     },
                     color: Colors.white,
                     icon: Icon(

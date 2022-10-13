@@ -16,47 +16,46 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 // Project imports:
 import '../models/index.dart';
-import '../utils/debounce.dart';
+import '../utils/debouncer.dart';
 import '../utils/http_service.dart';
 
 enum Action { update, delete }
 
 class ManageTermController extends GetxController {
+  List<Term> terms = [];
+  String token = "";
+
   var isTyping = false.obs;
   var isLoading = false.obs;
   var isSuccess = false.obs;
-
-  late ScrollController scrollController;
   var scrollTop = false.obs;
   var currentPage = 1;
   var prevPage = 0;
   var lastPage = 1;
 
-  List<Term> terms = [];
+  final serchDebouncer = Debouncer(milliseconds: 1500);
+  final toTopDebouncer = Debouncer(milliseconds: 300);
+  final openModalDebouncer = Debouncer(milliseconds: 2300);
+  final closeModalDebouncer = Debouncer(milliseconds: 2000);
+  final _formKey = GlobalKey<FormState>();
 
+  late ScrollController scrollController;
   late TextEditingController searchController;
   late TextEditingController jahaiTermController;
   late TextEditingController malayTermController;
   late TextEditingController englishTermController;
   late TextEditingController descriptionController;
   late TextEditingController termCategoryController;
-
-  final _formKey = GlobalKey<FormState>();
-
   late Future getTermListFuture;
   late Future manageTermFuture;
-
   late GetStorage box;
-  String token = "";
 
   @override
   Future<void> onInit() async {
     super.onInit();
-
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
 
     scrollController = ScrollController();
-
     scrollController.addListener(() {
       if (scrollController.offset > 10.0 && scrollTop.isFalse) {
         update();
@@ -102,6 +101,16 @@ class ManageTermController extends GetxController {
     super.onClose();
   }
 
+  void toTop() {
+    scrollController.animateTo(0,
+        duration: Duration(milliseconds: 300), curve: Curves.fastOutSlowIn);
+
+    toTopDebouncer.run(() {
+      update();
+      scrollTop.value = false;
+    });
+  }
+
   void openDetailModal(data) {
     showCupertinoModalBottomSheet(
         context: Get.context as BuildContext,
@@ -111,7 +120,7 @@ class ManageTermController extends GetxController {
   }
 
   void closeModal() {
-    Debouncer(milliseconds: 2000).run(() {
+    closeModalDebouncer.run(() {
       Get.back();
     });
   }
@@ -205,7 +214,7 @@ class ManageTermController extends GetxController {
         terms[index] = Term.fromJson(updatedData);
         isSuccess.value = true;
       } else {
-        Debouncer(milliseconds: 2300).run(() {
+        openModalDebouncer.run(() {
           openDetailModal(terms[index]);
         });
       }
@@ -239,7 +248,7 @@ class ManageTermController extends GetxController {
 
         isSuccess.value = true;
       } else {
-        Debouncer(milliseconds: 2300).run(() {
+        openModalDebouncer.run(() {
           openDetailModal(terms[index]);
         });
       }
