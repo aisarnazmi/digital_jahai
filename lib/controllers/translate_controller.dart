@@ -23,7 +23,6 @@ class TranslateController extends GetxController {
   var scrollTop = false.obs;
 
   final serchDebouncer = Debouncer(milliseconds: 1500);
-  final toTopDebouncer = Debouncer(milliseconds: 300);
 
   late TextEditingController searchController;
   late ScrollController scrollController;
@@ -35,14 +34,21 @@ class TranslateController extends GetxController {
 
     scrollController = ScrollController();
     scrollController.addListener(() {
-      if (scrollController.offset > 180.h && scrollTop.isFalse) {
+      if (scrollController.offset > 300.0 && scrollTop.isFalse) {
         update();
         scrollTop.value = true;
       }
 
+      if (scrollController.offset < 150.0 && scrollTop.isTrue) {
+        update();
+        scrollTop.value = false;
+      }
+
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
-        print('bottom');
+        // if (currentPage <= lastPage) {
+        //   initGetTermListFuture();
+        // }
       }
     });
 
@@ -76,11 +82,6 @@ class TranslateController extends GetxController {
   void toTop() {
     scrollController.animateTo(0,
         duration: Duration(milliseconds: 300), curve: Curves.fastOutSlowIn);
-
-    toTopDebouncer.run(() {
-      update();
-      scrollTop.value = false;
-    });
   }
 
   void initGetTranslationFuture() {
@@ -214,7 +215,7 @@ class TranslateController extends GetxController {
                         )),
                     SizedBox(height: 10.0.h),
                     Text((isTyping.isFalse && searchController.text != "")
-                        ? "Sorry! No translation found.."
+                        ? "Sorry! No translation found."
                         : ''),
                   ],
                 ),
@@ -250,8 +251,9 @@ class TranslateController extends GetxController {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    offset: Offset(5, 10),
-                    blurRadius: 20.0,
+                    spreadRadius: 1,
+                    blurRadius: 5,
+                    offset: const Offset(0, 5),
                     color: const Color(0xff181d5f).withOpacity(0.5),
                   )
                 ],
@@ -431,8 +433,9 @@ class TranslateController extends GetxController {
           ),
           boxShadow: [
             BoxShadow(
-              offset: Offset(5, 10),
-              blurRadius: 20.0,
+              spreadRadius: 1,
+              blurRadius: 5,
+              offset: const Offset(0, 5),
               color: const Color(0xff181d5f).withOpacity(0.5),
             )
           ],

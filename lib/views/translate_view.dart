@@ -182,7 +182,7 @@ class TranslateView extends GetView<TranslateController> {
             ),
             bottomSheet: controller.languageSwitcher(),
             floatingActionButton: AnimatedOpacity(
-                duration: Duration(milliseconds: 1000),
+                duration: Duration(milliseconds: 500),
                 opacity: controller.scrollTop.isTrue ? 1.0 : 0.0,
                 child: Container(
                   margin: EdgeInsets.only(bottom: 60.h, right: 10.w),

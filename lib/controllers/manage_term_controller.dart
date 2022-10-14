@@ -34,7 +34,6 @@ class ManageTermController extends GetxController {
   var lastPage = 1;
 
   final serchDebouncer = Debouncer(milliseconds: 1500);
-  final toTopDebouncer = Debouncer(milliseconds: 300);
   final openModalDebouncer = Debouncer(milliseconds: 2300);
   final closeModalDebouncer = Debouncer(milliseconds: 2000);
   final _formKey = GlobalKey<FormState>();
@@ -60,6 +59,11 @@ class ManageTermController extends GetxController {
       if (scrollController.offset > 10.0 && scrollTop.isFalse) {
         update();
         scrollTop.value = true;
+      }
+
+      if (scrollController.offset < 10.0 && scrollTop.isTrue) {
+        update();
+        scrollTop.value = false;
       }
 
       if (scrollController.position.pixels ==
@@ -104,11 +108,6 @@ class ManageTermController extends GetxController {
   void toTop() {
     scrollController.animateTo(0,
         duration: Duration(milliseconds: 300), curve: Curves.fastOutSlowIn);
-
-    toTopDebouncer.run(() {
-      update();
-      scrollTop.value = false;
-    });
   }
 
   void openDetailModal(data) {
@@ -270,8 +269,11 @@ class ManageTermController extends GetxController {
           return Center(
             child: Container(
               padding: EdgeInsets.only(top: 30.h, bottom: 30),
-              child: Lottie.asset('assets/lottie/typing-animation.json',
-                  height: 36),
+              child: searchController.text == ""
+                  ? Lottie.asset('assets/lottie/typing-animation.json',
+                      height: 36)
+                  : Text("No record found.",
+                      style: TextStyle(color: Colors.grey.shade600)),
             ),
           );
         } else {
@@ -282,7 +284,7 @@ class ManageTermController extends GetxController {
                 primary: false,
                 shrinkWrap: true,
                 padding: EdgeInsets.symmetric(horizontal: 25.w),
-                itemCount: terms.isEmpty ? 0 : terms.length,
+                itemCount: terms.isNotEmpty ? terms.length : 0,
                 itemBuilder: (BuildContext context, int index) {
                   return Column(
                     children: [
@@ -301,11 +303,9 @@ class ManageTermController extends GetxController {
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                                'Malay: ${terms[index].malay_term ?? '-'}'),
+                            Text('Malay: ${terms[index].malay_term ?? '-'}'),
                             SizedBox(height: 10.h),
-                            Text(
-                                'English: ${terms[index].english_term ?? ''}'),
+                            Text('English: ${terms[index].english_term ?? ''}'),
                           ],
                         ),
                         trailing: Column(
