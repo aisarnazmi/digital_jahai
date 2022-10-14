@@ -124,6 +124,13 @@ class ManageTermController extends GetxController {
     });
   }
 
+  void resetList() {
+    currentPage = 1;
+    prevPage = 0;
+    lastPage = 1;
+    terms = [];
+  }
+
   void initGetTermListFuture() {
     getTermListFuture = getTermList();
   }
@@ -147,6 +154,7 @@ class ManageTermController extends GetxController {
   }
 
   Future<void> getTermList() async {
+    print('Current: $currentPage, Prev: $prevPage, Last: $lastPage');
     isLoading.value = true;
     update();
 

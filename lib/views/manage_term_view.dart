@@ -98,9 +98,8 @@ class ManageTermView extends GetView<ManageTermController> {
                                 controller.serchDebouncer.run(() {
                                   controller.update();
                                   controller.isTyping.value = false;
-                                  controller.terms = [];
+                                  controller.resetList();
                                   controller.getTermList();
-                                  controller.update();
                                 });
                               },
                               decoration: InputDecoration(
@@ -127,9 +126,8 @@ class ManageTermView extends GetView<ManageTermController> {
                                           controller.searchController.clear();
                                           controller.isTyping.value = false;
                                           controller.update();
-                                          controller.terms = [];
+                                          controller.resetList();
                                           controller.getTermList();
-                                          controller.update();
                                         }),
                               ),
                             ),

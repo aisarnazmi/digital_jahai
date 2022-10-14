@@ -1,3 +1,6 @@
+// Dart imports:
+import 'dart:convert';
+
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +24,9 @@ class TranslateController extends GetxController {
   var transLang = "".obs;
   var isTyping = false.obs;
   var scrollTop = false.obs;
+  var currentPage = 1;
+  var prevPage = 0;
+  var lastPage = 1;
 
   final serchDebouncer = Debouncer(milliseconds: 1500);
 
@@ -46,9 +52,9 @@ class TranslateController extends GetxController {
 
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
-        // if (currentPage <= lastPage) {
-        //   initGetTermListFuture();
-        // }
+        if (currentPage <= lastPage) {
+          initGetTranslationFuture();
+        }
       }
     });
 
@@ -75,7 +81,7 @@ class TranslateController extends GetxController {
     transLang.value = temp;
     update();
 
-    toTop();
+    resetList();
     initGetTranslationFuture();
   }
 
@@ -84,48 +90,65 @@ class TranslateController extends GetxController {
         duration: Duration(milliseconds: 300), curve: Curves.fastOutSlowIn);
   }
 
+  void resetList() {
+    currentPage = 1;
+    prevPage = 0;
+    lastPage = 1;
+    terms = [];
+  }
+
   void initGetTranslationFuture() {
     getTranslationFuture = getTranslation();
   }
 
   Future<void> getTranslation() async {
-    var search = searchController.text;
+    print('Current: $currentPage, Prev: $prevPage, Last: $lastPage');
 
-    terms = [];
+    var language = originLang.value;
+    var search = searchController.text;
 
     if (search == "") {
       return;
-    } else {
-      try {
-        var payload = {'language': originLang.value, 'search': search};
+    }
 
-        final headers = {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        };
+    try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      };
 
-        await HttpService()
-            .post('/library/translate', headers, payload)
-            .then((response) {
-          if (response.statusCode == 200) {
-            var res = response.body;
+      await HttpService()
+          .get(
+              '/library/translate?page=$currentPage&language=$language&search=$search',
+              headers)
+          .then((response) {
+        if (response.statusCode == 200) {
+          var res = jsonDecode(response.body);
 
-            terms.addAll(Terms.parseTerms(res).terms);
+          if (res['current_page'] > prevPage) {
+            currentPage++;
+            prevPage = res['current_page'];
+            lastPage = res['last_page'];
+
+            terms.addAll(Terms.parseTerms(jsonEncode(res['data'])).terms);
           }
-        });
-      } catch (e) {
-        if (kDebugMode) {
-          print(e.toString());
         }
+      });
+    } catch (e) {
+      if (kDebugMode) {
+        print(e.toString());
       }
     }
+
+    update();
   }
 
   Widget translationListBuilder() {
     return FutureBuilder<dynamic>(
       future: getTranslationFuture,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
+        if (terms.isEmpty &&
+            snapshot.connectionState == ConnectionState.waiting) {
           if (searchController.text == "") {
             return Center(
               child: Padding(
@@ -166,7 +189,7 @@ class TranslateController extends GetxController {
               ],
             );
           }
-        } else if (snapshot.connectionState == ConnectionState.done) {
+        } else {
           if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else if (terms.isNotEmpty) {
@@ -188,9 +211,13 @@ class TranslateController extends GetxController {
                   height: 15.0.h,
                 ),
                 termCard(terms),
-                SizedBox(
-                  height: 100.0.h,
-                ),
+                if (currentPage < lastPage) ...[
+                  skeletonCard()
+                ] else ...[
+                  SizedBox(
+                    height: 50.0.h,
+                  ),
+                ],
               ],
             );
           } else {
@@ -222,8 +249,6 @@ class TranslateController extends GetxController {
               ),
             );
           }
-        } else {
-          return Text('State: ${snapshot.connectionState}');
         }
       },
     );
@@ -735,6 +760,7 @@ class TranslateController extends GetxController {
                     borderRadius: BorderRadius.all(Radius.circular(15.0))),
                 child: IconButton(
                   onPressed: () {
+                    toTop();
                     switchLang();
                   },
                   color: Colors.white,

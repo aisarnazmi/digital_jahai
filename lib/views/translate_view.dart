@@ -131,10 +131,11 @@ class TranslateView extends GetView<TranslateController> {
                                     controller.update();
 
                                     controller.serchDebouncer.run(() {
-                                      controller.update();
                                       controller.isTyping.value = false;
-                                      controller.initGetTranslationFuture();
+                                      controller.toTop();
                                       controller.update();
+                                      controller.resetList();
+                                      controller.initGetTranslationFuture();
                                     });
                                   },
                                   decoration: InputDecoration(
@@ -160,13 +161,12 @@ class TranslateView extends GetView<TranslateController> {
                                                     'assets/lottie/typing-animation.json')
                                                 : Icon(Icons.close),
                                             onPressed: () {
-                                              controller.searchController
-                                                  .clear();
+                                              controller.searchController.clear();
                                               controller.isTyping.value = false;
+                                              controller.toTop();
                                               controller.update();
-                                              controller
-                                                  .initGetTranslationFuture();
-                                              controller.update();
+                                              controller.resetList();
+                                              controller.initGetTranslationFuture();
                                             }),
                                   ),
                                 ),
