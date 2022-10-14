@@ -102,7 +102,6 @@ class TranslateController extends GetxController {
   }
 
   Future<void> getTranslation() async {
-    print('Current: $currentPage, Prev: $prevPage, Last: $lastPage');
 
     var language = originLang.value;
     var search = searchController.text;

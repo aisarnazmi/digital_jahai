@@ -154,7 +154,6 @@ class ManageTermController extends GetxController {
   }
 
   Future<void> getTermList() async {
-    print('Current: $currentPage, Prev: $prevPage, Last: $lastPage');
     isLoading.value = true;
     update();
 
