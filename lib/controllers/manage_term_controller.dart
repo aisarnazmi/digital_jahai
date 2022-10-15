@@ -218,6 +218,7 @@ class ManageTermController extends GetxController {
 
     try {
       var payload = {
+        "id": id,
         "jahai_term": jahaiTermController.text,
         "malay_term": malayTermController.text,
         "english_term": englishTermController.text,
@@ -232,7 +233,7 @@ class ManageTermController extends GetxController {
       };
 
       final response =
-          await HttpService().put('/library/$id', headers, payload);
+          await HttpService().post('/library/update', headers, payload);
 
       var index = terms.indexWhere((element) => element.id == id);
 
@@ -271,7 +272,7 @@ class ManageTermController extends GetxController {
         'Authorization': 'Bearer $token',
       };
 
-      final response = await HttpService().delete('/library/$id', headers);
+      final response = await HttpService().get('/library/delete?id=$id', headers);
 
       var index = terms.indexWhere((element) => element.id == id);
 
