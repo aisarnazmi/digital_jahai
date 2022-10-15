@@ -11,7 +11,7 @@ const Color colorBackgroundLight = Color(0xffffffff);
 const Color colorBackgroundDark = Color(0xfffafafa);
 
 const Color colorTextLight = Color(0xffffffff);
-const Color colorTextDark = Color(0xffffffff);
+const Color colorTextDark = Color(0xff757575);
 const Color colorTextDarker = Color(0xff373737);
 const Color colorPlaceholderText = Color(0x89000000);
 const Color colorErrorText = Color(0xfff44336);

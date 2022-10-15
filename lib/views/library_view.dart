@@ -1,4 +1,5 @@
 // Flutter imports:
+import '../constants/color.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -19,7 +20,7 @@ class LibraryView extends GetView<LibraryController> {
         init: LibraryController(),
         builder: (controller) {
           return Scaffold(
-            backgroundColor: const Color(0xfffafafa),
+            backgroundColor: colorBackgroundDark,
             body: SafeArea(
               child: SingleChildScrollView(
                 child: Padding(
@@ -32,12 +33,12 @@ class LibraryView extends GetView<LibraryController> {
                           Container(
                             margin: EdgeInsets.symmetric(horizontal: 20.0.w),
                             decoration: BoxDecoration(
-                                color: Color(0xffec6882),
+                                color: colorSecondaryDark,
                                 boxShadow: [
                                   BoxShadow(
                                     offset: Offset(3, 3),
                                     blurRadius: 10.0,
-                                    color: const Color(0xffec6882)
+                                    color: colorSecondaryDark
                                         .withOpacity(0.5),
                                   )
                                 ],
@@ -47,7 +48,7 @@ class LibraryView extends GetView<LibraryController> {
                               onPressed: () {
                                 Get.back();
                               },
-                              color: Colors.white,
+                              color: colorTextLight,
                               icon: Icon(
                                 IconlyLight.arrow_left_2,
                                 size: 22,
@@ -86,7 +87,7 @@ class LibraryView extends GetView<LibraryController> {
                             children: <Widget>[
                               Text("Add New Term to Repository",
                                   style: TextStyle(
-                                      color: const Color(0xff181d5f),
+                                      color: colorPrimaryLight,
                                       fontSize: 20.sp,
                                       fontWeight: FontWeight.w600)),
                               SizedBox(
@@ -98,14 +99,14 @@ class LibraryView extends GetView<LibraryController> {
                                 children: [
                                   Container(
                                     decoration: BoxDecoration(
-                                      color: Colors.white,
+                                      color: colorBackgroundLight,
                                       borderRadius: BorderRadius.circular(10),
                                       boxShadow: [
                                         BoxShadow(
                                           offset: Offset(0, 2),
                                           blurRadius: 3.0,
-                                          color: Color(0xFF8B8DA3)
-                                              .withOpacity(0.3),
+                                          color: colorShadow
+                                              .withOpacity(0.5),
                                         )
                                       ],
                                     ),
@@ -115,7 +116,7 @@ class LibraryView extends GetView<LibraryController> {
                                       decoration: InputDecoration(
                                         labelText: 'Jahai Term',
                                         labelStyle: TextStyle(
-                                          color: Colors.grey,
+                                          color: colorPlaceholderText,
                                         ),
                                         enabledBorder: OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
@@ -123,17 +124,17 @@ class LibraryView extends GetView<LibraryController> {
                                             borderSide: BorderSide(
                                                 color: !!controller.errors
                                                         .contains("jahai")
-                                                    ? Colors.red.shade500
-                                                    : Colors.transparent)),
+                                                    ? colorErrorText
+                                                    : colorTransparent)),
                                         focusedBorder: OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(10.0)),
                                             borderSide:
-                                                BorderSide(color: Colors.grey)),
+                                                BorderSide(color: colorBorder)),
                                         suffixIcon: !!controller.errors
                                                 .contains("jahai")
                                             ? Icon(Icons.error,
-                                                color: const Color(0xffec6882))
+                                                color: colorSecondaryDark)
                                             : null,
                                       ),
                                     ),
@@ -147,14 +148,14 @@ class LibraryView extends GetView<LibraryController> {
                                   ],
                                   Container(
                                     decoration: BoxDecoration(
-                                      color: Color(0xFFFFFFFF),
+                                      color: colorBackgroundLight,
                                       borderRadius: BorderRadius.circular(10),
                                       boxShadow: [
                                         BoxShadow(
                                           offset: Offset(0, 2),
                                           blurRadius: 3.0,
-                                          color: Color(0xFF8B8DA3)
-                                              .withOpacity(0.3),
+                                          color: colorShadow
+                                              .withOpacity(0.5),
                                         )
                                       ],
                                     ),
@@ -164,7 +165,7 @@ class LibraryView extends GetView<LibraryController> {
                                       decoration: InputDecoration(
                                         labelText: 'Malay Term',
                                         labelStyle: TextStyle(
-                                          color: Colors.grey,
+                                          color: colorPlaceholderText,
                                         ),
                                         enabledBorder: OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
@@ -172,17 +173,17 @@ class LibraryView extends GetView<LibraryController> {
                                             borderSide: BorderSide(
                                                 color: !!controller.errors
                                                         .contains("malay")
-                                                    ? Colors.red.shade500
-                                                    : Colors.transparent)),
+                                                    ? colorErrorText
+                                                    : colorTransparent)),
                                         focusedBorder: OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(10.0)),
                                             borderSide:
-                                                BorderSide(color: Color(0xFF9E9E9E))),
+                                                BorderSide(color: colorBorder)),
                                         suffixIcon: !!controller.errors
                                                 .contains("malay")
                                             ? Icon(Icons.error,
-                                                color: const Color(0xffec6882))
+                                                color: colorSecondaryDark)
                                             : null,
                                       ),
                                     ),
@@ -196,14 +197,14 @@ class LibraryView extends GetView<LibraryController> {
                                   ],
                                   Container(
                                     decoration: BoxDecoration(
-                                      color: Color.fromRGBO(255, 255, 255, 1),
+                                      color: colorBackgroundLight,
                                       borderRadius: BorderRadius.circular(10),
                                       boxShadow: [
                                         BoxShadow(
                                           offset: Offset(0, 2),
                                           blurRadius: 3.0,
-                                          color: Color(0xFF8B8DA3)
-                                              .withOpacity(0.3),
+                                          color: colorShadow
+                                              .withOpacity(0.5),
                                         )
                                       ],
                                     ),
@@ -213,7 +214,7 @@ class LibraryView extends GetView<LibraryController> {
                                       decoration: InputDecoration(
                                         labelText: 'English Term',
                                         labelStyle: TextStyle(
-                                          color: Colors.grey,
+                                          color: colorPlaceholderText,
                                         ),
                                         enabledBorder: OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
@@ -221,17 +222,17 @@ class LibraryView extends GetView<LibraryController> {
                                             borderSide: BorderSide(
                                                 color: !!controller.errors
                                                         .contains("english")
-                                                    ? Colors.red.shade500
-                                                    : Colors.transparent)),
+                                                    ? colorErrorText
+                                                    : colorTransparent)),
                                         focusedBorder: OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(10.0)),
                                             borderSide:
-                                                BorderSide(color: Colors.grey)),
+                                                BorderSide(color: colorBorder)),
                                         suffixIcon: !!controller.errors
                                                 .contains("english")
                                             ? Icon(Icons.error,
-                                                color: const Color(0xffec6882))
+                                                color: colorSecondaryDark)
                                             : null,
                                       ),
                                     ),
@@ -245,14 +246,14 @@ class LibraryView extends GetView<LibraryController> {
                                   ],
                                   Container(
                                     decoration: BoxDecoration(
-                                      color: Colors.white,
+                                      color: colorBackgroundLight,
                                       borderRadius: BorderRadius.circular(10),
                                       boxShadow: [
                                         BoxShadow(
                                           offset: Offset(0, 2),
                                           blurRadius: 3.0,
-                                          color: Color(0xFF8B8DA3)
-                                              .withOpacity(0.3),
+                                          color: colorShadow
+                                              .withOpacity(0.5),
                                         )
                                       ],
                                     ),
@@ -264,7 +265,7 @@ class LibraryView extends GetView<LibraryController> {
                                       decoration: InputDecoration(
                                         labelText: 'Description',
                                         labelStyle: TextStyle(
-                                          color: Colors.grey,
+                                          color: colorPlaceholderText,
                                         ),
                                         enabledBorder: OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
@@ -272,17 +273,17 @@ class LibraryView extends GetView<LibraryController> {
                                             borderSide: BorderSide(
                                                 color: !!controller.errors
                                                         .contains("description")
-                                                    ? Colors.red.shade500
-                                                    : Colors.transparent)),
+                                                    ? colorErrorText
+                                                    : colorTransparent)),
                                         focusedBorder: OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(10.0)),
                                             borderSide:
-                                                BorderSide(color: Colors.grey)),
+                                                BorderSide(color: colorBorder)),
                                         suffixIcon: !!controller.errors
                                                 .contains("description")
                                             ? Icon(Icons.error,
-                                                color: const Color(0xffec6882))
+                                                color: colorSecondaryDark)
                                             : null,
                                       ),
                                     ),
@@ -296,14 +297,14 @@ class LibraryView extends GetView<LibraryController> {
                                   ],
                                   Container(
                                     decoration: BoxDecoration(
-                                      color: Colors.white,
+                                      color: colorBackgroundLight,
                                       borderRadius: BorderRadius.circular(10),
                                       boxShadow: [
                                         BoxShadow(
                                           offset: Offset(0, 2),
                                           blurRadius: 3.0,
-                                          color: Color(0xFF8B8DA3)
-                                              .withOpacity(0.3),
+                                          color: colorShadow
+                                              .withOpacity(0.5),
                                         )
                                       ],
                                     ),
@@ -313,7 +314,7 @@ class LibraryView extends GetView<LibraryController> {
                                       decoration: InputDecoration(
                                         labelText: 'Term Category',
                                         labelStyle: TextStyle(
-                                          color: Colors.grey,
+                                          color: colorPlaceholderText,
                                         ),
                                         enabledBorder: OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
@@ -321,17 +322,17 @@ class LibraryView extends GetView<LibraryController> {
                                             borderSide: BorderSide(
                                                 color: !!controller.errors
                                                         .contains("category")
-                                                    ? Colors.red.shade500
-                                                    : Colors.transparent)),
+                                                    ? colorErrorText
+                                                    : colorTransparent)),
                                         focusedBorder: OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(10.0)),
                                             borderSide:
-                                                BorderSide(color: Colors.grey)),
+                                                BorderSide(color: colorBorder)),
                                         suffixIcon: !!controller.errors
                                                 .contains("category")
                                             ? Icon(Icons.error,
-                                                color: const Color(0xffec6882))
+                                                color: colorSecondaryDark)
                                             : null,
                                       ),
                                     ),
@@ -345,17 +346,17 @@ class LibraryView extends GetView<LibraryController> {
                                     thickness: 0.3,
                                     indent: 5,
                                     endIndent: 5,
-                                    color: Colors.grey,
+                                    color: colorPlaceholderText,
                                   ),
                                   Container(
                                     width: double.infinity,
                                     decoration: BoxDecoration(
-                                        color: Color(0xffec6882),
+                                        color: colorSecondaryDark,
                                         boxShadow: [
                                           BoxShadow(
                                             offset: Offset(3, 3),
                                             blurRadius: 10.0,
-                                            color: const Color(0xffec6882)
+                                            color: colorSecondaryDark
                                                 .withOpacity(0.5),
                                           )
                                         ],
@@ -370,7 +371,7 @@ class LibraryView extends GetView<LibraryController> {
                                         if (controller.validate()) {
                                           showCupertinoModalBottomSheet(
                                               context: context,
-                                              backgroundColor: Colors.white,
+                                              backgroundColor: colorBackgroundLight,
                                               isDismissible: false,
                                               builder: (context) {
                                                 return controller.statusModal();
@@ -382,7 +383,7 @@ class LibraryView extends GetView<LibraryController> {
                                       },
                                       child: Text("Sumbit",
                                           style: TextStyle(
-                                            color: Colors.white,
+                                            color: colorBackgroundLight,
                                             fontWeight: FontWeight.w600,
                                           )),
                                     ),

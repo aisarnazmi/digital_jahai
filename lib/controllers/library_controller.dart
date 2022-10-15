@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:digital_jahai/constants/color.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -59,7 +60,7 @@ class LibraryController extends GetxController {
   }
 
   bool validate() {
-    errors = [];  
+    errors = [];
 
     errors.addIf(jahaiTermController.text == "", "jahai");
     errors.addIf(malayTermController.text == "", "malay");
@@ -121,7 +122,7 @@ class LibraryController extends GetxController {
         margin: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
         child: Text(
           'Please input $field.',
-          style: TextStyle(color: Colors.red.shade500, fontSize: 12.sp),
+          style: TextStyle(color: colorErrorText, fontSize: 12.sp),
         ));
   }
 
@@ -154,7 +155,7 @@ class LibraryController extends GetxController {
                       ),
                       Text('Loading ...',
                           style: TextStyle(
-                              color: Colors.grey[600],
+                              color: colorTextDark,
                               fontSize: 18.sp,
                               fontWeight: FontWeight.w500))
                     ],
@@ -176,7 +177,7 @@ class LibraryController extends GetxController {
                         ),
                         Text('Opps.. Something went wrong!',
                             style: TextStyle(
-                                color: Colors.grey[600],
+                                color: colorTextDark,
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.w500))
                       ],
@@ -202,7 +203,7 @@ class LibraryController extends GetxController {
                                 ? 'New term was added.'
                                 : 'Opps.. Something went wrong!'),
                             style: TextStyle(
-                                color: Colors.grey[600],
+                                color: colorTextDark,
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.w500))
                       ],
