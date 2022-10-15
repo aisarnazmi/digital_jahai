@@ -157,7 +157,8 @@ class LibraryController extends GetxController {
                           style: TextStyle(
                               color: colorTextDark,
                               fontSize: 16.sp,
-                              fontWeight: FontWeight.w500))
+                              fontWeight: FontWeight.w500)),
+                      SizedBox(height: 10)
                     ],
                   ),
                 );
@@ -179,7 +180,8 @@ class LibraryController extends GetxController {
                             style: TextStyle(
                                 color: colorTextDark,
                                 fontSize: 16.sp,
-                                fontWeight: FontWeight.w500))
+                                fontWeight: FontWeight.w500)),
+                        SizedBox(height: 10)
                       ],
                     ),
                   );
@@ -205,7 +207,8 @@ class LibraryController extends GetxController {
                             style: TextStyle(
                                 color: colorTextDark,
                                 fontSize: 16.sp,
-                                fontWeight: FontWeight.w500))
+                                fontWeight: FontWeight.w500)),
+                        SizedBox(height: 10)
                       ],
                     ),
                   );

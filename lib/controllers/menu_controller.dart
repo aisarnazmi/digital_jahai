@@ -7,6 +7,7 @@ import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
@@ -36,6 +37,21 @@ class MenuController extends GetxController {
     if (box.read('firsttime') != null) {
       isFirstTime = box.read('firsttime');
     }
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+
+    Future.delayed(Duration(milliseconds: 1000), () {
+      if (isFirstTime) {
+        showCupertinoModalBottomSheet(
+            context: Get.context as BuildContext,
+            backgroundColor: colorBackgroundLight,
+            isDismissible: false,
+            builder: (context) => keyboardDialogModal());
+      }
+    });
   }
 
   void openDrawer() {

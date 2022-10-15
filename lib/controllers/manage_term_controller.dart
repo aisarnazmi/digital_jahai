@@ -247,7 +247,7 @@ class ManageTermController extends GetxController {
         });
       }
       isLoading.value = false;
-      update();
+
     } catch (e) {
       if (kDebugMode) {
         print(e.toString());
@@ -285,7 +285,7 @@ class ManageTermController extends GetxController {
         });
       }
       isLoading.value = false;
-      update();
+      
     } catch (e) {
       if (kDebugMode) {
         print(e.toString());
@@ -307,8 +307,10 @@ class ManageTermController extends GetxController {
               child: searchController.text == ""
                   ? Lottie.asset('assets/lottie/typing-animation.json',
                       height: 36)
-                  :  isLoading.isFalse ? Text("No record found.",
-                      style: TextStyle(color: Colors.grey.shade600)) : null,
+                  : isLoading.isFalse
+                      ? Text("No record found.",
+                          style: TextStyle(color: Colors.grey.shade600))
+                      : null,
             ),
           );
         } else {
@@ -393,7 +395,8 @@ class ManageTermController extends GetxController {
           return Material(
             child: SafeArea(
               child: Padding(
-                padding: EdgeInsets.only(bottom: mediaQueryData.viewInsets.bottom),
+                padding:
+                    EdgeInsets.only(bottom: mediaQueryData.viewInsets.bottom),
                 child: SingleChildScrollView(
                   child: Container(
                       padding: EdgeInsets.symmetric(
@@ -411,7 +414,8 @@ class ManageTermController extends GetxController {
                                       fontWeight: FontWeight.w600)),
                               IconButton(
                                   onPressed: () {
-                                    FocusManager.instance.primaryFocus?.unfocus();
+                                    FocusManager.instance.primaryFocus
+                                        ?.unfocus();
                                     Get.back();
                                   },
                                   icon: Icon(Icons.close)),
@@ -535,9 +539,10 @@ class ManageTermController extends GetxController {
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(10.0)),
                                           borderSide: BorderSide(
-                                              color: !!errors.contains("english")
-                                                  ? colorErrorText
-                                                  : colorTransparent)),
+                                              color:
+                                                  !!errors.contains("english")
+                                                      ? colorErrorText
+                                                      : colorTransparent)),
                                       focusedBorder: OutlineInputBorder(
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(10.0)),
@@ -581,19 +586,20 @@ class ManageTermController extends GetxController {
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(10.0)),
                                           borderSide: BorderSide(
-                                              color:
-                                                  !!errors.contains("description")
-                                                      ? colorErrorText
-                                                      : colorTransparent)),
+                                              color: !!errors
+                                                      .contains("description")
+                                                  ? colorErrorText
+                                                  : colorTransparent)),
                                       focusedBorder: OutlineInputBorder(
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(10.0)),
                                           borderSide:
                                               BorderSide(color: colorBorder)),
-                                      suffixIcon: !!errors.contains("description")
-                                          ? Icon(Icons.error,
-                                              color: colorSecondaryDark)
-                                          : null,
+                                      suffixIcon:
+                                          !!errors.contains("description")
+                                              ? Icon(Icons.error,
+                                                  color: colorSecondaryDark)
+                                              : null,
                                     ),
                                   ),
                                 ),
@@ -626,9 +632,10 @@ class ManageTermController extends GetxController {
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(10.0)),
                                           borderSide: BorderSide(
-                                              color: !!errors.contains("category")
-                                                  ? colorErrorText
-                                                  : colorTransparent)),
+                                              color:
+                                                  !!errors.contains("category")
+                                                      ? colorErrorText
+                                                      : colorTransparent)),
                                       focusedBorder: OutlineInputBorder(
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(10.0)),
@@ -668,7 +675,8 @@ class ManageTermController extends GetxController {
                                               Radius.circular(10.0))),
                                       child: IconButton(
                                         onPressed: () {
-                                          FocusManager.instance.primaryFocus?.unfocus();
+                                          FocusManager.instance.primaryFocus
+                                              ?.unfocus();
 
                                           if (isLoading.isTrue) {
                                             return;
@@ -698,7 +706,8 @@ class ManageTermController extends GetxController {
                                                 Radius.circular(10.0))),
                                         child: TextButton(
                                           onPressed: () {
-                                            FocusManager.instance.primaryFocus?.unfocus();
+                                            FocusManager.instance.primaryFocus
+                                                ?.unfocus();
 
                                             if (isLoading.isTrue) {
                                               return;
@@ -771,7 +780,8 @@ class ManageTermController extends GetxController {
                           style: TextStyle(
                               color: colorTextDark,
                               fontSize: 16.sp,
-                              fontWeight: FontWeight.w500))
+                              fontWeight: FontWeight.w500)),
+                      SizedBox(height: 10)
                     ],
                   ),
                 );
@@ -793,7 +803,8 @@ class ManageTermController extends GetxController {
                             style: TextStyle(
                                 color: colorTextDark,
                                 fontSize: 16.sp,
-                                fontWeight: FontWeight.w500))
+                                fontWeight: FontWeight.w500)),
+                        SizedBox(height: 10)
                       ],
                     ),
                   );
@@ -821,7 +832,8 @@ class ManageTermController extends GetxController {
                             style: TextStyle(
                                 color: colorTextDark,
                                 fontSize: 16.sp,
-                                fontWeight: FontWeight.w500))
+                                fontWeight: FontWeight.w500)),
+                        SizedBox(height: 10)
                       ],
                     ),
                   );

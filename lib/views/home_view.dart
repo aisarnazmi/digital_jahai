@@ -33,16 +33,6 @@ class MenuScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(Duration(milliseconds: 700), () {
-      if (menuC.isFirstTime) {
-        showCupertinoModalBottomSheet(
-            context: context,
-            backgroundColor: colorBackgroundLight,
-            isDismissible: false,
-            builder: (context) => menuC.keyboardDialogModal());
-      }
-    });
-
     return Obx(() => Container(
           padding: EdgeInsets.only(top: 75.h, left: 25.w, bottom: 40.h),
           decoration: const BoxDecoration(
