@@ -274,6 +274,9 @@ class AuthController extends GetxController {
                                           fontWeight: FontWeight.w600)),
                                   IconButton(
                                       onPressed: () {
+                                        errors = [];
+                                        update();
+
                                         Get.back();
                                       },
                                       icon: Icon(Icons.close)),

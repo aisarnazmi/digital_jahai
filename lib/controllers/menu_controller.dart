@@ -95,7 +95,7 @@ class MenuController extends GetxController {
                 height: 25.0.h,
               ),
               Text(
-                  "Digital Jahai application required International Phonetic Alphabet (IPA) Keyboard to be used with Jahai terms."),
+                  "Digital Jahai application required International Phonetic Alphabet (IPA) keyboard to be used with Jahai terms."),
               SizedBox(
                 height: 20.0.h,
               ),
@@ -130,7 +130,7 @@ class MenuController extends GetxController {
                 )
               ],
               Text(
-                  "* Now you can use IPA language while typing by switching keyboard language to IPA.")
+                  "* Now you can use IPA language while typing by switching to IPA keyboard.")
             ],
           ),
         ),
