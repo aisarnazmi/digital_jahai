@@ -99,8 +99,8 @@ class TranslateView extends GetView<TranslateController> {
                               Container(
                                 color: colorBackgroundDark,
                                 child: Container(
-                                  margin:
-                                      EdgeInsets.fromLTRB(20.w, 10.h, 20.w, 10.h),
+                                  margin: EdgeInsets.fromLTRB(
+                                      20.w, 10.h, 20.w, 10.h),
                                   decoration: BoxDecoration(
                                     color: colorBackgroundLight,
                                     borderRadius: BorderRadius.circular(10),
@@ -118,7 +118,7 @@ class TranslateView extends GetView<TranslateController> {
                                     onChanged: (_) {
                                       controller.isTyping.value = true;
                                       controller.update();
-                              
+
                                       controller.serchDebouncer.run(() {
                                         controller.isTyping.value = false;
                                         controller.toTop();
@@ -130,8 +130,8 @@ class TranslateView extends GetView<TranslateController> {
                                     decoration: InputDecoration(
                                       hintText:
                                           "Enter ${controller.originLang.value} term...",
-                                      hintStyle:
-                                          TextStyle(color: colorPlaceholderText),
+                                      hintStyle: TextStyle(
+                                          color: colorPlaceholderText),
                                       enabledBorder: OutlineInputBorder(
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(10.0)),
@@ -161,7 +161,8 @@ class TranslateView extends GetView<TranslateController> {
                                               onPressed: () {
                                                 controller.searchController
                                                     .clear();
-                                                controller.isTyping.value = false;
+                                                controller.isTyping.value =
+                                                    false;
                                                 controller.toTop();
                                                 controller.update();
                                                 controller.resetList();

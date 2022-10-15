@@ -9,6 +9,7 @@ import 'package:lottie/lottie.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 
 // Project imports:
+import '../constants/color.dart';
 import '../controllers/manage_term_controller.dart';
 import '../controllers/menu_controller.dart';
 
@@ -23,7 +24,7 @@ class ManageTermView extends GetView<ManageTermController> {
         init: ManageTermController(),
         builder: (controller) {
           return Scaffold(
-            backgroundColor: const Color(0xfffafafa),
+            backgroundColor: colorBackgroundDark,
             body: SafeArea(
               child: SingleChildScrollView(
                 controller: controller.scrollController,
@@ -37,13 +38,12 @@ class ManageTermView extends GetView<ManageTermController> {
                           Container(
                             margin: EdgeInsets.symmetric(horizontal: 20.0.w),
                             decoration: BoxDecoration(
-                                color: Color(0xffec6882),
+                                color: colorSecondaryDark,
                                 boxShadow: [
                                   BoxShadow(
                                     offset: Offset(3, 3),
                                     blurRadius: 10.0,
-                                    color: const Color(0xffec6882)
-                                        .withOpacity(0.5),
+                                    color: colorSecondaryDark.withOpacity(0.5),
                                   )
                                 ],
                                 borderRadius:
@@ -52,7 +52,7 @@ class ManageTermView extends GetView<ManageTermController> {
                               onPressed: () {
                                 Get.back();
                               },
-                              color: Colors.white,
+                              color: colorTextLight,
                               icon: Icon(
                                 IconlyLight.arrow_left_2,
                                 size: 22,
@@ -61,29 +61,25 @@ class ManageTermView extends GetView<ManageTermController> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 30.h),
+                      SizedBox(height: 20.h),
                       StickyHeader(
                           header: Container(
-                            margin: EdgeInsets.symmetric(horizontal: 20.w),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 20.0.w,
-                                vertical: 5.0.h // 5 top and bottom
-                                ),
+                            margin:
+                                EdgeInsets.symmetric(horizontal: 20.w),
                             decoration: BoxDecoration(
-                              color: Colors.white,
-                              // color: Colors.grey[100],
-                              border: Border.all(color: Colors.grey.shade300),
-                              borderRadius: BorderRadius.circular(12),
+                              color: colorBackgroundLight,
+                              borderRadius: BorderRadius.circular(10),
                               boxShadow: [
                                 BoxShadow(
                                   offset: Offset(0, 2),
                                   blurRadius: 3.0,
-                                  color: Color(0xFF8B8DA3).withOpacity(0.3),
+                                  color: colorShadow.withOpacity(0.3),
                                 )
                               ],
                             ),
-                            child: TextField(
+                            child: TextFormField(
                               controller: controller.searchController,
+                              onTap: () => menuC.closeDrawer(),
                               onChanged: (_) {
                                 controller.isTyping.value = true;
                                 controller.update();
@@ -96,40 +92,50 @@ class ManageTermView extends GetView<ManageTermController> {
                                 });
                               },
                               decoration: InputDecoration(
-                                enabledBorder: InputBorder.none,
-                                focusedBorder: InputBorder.none,
-                                icon: Icon(
-                                  IconlyBroken.search,
-                                  color: Colors.black54,
-                                  size: 22,
-                                ),
-                                hintText: "Search...",
-                                hintStyle: TextStyle(color: Colors.black54),
-                                suffixIcon: controller.searchController.text ==
-                                        ""
-                                    ? null
-                                    : IconButton(
-                                        color: Colors.black54,
-                                        iconSize: 24,
-                                        icon: controller.isTyping.value
-                                            ? Lottie.asset(
-                                                'assets/lottie/typing-animation.json')
-                                            : Icon(Icons.close),
-                                        onPressed: () {
-                                          controller.searchController.clear();
-                                          controller.isTyping.value = false;
-                                          controller.update();
-                                          controller.resetList();
-                                          controller.getTermList();
-                                        }),
-                              ),
+                                  hintText: "Search...",
+                                  hintStyle:
+                                      TextStyle(color: colorPlaceholderText),
+                                  enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10.0)),
+                                      borderSide: BorderSide(
+                                          color: colorTransparent)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10.0)),
+                                      borderSide:
+                                          BorderSide(color: colorBorder)),
+                                  prefixIcon: Icon(
+                                    IconlyBroken.search,
+                                    color: colorPlaceholderText,
+                                    size: 22,
+                                  ),
+                                  suffixIcon: controller
+                                              .searchController.text ==
+                                          ""
+                                      ? null
+                                      : IconButton(
+                                          color: colorPlaceholderText,
+                                          iconSize: 24,
+                                          icon: controller.isTyping.value
+                                              ? Lottie.asset(
+                                                  'assets/lottie/typing-animation.json')
+                                              : Icon(Icons.close),
+                                          onPressed: () {
+                                            controller.searchController
+                                                .clear();
+                                            controller.isTyping.value = false;
+                                            controller.update();
+                                            controller.resetList();
+                                            controller.getTermList();
+                                          })),
                             ),
                           ),
                           content: Column(
                             children: [
                               Container(
                                   margin:
-                                      EdgeInsets.fromLTRB(25.w, 25.h, 25.w, 0),
+                                      EdgeInsets.fromLTRB(25.w, 20.h, 25.w, 0),
                                   decoration: BoxDecoration(
                                       border: Border(
                                           bottom: BorderSide(
@@ -159,12 +165,12 @@ class ManageTermView extends GetView<ManageTermController> {
                 child: Container(
                   margin: EdgeInsets.only(bottom: 8.h, right: 10.w),
                   decoration: BoxDecoration(
-                      color: Color(0xffec6882),
+                      color: colorSecondaryDark,
                       boxShadow: [
                         BoxShadow(
                           offset: Offset(3, 3),
                           blurRadius: 10.0,
-                          color: const Color(0xffec6882).withOpacity(0.5),
+                          color: colorSecondaryDark.withOpacity(0.5),
                         )
                       ],
                       borderRadius: BorderRadius.all(Radius.circular(50.0))),
@@ -172,7 +178,7 @@ class ManageTermView extends GetView<ManageTermController> {
                     onPressed: () {
                       controller.toTop();
                     },
-                    color: Colors.white,
+                    color: colorTextLight,
                     icon: Icon(
                       IconlyLight.arrow_up_2,
                       size: 22,

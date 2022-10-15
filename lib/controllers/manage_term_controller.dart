@@ -15,6 +15,7 @@ import 'package:lottie/lottie.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 // Project imports:
+import '../constants/color.dart';
 import '../models/index.dart';
 import '../utils/debouncer.dart';
 import '../utils/http_service.dart';
@@ -113,7 +114,7 @@ class ManageTermController extends GetxController {
   void openDetailModal(data) {
     showCupertinoModalBottomSheet(
         context: Get.context as BuildContext,
-        backgroundColor: Colors.white,
+        backgroundColor: colorBackgroundLight,
         isDismissible: true,
         builder: (context) => detailModal(data));
   }
@@ -156,7 +157,7 @@ class ManageTermController extends GetxController {
 
     showCupertinoModalBottomSheet(
         context: Get.context as BuildContext,
-        backgroundColor: Colors.white,
+        backgroundColor: colorBackgroundLight,
         isDismissible: false,
         builder: (context) {
           return statusModal(action);
@@ -303,7 +304,7 @@ class ManageTermController extends GetxController {
           return Center(
             child: Container(
               padding: EdgeInsets.only(top: 30.h, bottom: 30),
-              child: searchController.text == ""
+              child: isLoading.isTrue || searchController.text == ""
                   ? Lottie.asset('assets/lottie/typing-animation.json',
                       height: 36)
                   : Text("No record found.",
@@ -361,7 +362,7 @@ class ManageTermController extends GetxController {
                             (index) => Expanded(
                                   child: Container(
                                     color: index % 2 == 0
-                                        ? Colors.transparent
+                                        ? colorTransparent
                                         : Colors.black54,
                                     height: 0.3,
                                   ),
@@ -403,7 +404,7 @@ class ManageTermController extends GetxController {
                           children: [
                             Text("Manage Term",
                                 style: TextStyle(
-                                    color: const Color(0xff181d5f),
+                                    color: colorPrimaryLight,
                                     fontSize: 20.sp,
                                     fontWeight: FontWeight.w600)),
                             IconButton(
@@ -422,13 +423,13 @@ class ManageTermController extends GetxController {
                                 children: [
                               Container(
                                 decoration: BoxDecoration(
-                                  color: Colors.white,
+                                  color: colorBackgroundLight,
                                   borderRadius: BorderRadius.circular(10),
                                   boxShadow: [
                                     BoxShadow(
                                       offset: Offset(0, 2),
                                       blurRadius: 3.0,
-                                      color: Color(0xFF8B8DA3).withOpacity(0.3),
+                                      color: colorShadow.withOpacity(0.5),
                                     )
                                   ],
                                 ),
@@ -437,23 +438,23 @@ class ManageTermController extends GetxController {
                                   decoration: InputDecoration(
                                     labelText: 'Jahai Term',
                                     labelStyle: TextStyle(
-                                      color: Colors.grey,
+                                      color: colorPlaceholderText,
                                     ),
                                     enabledBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(10.0)),
                                         borderSide: BorderSide(
                                             color: !!errors.contains("jahai")
-                                                ? Colors.red.shade500
-                                                : Colors.transparent)),
+                                                ? colorErrorText
+                                                : colorTransparent)),
                                     focusedBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(10.0)),
                                         borderSide:
-                                            BorderSide(color: Colors.grey)),
+                                            BorderSide(color: colorBorder)),
                                     suffixIcon: !!errors.contains("jahai")
                                         ? Icon(Icons.error,
-                                            color: const Color(0xffec6882))
+                                            color: colorSecondaryDark)
                                         : null,
                                   ),
                                 ),
@@ -466,13 +467,13 @@ class ManageTermController extends GetxController {
                               ],
                               Container(
                                 decoration: BoxDecoration(
-                                  color: Color.fromRGBO(255, 255, 255, 1),
+                                  color: colorBackgroundLight,
                                   borderRadius: BorderRadius.circular(10),
                                   boxShadow: [
                                     BoxShadow(
                                       offset: Offset(0, 2),
                                       blurRadius: 3.0,
-                                      color: Color(0xFF8B8DA3).withOpacity(0.3),
+                                      color: colorShadow.withOpacity(0.5),
                                     )
                                   ],
                                 ),
@@ -481,23 +482,23 @@ class ManageTermController extends GetxController {
                                   decoration: InputDecoration(
                                     labelText: 'Malay Term',
                                     labelStyle: TextStyle(
-                                      color: Colors.grey,
+                                      color: colorPlaceholderText,
                                     ),
                                     enabledBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(10.0)),
                                         borderSide: BorderSide(
                                             color: !!errors.contains("malay")
-                                                ? Colors.red.shade500
-                                                : Colors.transparent)),
+                                                ? colorErrorText
+                                                : colorTransparent)),
                                     focusedBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(10.0)),
                                         borderSide:
-                                            BorderSide(color: Colors.grey)),
+                                            BorderSide(color: colorBorder)),
                                     suffixIcon: !!errors.contains("malay")
                                         ? Icon(Icons.error,
-                                            color: const Color(0xffec6882))
+                                            color: colorSecondaryDark)
                                         : null,
                                   ),
                                 ),
@@ -510,13 +511,13 @@ class ManageTermController extends GetxController {
                               ],
                               Container(
                                 decoration: BoxDecoration(
-                                  color: Color.fromRGBO(255, 255, 255, 1),
+                                  color: colorBackgroundLight,
                                   borderRadius: BorderRadius.circular(10),
                                   boxShadow: [
                                     BoxShadow(
                                       offset: Offset(0, 2),
                                       blurRadius: 3.0,
-                                      color: Color(0xFF8B8DA3).withOpacity(0.3),
+                                      color: colorShadow.withOpacity(0.5),
                                     )
                                   ],
                                 ),
@@ -525,23 +526,23 @@ class ManageTermController extends GetxController {
                                   decoration: InputDecoration(
                                     labelText: 'English Term',
                                     labelStyle: TextStyle(
-                                      color: Colors.grey,
+                                      color: colorPlaceholderText,
                                     ),
                                     enabledBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(10.0)),
                                         borderSide: BorderSide(
                                             color: !!errors.contains("english")
-                                                ? Colors.red.shade500
-                                                : Colors.transparent)),
+                                                ? colorErrorText
+                                                : colorTransparent)),
                                     focusedBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(10.0)),
                                         borderSide:
-                                            BorderSide(color: Colors.grey)),
+                                            BorderSide(color: colorBorder)),
                                     suffixIcon: !!errors.contains("english")
                                         ? Icon(Icons.error,
-                                            color: const Color(0xffec6882))
+                                            color: colorSecondaryDark)
                                         : null,
                                   ),
                                 ),
@@ -554,13 +555,13 @@ class ManageTermController extends GetxController {
                               ],
                               Container(
                                 decoration: BoxDecoration(
-                                  color: Colors.white,
+                                  color: colorBackgroundLight,
                                   borderRadius: BorderRadius.circular(10),
                                   boxShadow: [
                                     BoxShadow(
                                       offset: Offset(0, 2),
                                       blurRadius: 3.0,
-                                      color: Color(0xFF8B8DA3).withOpacity(0.3),
+                                      color: colorShadow.withOpacity(0.5),
                                     )
                                   ],
                                 ),
@@ -571,7 +572,7 @@ class ManageTermController extends GetxController {
                                   decoration: InputDecoration(
                                     labelText: 'Description',
                                     labelStyle: TextStyle(
-                                      color: Colors.grey,
+                                      color: colorPlaceholderText,
                                     ),
                                     enabledBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.all(
@@ -579,16 +580,16 @@ class ManageTermController extends GetxController {
                                         borderSide: BorderSide(
                                             color:
                                                 !!errors.contains("description")
-                                                    ? Colors.red.shade500
-                                                    : Colors.transparent)),
+                                                    ? colorErrorText
+                                                    : colorTransparent)),
                                     focusedBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(10.0)),
                                         borderSide:
-                                            BorderSide(color: Colors.grey)),
+                                            BorderSide(color: colorBorder)),
                                     suffixIcon: !!errors.contains("description")
                                         ? Icon(Icons.error,
-                                            color: const Color(0xffec6882))
+                                            color: colorSecondaryDark)
                                         : null,
                                   ),
                                 ),
@@ -601,13 +602,13 @@ class ManageTermController extends GetxController {
                               ],
                               Container(
                                 decoration: BoxDecoration(
-                                  color: Colors.white,
+                                  color: colorBackgroundLight,
                                   borderRadius: BorderRadius.circular(10),
                                   boxShadow: [
                                     BoxShadow(
                                       offset: Offset(0, 2),
                                       blurRadius: 3.0,
-                                      color: Color(0xFF8B8DA3).withOpacity(0.3),
+                                      color: colorShadow.withOpacity(0.5),
                                     )
                                   ],
                                 ),
@@ -616,23 +617,23 @@ class ManageTermController extends GetxController {
                                   decoration: InputDecoration(
                                     labelText: 'Term Category',
                                     labelStyle: TextStyle(
-                                      color: Colors.grey,
+                                      color: colorPlaceholderText,
                                     ),
                                     enabledBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(10.0)),
                                         borderSide: BorderSide(
                                             color: !!errors.contains("category")
-                                                ? Colors.red.shade500
-                                                : Colors.transparent)),
+                                                ? colorErrorText
+                                                : colorTransparent)),
                                     focusedBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(10.0)),
                                         borderSide:
-                                            BorderSide(color: Colors.grey)),
+                                            BorderSide(color: colorBorder)),
                                     suffixIcon: !!errors.contains("category")
                                         ? Icon(Icons.error,
-                                            color: const Color(0xffec6882))
+                                            color: colorSecondaryDark)
                                         : null,
                                   ),
                                 ),
@@ -645,18 +646,18 @@ class ManageTermController extends GetxController {
                                 thickness: 0.3,
                                 indent: 5,
                                 endIndent: 5,
-                                color: Colors.grey,
+                                color: colorPlaceholderText,
                               ),
                               Row(
                                 children: [
                                   Container(
                                     decoration: BoxDecoration(
-                                        color: Color(0xffec6882),
+                                        color: colorSecondaryDark,
                                         boxShadow: [
                                           BoxShadow(
                                             offset: Offset(3, 3),
                                             blurRadius: 10.0,
-                                            color: const Color(0xffec6882)
+                                            color: colorSecondaryDark
                                                 .withOpacity(0.5),
                                           )
                                         ],
@@ -672,19 +673,19 @@ class ManageTermController extends GetxController {
                                             Action.delete, data.id);
                                       },
                                       icon: Icon(IconlyBold.delete,
-                                          color: Colors.white),
+                                          color: colorTextLight),
                                     ),
                                   ),
                                   SizedBox(width: 15.w),
                                   Expanded(
                                     child: Container(
                                       decoration: BoxDecoration(
-                                          color: Color(0xffec6882),
+                                          color: colorSecondaryDark,
                                           boxShadow: [
                                             BoxShadow(
                                               offset: Offset(3, 3),
                                               blurRadius: 10.0,
-                                              color: const Color(0xffec6882)
+                                              color: colorSecondaryDark
                                                   .withOpacity(0.5),
                                             )
                                           ],
@@ -705,7 +706,7 @@ class ManageTermController extends GetxController {
                                         },
                                         child: Text("Save",
                                             style: TextStyle(
-                                              color: Colors.white,
+                                              color: colorTextLight,
                                               fontWeight: FontWeight.w600,
                                             )),
                                       ),
@@ -727,7 +728,7 @@ class ManageTermController extends GetxController {
         margin: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
         child: Text(
           'Please input $field.',
-          style: TextStyle(color: Colors.red.shade500, fontSize: 12.sp),
+          style: TextStyle(color: colorErrorText, fontSize: 12.sp),
         ));
   }
 
@@ -760,7 +761,7 @@ class ManageTermController extends GetxController {
                       ),
                       Text('Loading ...',
                           style: TextStyle(
-                              color: Colors.grey[600],
+                              color: colorTextDark,
                               fontSize: 18.sp,
                               fontWeight: FontWeight.w500))
                     ],
@@ -782,7 +783,7 @@ class ManageTermController extends GetxController {
                         ),
                         Text('Opps.. Something went wrong!',
                             style: TextStyle(
-                                color: Colors.grey[600],
+                                color: colorTextDark,
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.w500))
                       ],
@@ -810,7 +811,7 @@ class ManageTermController extends GetxController {
                                     : 'Term has been deleted.')
                                 : 'Opps.. Something went wrong!'),
                             style: TextStyle(
-                                color: Colors.grey[600],
+                                color: colorTextDark,
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.w500))
                       ],
