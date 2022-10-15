@@ -27,7 +27,6 @@ class MenuController extends GetxController {
     super.onInit();
 
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
-    
 
     await GetStorage.init();
     box = GetStorage();
@@ -112,8 +111,35 @@ class MenuController extends GetxController {
                   text:
                       "Android Platform: https://play.google.com/store/apps/details?id=com.google.android.inputmethod.latin",
                 ),
-                Text(
-                    "\nStep to add IPA language on Gboard:-\n\n1. Open the Settings app.\n2. System > Languages & input > Keyboard > Virtual keyboard\n3. Tap Gboard and then Languages\n4. Pick International Phonetic Alphabet (IPA) language."),
+                RichText(
+                  text: TextSpan(
+                    style: const TextStyle(
+                      fontFamily: 'Poppins',
+                      color: Colors.black87,
+                    ),
+                    children: const <TextSpan>[
+                      TextSpan(
+                          text:
+                              "\nStep to add IPA language on Gboard:-\n\n1. Open the "),
+                      TextSpan(
+                          text: "Settings",
+                          style: TextStyle(fontWeight: FontWeight.w600)),
+                      TextSpan(text: " app.\n2. Go to "),
+                      TextSpan(
+                          text: "System > Languages & input > Keyboard > Virtual keyboard",
+                          style: TextStyle(fontWeight: FontWeight.w600)),
+                      TextSpan(text: ".\n3. Tap "),
+                      TextSpan(
+                          text: "Gboard > Languages",
+                          style: TextStyle(fontWeight: FontWeight.w600)),
+                      TextSpan(text: ".\n4. Select "),
+                      TextSpan(
+                          text: "'International Phonetic Alphabet (IPA)'",
+                          style: TextStyle(fontWeight: FontWeight.w600)),
+                      TextSpan(text: " language."),
+                    ],
+                  ),
+                ),
                 SizedBox(
                   height: 15.0.h,
                 )
@@ -123,8 +149,39 @@ class MenuController extends GetxController {
                     options: LinkifyOptions(humanize: true),
                     text:
                         "IOS Platform: https://apps.apple.com/my/app/ipa-phonetic-keyboard/id1440241497"),
-                Text(
-                    "\nStep to add IPA language on IOS Keyboard:-\n\n1. Open the Settings app\n2. Go to General > Keyboard > Keyboards\n3. Tap on 'Add New Keyboard'.\n4. Add 'IPA Keyboard' from the 'Third-Party Keyboards list'."),
+                RichText(
+                  text: TextSpan(
+                    style: const TextStyle(
+                      fontFamily: 'Poppins',
+                      color: Colors.black87,
+                    ),
+                    children: const <TextSpan>[
+                      TextSpan(
+                          text:
+                              "\nStep to add IPA language on IOS Keyboard:-\n\n1. Open the "),
+                      TextSpan(
+                          text: "Settings",
+                          style: TextStyle(fontWeight: FontWeight.w600)),
+                      TextSpan(text: " app.\n2. Go to "),
+                      TextSpan(
+                          text: "General > Keyboard > Keyboards",
+                          style: TextStyle(fontWeight: FontWeight.w600)),
+                      TextSpan(text: ".\n3. Tap on "),
+                      TextSpan(
+                          text: "'Add New Keyboard'",
+                          style: TextStyle(fontWeight: FontWeight.w600)),
+                      TextSpan(text: ".\n4. Add "),
+                      TextSpan(
+                          text: "'IPA Keyboard'",
+                          style: TextStyle(fontWeight: FontWeight.w600)),
+                      TextSpan(text: " from the "),
+                      TextSpan(
+                          text: "'Third-Party Keyboards list'",
+                          style: TextStyle(fontWeight: FontWeight.w600)),
+                      TextSpan(text: ".")
+                    ],
+                  ),
+                ),
                 SizedBox(
                   height: 15.0.h,
                 )
