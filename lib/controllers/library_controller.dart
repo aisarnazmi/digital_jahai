@@ -12,6 +12,8 @@ import '../utils/debouncer.dart';
 import '../utils/http_service.dart';
 
 class LibraryController extends GetxController {
+  List<String> errors = [];
+
   var isLoading = false.obs;
   var isSuccess = false.obs;
 
@@ -50,9 +52,33 @@ class LibraryController extends GetxController {
     storeTermFuture = storeTerm();
   }
 
+  void closeModal() {
+    closeModalDebouncer.run(() {
+      Get.back();
+    });
+  }
+
+  bool validate() {
+    errors = [];  
+
+    errors.addIf(jahaiTermController.text == "", "jahai");
+    errors.addIf(malayTermController.text == "", "malay");
+    errors.addIf(englishTermController.text == "", "english");
+    errors.addIf(descriptionController.text == "", "description");
+    errors.addIf(termCategoryController.text == "", "category");
+
+    if (errors.isNotEmpty) {
+      return false;
+    }
+
+    return true;
+  }
+
   Future<void> storeTerm() async {
     isLoading.value = true;
     isSuccess.value = false;
+
+    update();
 
     try {
       var payload = {
@@ -86,12 +112,17 @@ class LibraryController extends GetxController {
       }
       isLoading.value = false;
     }
+
+    update();
   }
 
-  void closeModal() {
-    closeModalDebouncer.run(() {
-      Get.back();
-    });
+  Widget validationError(field) {
+    return Container(
+        margin: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
+        child: Text(
+          'Please input $field.',
+          style: TextStyle(color: Colors.red.shade500, fontSize: 12.sp),
+        ));
   }
 
   Widget statusModal() {
@@ -118,7 +149,7 @@ class LibraryController extends GetxController {
                           padding: EdgeInsets.only(
                               top: 40, bottom: 20, left: 100, right: 100),
                           child: Lottie.asset('assets/lottie/loading.json',
-                              repeat: false),
+                              repeat: true),
                         ),
                       ),
                       Text('Loading ...',

@@ -123,7 +123,7 @@ class TranslateView extends GetView<TranslateController> {
                                     )
                                   ],
                                 ),
-                                child: TextFormField(
+                                child: TextField(
                                   controller: controller.searchController,
                                   onTap: () => menuC.closeDrawer(),
                                   onChanged: (_) {

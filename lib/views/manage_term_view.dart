@@ -89,7 +89,7 @@ class ManageTermView extends GetView<ManageTermController> {
                                 )
                               ],
                             ),
-                            child: TextFormField(
+                            child: TextField(
                               controller: controller.searchController,
                               onChanged: (_) {
                                 controller.isTyping.value = true;
