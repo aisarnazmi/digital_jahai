@@ -32,20 +32,13 @@ class LibraryView extends GetView<LibraryController> {
                           Container(
                             margin: EdgeInsets.symmetric(horizontal: 20.0.w),
                             decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: const [
-                                    Color(0xffeb7c91),
-                                    Color(0xffec6882),
-                                  ],
-                                ),
+                                color: Color(0xffec6882),
                                 boxShadow: [
                                   BoxShadow(
-                                    offset: Offset(5, 10),
-                                    blurRadius: 20.0,
+                                    offset: Offset(3, 3),
+                                    blurRadius: 10.0,
                                     color: const Color(0xffec6882)
-                                        .withOpacity(0.4),
+                                        .withOpacity(0.5),
                                   )
                                 ],
                                 borderRadius:
@@ -101,7 +94,7 @@ class LibraryView extends GetView<LibraryController> {
                               ),
                               Form(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Container(
                                     decoration: BoxDecoration(
@@ -154,7 +147,7 @@ class LibraryView extends GetView<LibraryController> {
                                   ],
                                   Container(
                                     decoration: BoxDecoration(
-                                      color: Color.fromRGBO(255, 255, 255, 1),
+                                      color: Color(0xFFFFFFFF),
                                       borderRadius: BorderRadius.circular(10),
                                       boxShadow: [
                                         BoxShadow(
@@ -185,7 +178,7 @@ class LibraryView extends GetView<LibraryController> {
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(10.0)),
                                             borderSide:
-                                                BorderSide(color: Colors.grey)),
+                                                BorderSide(color: Color(0xFF9E9E9E))),
                                         suffixIcon: !!controller.errors
                                                 .contains("malay")
                                             ? Icon(Icons.error,
@@ -357,20 +350,13 @@ class LibraryView extends GetView<LibraryController> {
                                   Container(
                                     width: double.infinity,
                                     decoration: BoxDecoration(
-                                        gradient: LinearGradient(
-                                          begin: Alignment.bottomLeft,
-                                          end: Alignment.topRight,
-                                          colors: const [
-                                            Color(0xffeb7c91),
-                                            Color(0xffec6882),
-                                          ],
-                                        ),
+                                        color: Color(0xffec6882),
                                         boxShadow: [
                                           BoxShadow(
-                                            offset: Offset(5, 10),
-                                            blurRadius: 20.0,
+                                            offset: Offset(3, 3),
+                                            blurRadius: 10.0,
                                             color: const Color(0xffec6882)
-                                                .withOpacity(0.4),
+                                                .withOpacity(0.5),
                                           )
                                         ],
                                         borderRadius: BorderRadius.all(

@@ -37,20 +37,13 @@ class ManageTermView extends GetView<ManageTermController> {
                           Container(
                             margin: EdgeInsets.symmetric(horizontal: 20.0.w),
                             decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: const [
-                                    Color(0xffeb7c91),
-                                    Color(0xffec6882),
-                                  ],
-                                ),
+                                color: Color(0xffec6882),
                                 boxShadow: [
                                   BoxShadow(
-                                    offset: Offset(5, 10),
-                                    blurRadius: 20.0,
+                                    offset: Offset(3, 3),
+                                    blurRadius: 10.0,
                                     color: const Color(0xffec6882)
-                                        .withOpacity(0.4),
+                                        .withOpacity(0.5),
                                   )
                                 ],
                                 borderRadius:
@@ -166,19 +159,12 @@ class ManageTermView extends GetView<ManageTermController> {
                 child: Container(
                   margin: EdgeInsets.only(bottom: 8.h, right: 10.w),
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: const [
-                          Color(0xffeb7c91),
-                          Color(0xffec6882),
-                        ],
-                      ),
+                      color: Color(0xffec6882),
                       boxShadow: [
                         BoxShadow(
-                          offset: Offset(5, 10),
-                          blurRadius: 20.0,
-                          color: const Color(0xffec6882).withOpacity(0.4),
+                          offset: Offset(3, 3),
+                          blurRadius: 10.0,
+                          color: const Color(0xffec6882).withOpacity(0.5),
                         )
                       ],
                       borderRadius: BorderRadius.all(Radius.circular(50.0))),

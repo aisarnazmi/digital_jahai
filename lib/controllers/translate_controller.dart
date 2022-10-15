@@ -12,6 +12,7 @@ import 'package:ms_undraw/ms_undraw.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 
 // Project imports:
+import '../constants/color.dart';
 import '../models/index.dart';
 import '../utils/debouncer.dart';
 import '../utils/http_service.dart';
@@ -102,7 +103,6 @@ class TranslateController extends GetxController {
   }
 
   Future<void> getTranslation() async {
-
     var language = originLang.value;
     var search = searchController.text;
 
@@ -154,7 +154,7 @@ class TranslateController extends GetxController {
                 padding: EdgeInsets.only(top: 70.0.h),
                 child: UnDraw(
                   height: 200.0.h,
-                  color: Color.fromRGBO(52, 48, 144, 1),
+                  color: colorPrimaryLight,
                   illustration: UnDrawIllustration.bibliophile,
                   errorWidget: Column(
                     children: [
@@ -227,7 +227,7 @@ class TranslateController extends GetxController {
                   children: [
                     UnDraw(
                         height: 200.0.h,
-                        color: Color(0xff343090),
+                        color: colorPrimaryLight,
                         illustration:
                             (isTyping.isFalse && searchController.text != "")
                                 ? UnDrawIllustration.void_
@@ -263,14 +263,12 @@ class TranslateController extends GetxController {
           return Container(
             margin: EdgeInsets.only(bottom: 20.0.h),
             decoration: BoxDecoration(
-                // color: Color(0xff5969e3),
-                // color: Color(0xff112043),
                 gradient: const LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    Color(0xff181d5f),
-                    Color(0xff112043),
+                    colorPrimaryLight,
+                    colorPrimaryDark,
                   ],
                 ),
                 boxShadow: [
@@ -278,7 +276,7 @@ class TranslateController extends GetxController {
                     spreadRadius: 1,
                     blurRadius: 5,
                     offset: const Offset(0, 5),
-                    color: const Color(0xff181d5f).withOpacity(0.5),
+                    color: colorPrimaryLight.withOpacity(0.5),
                   )
                 ],
                 borderRadius: BorderRadius.all(Radius.circular(25))),
@@ -293,7 +291,7 @@ class TranslateController extends GetxController {
                   style: TextStyle(
                       fontWeight: FontWeight.w800,
                       fontSize: 32.sp,
-                      color: Colors.white),
+                      color: colorTextLight),
                 ),
                 SizedBox(height: 15.h),
                 Padding(
@@ -311,7 +309,7 @@ class TranslateController extends GetxController {
                               style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 16.sp,
-                                  color: Colors.white)),
+                                  color: colorTextLight)),
                         ],
                       ),
                       SizedBox(height: 10.h),
@@ -325,7 +323,7 @@ class TranslateController extends GetxController {
                                     ? "- ${terms[index].malay_term}"
                                     : "- ${terms[index].jahai_term}",
                                 style: TextStyle(
-                                    fontSize: 16.sp, color: Colors.white),
+                                    fontSize: 16.sp, color: colorTextLight),
                               ),
                             ),
                           ),
@@ -347,7 +345,7 @@ class TranslateController extends GetxController {
                 //               style: TextStyle(
                 //                   fontWeight: FontWeight.w600,
                 //                   fontSize: 16.sp,
-                //                   color: Colors.white)),
+                //                   color: colorTextLight)),
                 //         ],
                 //       ),
                 //       SizedBox(height: 10.h),
@@ -359,7 +357,7 @@ class TranslateController extends GetxController {
                 //               "- ${ terms[index].english_term }",
                 //               style: TextStyle(
                 //                   fontSize: 16.sp,
-                //                   color: Colors.white),
+                //                   color: colorTextLight),
                 //             ),
                 //           ),
                 //         ],
@@ -380,7 +378,7 @@ class TranslateController extends GetxController {
                               style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 16.sp,
-                                  color: Colors.white)),
+                                  color: colorTextLight)),
                         ],
                       ),
                       SizedBox(height: 10.h),
@@ -394,7 +392,7 @@ class TranslateController extends GetxController {
                               style: TextStyle(
                                   height: 1.5,
                                   fontSize: 16.sp,
-                                  color: Colors.white),
+                                  color: colorTextLight),
                               textAlign: TextAlign.left,
                             ),
                           ),
@@ -416,7 +414,7 @@ class TranslateController extends GetxController {
                               style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 16.sp,
-                                  color: Colors.white)),
+                                  color: colorTextLight)),
                         ],
                       ),
                       SizedBox(height: 10.h),
@@ -427,7 +425,7 @@ class TranslateController extends GetxController {
                             child: Text(
                               "- ${terms[index].term_category}",
                               style: TextStyle(
-                                  fontSize: 16.sp, color: Colors.white),
+                                  fontSize: 16.sp, color: colorTextLight),
                             ),
                           ),
                         ],
@@ -445,14 +443,12 @@ class TranslateController extends GetxController {
     return Container(
       margin: EdgeInsets.fromLTRB(25.w, 0, 25.w, 20.h),
       decoration: BoxDecoration(
-          // color: Color(0xff5969e3),
-          // color: Color(0xff112043),
           gradient: const LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Color(0xff181d5f),
-              Color(0xff112043),
+              colorPrimaryLight,
+              colorPrimaryDark,
             ],
           ),
           boxShadow: [
@@ -460,7 +456,7 @@ class TranslateController extends GetxController {
               spreadRadius: 1,
               blurRadius: 5,
               offset: const Offset(0, 5),
-              color: const Color(0xff181d5f).withOpacity(0.5),
+              color: colorPrimaryLight.withOpacity(0.5),
             )
           ],
           borderRadius: BorderRadius.all(Radius.circular(25))),
@@ -706,14 +702,14 @@ class TranslateController extends GetxController {
     return Container(
       margin: EdgeInsets.only(bottom: 5.0),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorBackgroundLight,
         // borderRadius: const BorderRadius.only(
         //   topLeft: Radius.circular(15),
         //   topRight: Radius.circular(15),
         // ),
         boxShadow: [
           BoxShadow(
-            color: Colors.white.withOpacity(0.5),
+            color: colorBackgroundLight.withOpacity(0.5),
             spreadRadius: 7,
             blurRadius: 5,
             offset: const Offset(7, 0), // changes position of shadow
@@ -731,7 +727,7 @@ class TranslateController extends GetxController {
                 child: Text(
               capitalize(originLang.value),
               style: TextStyle(
-                  color: Colors.grey[800],
+                  color: colorTextDarker,
                   fontWeight: FontWeight.w600,
                   fontSize: 14.sp),
             )),
@@ -741,19 +737,12 @@ class TranslateController extends GetxController {
             child: Center(
               child: Container(
                 decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: const [
-                        Color(0xffeb7c91),
-                        Color(0xffec6882),
-                      ],
-                    ),
+                    color: colorSecondaryDark,
                     boxShadow: [
                       BoxShadow(
-                        offset: Offset(5, 10),
-                        blurRadius: 20.0,
-                        color: const Color(0xffec6882).withOpacity(0.4),
+                        offset: Offset(3, 3),
+                        blurRadius: 10.0,
+                        color: colorSecondaryDark.withOpacity(0.5),
                       )
                     ],
                     borderRadius: BorderRadius.all(Radius.circular(15.0))),
@@ -762,7 +751,7 @@ class TranslateController extends GetxController {
                     toTop();
                     switchLang();
                   },
-                  color: Colors.white,
+                  color: colorTextLight,
                   icon: Icon(
                     Icons.swap_horiz,
                     size: 24.w,
@@ -776,7 +765,7 @@ class TranslateController extends GetxController {
                 child: Text(
               capitalize(transLang.value),
               style: TextStyle(
-                  color: Colors.grey[800],
+                  color: colorTextDarker,
                   fontWeight: FontWeight.w600,
                   fontSize: 14.sp),
             )),

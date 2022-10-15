@@ -651,20 +651,13 @@ class ManageTermController extends GetxController {
                                 children: [
                                   Container(
                                     decoration: BoxDecoration(
-                                        gradient: LinearGradient(
-                                          begin: Alignment.bottomRight,
-                                          end: Alignment.topLeft,
-                                          colors: const [
-                                            Color(0xffeb7c91),
-                                            Color(0xffec6882),
-                                          ],
-                                        ),
+                                        color: Color(0xffec6882),
                                         boxShadow: [
                                           BoxShadow(
-                                            offset: Offset(5, 10),
-                                            blurRadius: 20.0,
+                                            offset: Offset(3, 3),
+                                            blurRadius: 10.0,
                                             color: const Color(0xffec6882)
-                                                .withOpacity(0.4),
+                                                .withOpacity(0.5),
                                           )
                                         ],
                                         borderRadius: BorderRadius.all(
@@ -686,20 +679,13 @@ class ManageTermController extends GetxController {
                                   Expanded(
                                     child: Container(
                                       decoration: BoxDecoration(
-                                          gradient: LinearGradient(
-                                            begin: Alignment.bottomLeft,
-                                            end: Alignment.topRight,
-                                            colors: const [
-                                              Color(0xffeb7c91),
-                                              Color(0xffec6882),
-                                            ],
-                                          ),
+                                          color: Color(0xffec6882),
                                           boxShadow: [
                                             BoxShadow(
-                                              offset: Offset(5, 10),
-                                              blurRadius: 20.0,
+                                              offset: Offset(3, 3),
+                                              blurRadius: 10.0,
                                               color: const Color(0xffec6882)
-                                                  .withOpacity(0.4),
+                                                  .withOpacity(0.5),
                                             )
                                           ],
                                           borderRadius: BorderRadius.all(
