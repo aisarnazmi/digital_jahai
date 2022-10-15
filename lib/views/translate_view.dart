@@ -40,7 +40,11 @@ class TranslateView extends GetView<TranslateController> {
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 10.0.w),
                               child: IconButton(
-                                  onPressed: () => menuC.openDrawer(),
+                                  onPressed: () {
+                                    FocusManager.instance.primaryFocus
+                                        ?.unfocus();
+                                    menuC.openDrawer();
+                                  },
                                   icon: SvgPicture.asset(
                                       'assets/images/menu.svg',
                                       semanticsLabel: 'Menu')),
@@ -61,6 +65,7 @@ class TranslateView extends GetView<TranslateController> {
                                       BorderRadius.all(Radius.circular(50.0))),
                               child: IconButton(
                                 onPressed: () {
+                                  FocusManager.instance.primaryFocus?.unfocus();
                                   Get.toNamed('/library');
                                 },
                                 color: colorTextLight,
@@ -114,6 +119,7 @@ class TranslateView extends GetView<TranslateController> {
                                   ),
                                   child: TextFormField(
                                     controller: controller.searchController,
+                                    textInputAction: TextInputAction.search,
                                     onTap: () => menuC.closeDrawer(),
                                     onChanged: (_) {
                                       controller.isTyping.value = true;

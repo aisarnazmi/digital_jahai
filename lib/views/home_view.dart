@@ -77,7 +77,10 @@ class TranslateScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() => GestureDetector(
-          onTap: () => menuC.closeDrawer(),
+          onTap: () {
+            FocusManager.instance.primaryFocus?.unfocus();
+            menuC.closeDrawer();
+          },
           onHorizontalDragStart: (details) => menuC.isDragging.value = true,
           onHorizontalDragUpdate: (details) {
             if (menuC.isDragging.isFalse) {
