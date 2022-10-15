@@ -245,7 +245,7 @@ class AuthController extends GetxController {
                             Text('Login Success',
                                 style: TextStyle(
                                     color: colorTextDark,
-                                    fontSize: 18.sp,
+                                    fontSize: 16.sp,
                                     fontWeight: FontWeight.w500))
                           ],
                         ),

@@ -156,7 +156,7 @@ class LibraryController extends GetxController {
                       Text('Loading ...',
                           style: TextStyle(
                               color: colorTextDark,
-                              fontSize: 18.sp,
+                              fontSize: 16.sp,
                               fontWeight: FontWeight.w500))
                     ],
                   ),
@@ -178,7 +178,7 @@ class LibraryController extends GetxController {
                         Text('Opps.. Something went wrong!',
                             style: TextStyle(
                                 color: colorTextDark,
-                                fontSize: 18.sp,
+                                fontSize: 16.sp,
                                 fontWeight: FontWeight.w500))
                       ],
                     ),
@@ -204,7 +204,7 @@ class LibraryController extends GetxController {
                                 : 'Opps.. Something went wrong!'),
                             style: TextStyle(
                                 color: colorTextDark,
-                                fontSize: 18.sp,
+                                fontSize: 16.sp,
                                 fontWeight: FontWeight.w500))
                       ],
                     ),

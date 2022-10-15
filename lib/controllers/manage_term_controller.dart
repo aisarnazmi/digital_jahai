@@ -331,7 +331,7 @@ class ManageTermController extends GetxController {
                             child: Text(
                               terms[index].jahai_term ?? "",
                               style: TextStyle(
-                                  fontSize: 18.sp,
+                                  fontSize: 16.sp,
                                   color: Colors.grey.shade700,
                                   fontWeight: FontWeight.w600),
                             )),
@@ -762,7 +762,7 @@ class ManageTermController extends GetxController {
                       Text('Loading ...',
                           style: TextStyle(
                               color: colorTextDark,
-                              fontSize: 18.sp,
+                              fontSize: 16.sp,
                               fontWeight: FontWeight.w500))
                     ],
                   ),
@@ -784,7 +784,7 @@ class ManageTermController extends GetxController {
                         Text('Opps.. Something went wrong!',
                             style: TextStyle(
                                 color: colorTextDark,
-                                fontSize: 18.sp,
+                                fontSize: 16.sp,
                                 fontWeight: FontWeight.w500))
                       ],
                     ),
@@ -812,7 +812,7 @@ class ManageTermController extends GetxController {
                                 : 'Opps.. Something went wrong!'),
                             style: TextStyle(
                                 color: colorTextDark,
-                                fontSize: 18.sp,
+                                fontSize: 16.sp,
                                 fontWeight: FontWeight.w500))
                       ],
                     ),
