@@ -305,7 +305,7 @@ class AuthController extends GetxController {
                                     child: TextFormField(
                                       controller: emailController,
                                       decoration: InputDecoration(
-                                        labelText: 'Jahai Term',
+                                        labelText: 'Email',
                                         labelStyle: TextStyle(
                                           color: Colors.grey,
                                         ),
@@ -322,6 +322,8 @@ class AuthController extends GetxController {
                                                 Radius.circular(10.0)),
                                             borderSide:
                                                 BorderSide(color: Colors.grey)),
+                                        prefixIcon: Icon(IconlyBold.message,
+                                            color: Colors.black26),
                                         suffixIcon: !!errors.contains("email")
                                             ? Icon(Icons.error,
                                                 color: const Color(0xffec6882))
@@ -372,6 +374,8 @@ class AuthController extends GetxController {
                                                 Radius.circular(10.0)),
                                             borderSide:
                                                 BorderSide(color: Colors.grey)),
+                                        prefixIcon: Icon(IconlyBold.password,
+                                            color: Colors.black26),
                                         suffixIcon: !!errors
                                                     .contains("password") &&
                                                 passwordController.text == ""

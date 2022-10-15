@@ -126,7 +126,8 @@ class MenuController extends GetxController {
                           style: TextStyle(fontWeight: FontWeight.w600)),
                       TextSpan(text: " app.\n2. Go to "),
                       TextSpan(
-                          text: "System > Languages & input > Keyboard > Virtual keyboard",
+                          text:
+                              "System > Languages & input > Keyboard > Virtual keyboard",
                           style: TextStyle(fontWeight: FontWeight.w600)),
                       TextSpan(text: ".\n3. Tap "),
                       TextSpan(
@@ -140,9 +141,6 @@ class MenuController extends GetxController {
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: 15.0.h,
-                )
               ] else if (GetPlatform.isIOS) ...[
                 Linkify(
                     onOpen: onOpenUrl,
@@ -182,10 +180,10 @@ class MenuController extends GetxController {
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: 15.0.h,
-                )
               ],
+              SizedBox(
+                height: 15.0.h,
+              ),
               Text(
                   "* Now you can use IPA language while typing by switching to IPA keyboard.")
             ],
