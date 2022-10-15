@@ -1,5 +1,4 @@
 // Flutter imports:
-import '../constants/color.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -9,6 +8,7 @@ import 'package:iconly/iconly.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 // Project imports:
+import '../constants/color.dart';
 import '../controllers/library_controller.dart';
 
 class LibraryView extends GetView<LibraryController> {

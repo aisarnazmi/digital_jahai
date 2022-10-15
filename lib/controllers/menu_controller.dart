@@ -9,6 +9,9 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+// Project imports:
+import '../constants/color.dart';
+
 class MenuController extends GetxController {
   var isDrawerOpen = false.obs;
   var isDragging = false.obs;
@@ -79,7 +82,7 @@ class MenuController extends GetxController {
                 children: [
                   Text("How to Use?",
                       style: TextStyle(
-                          color: Colors.grey[600],
+                          color: colorTextDark,
                           fontSize: 20.sp,
                           fontWeight: FontWeight.w600)),
                   IconButton(

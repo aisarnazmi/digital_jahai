@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 // Project imports:
+import '../constants/color.dart';
 import '../controllers/menu_controller.dart';
 import '../controllers/translate_controller.dart';
 import '../views/menu_view.dart';
@@ -36,7 +37,7 @@ class MenuScreen extends StatelessWidget {
       if (menuC.isFirstTime) {
         showCupertinoModalBottomSheet(
             context: context,
-            backgroundColor: Colors.white,
+            backgroundColor: colorBackgroundLight,
             isDismissible: false,
             builder: (context) => menuC.keyboardDialogModal());
       }
@@ -49,8 +50,8 @@ class MenuScreen extends StatelessWidget {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                Color(0xff181d5f),
-                Color(0xff112043),
+                colorPrimaryLight,
+                colorPrimaryDark,
               ],
             ),
           ),
@@ -102,7 +103,7 @@ class TranslateScreen extends StatelessWidget {
                 BoxShadow(
                   offset: Offset(5, 10),
                   blurRadius: 40.0,
-                  color: Color.fromARGB(255, 139, 141, 163).withOpacity(0.4),
+                  color: colorShadow.withOpacity(0.5),
                 )
               ],
             ),

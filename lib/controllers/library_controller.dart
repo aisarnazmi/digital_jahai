@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:digital_jahai/constants/color.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
 // Project imports:
+import '../constants/color.dart';
 import '../utils/debouncer.dart';
 import '../utils/http_service.dart';
 

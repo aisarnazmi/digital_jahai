@@ -14,6 +14,7 @@ import 'package:lottie/lottie.dart';
 import 'package:platform_device_id/platform_device_id.dart';
 
 // Project imports:
+import '../constants/color.dart';
 import '../models/user.dart';
 import '../utils/debouncer.dart';
 import '../utils/http_service.dart';
@@ -188,28 +189,21 @@ class AuthController extends GetxController {
     Get.snackbar('Login Failed', message,
         icon: Icon(
           IconlyBold.shield_fail,
-          color: Colors.white,
+          color: colorTextLight,
         ),
         shouldIconPulse: false,
         snackPosition: SnackPosition.TOP,
         duration: Duration(milliseconds: 2500),
         isDismissible: true,
-        backgroundColor: Color(0xffec6882),
-        backgroundGradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: const [
-              Color(0xffeb7c91),
-              Color(0xffec6882),
-            ]),
+        backgroundColor: colorSecondaryDark,
         boxShadows: [
           BoxShadow(
-            offset: Offset(5, 10),
-            blurRadius: 20.0,
-            color: const Color(0xffec6882).withOpacity(0.4),
+            offset: Offset(3, 3),
+            blurRadius: 10.0,
+            color: colorSecondaryDark.withOpacity(0.5),
           )
         ],
-        colorText: Colors.white);
+        colorText: colorTextLight);
 
     loginFailedMsg = '';
     errorDebouncer.run(() {
@@ -250,7 +244,7 @@ class AuthController extends GetxController {
                             ),
                             Text('Login Success',
                                 style: TextStyle(
-                                    color: Colors.grey[600],
+                                    color: colorTextDark,
                                     fontSize: 18.sp,
                                     fontWeight: FontWeight.w500))
                           ],
@@ -269,7 +263,7 @@ class AuthController extends GetxController {
                                 children: [
                                   Text("Admin Login",
                                       style: TextStyle(
-                                          color: Colors.grey[600],
+                                          color: colorTextDark,
                                           fontSize: 20.sp,
                                           fontWeight: FontWeight.w600)),
                                   IconButton(
@@ -291,14 +285,13 @@ class AuthController extends GetxController {
                                 children: [
                                   Container(
                                     decoration: BoxDecoration(
-                                      color: Colors.white,
+                                      color: colorBackgroundLight,
                                       borderRadius: BorderRadius.circular(10),
                                       boxShadow: [
                                         BoxShadow(
                                           offset: Offset(0, 2),
                                           blurRadius: 3.0,
-                                          color: Color(0xFF8B8DA3)
-                                              .withOpacity(0.3),
+                                          color: colorBorder.withOpacity(0.5),
                                         )
                                       ],
                                     ),
@@ -307,7 +300,7 @@ class AuthController extends GetxController {
                                       decoration: InputDecoration(
                                         labelText: 'Email',
                                         labelStyle: TextStyle(
-                                          color: Colors.grey,
+                                          color: colorPlaceholderText,
                                         ),
                                         enabledBorder: OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
@@ -315,18 +308,18 @@ class AuthController extends GetxController {
                                             borderSide: BorderSide(
                                                 color:
                                                     !!errors.contains("email")
-                                                        ? Colors.red.shade500
-                                                        : Colors.transparent)),
+                                                        ? colorErrorText
+                                                        : colorTransparent)),
                                         focusedBorder: OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(10.0)),
                                             borderSide:
-                                                BorderSide(color: Colors.grey)),
+                                                BorderSide(color: colorBorder)),
                                         prefixIcon: Icon(IconlyBold.message,
                                             color: Colors.black26),
                                         suffixIcon: !!errors.contains("email")
                                             ? Icon(Icons.error,
-                                                color: const Color(0xffec6882))
+                                                color: colorSecondaryDark)
                                             : null,
                                       ),
                                     ),
@@ -339,14 +332,13 @@ class AuthController extends GetxController {
                                   ],
                                   Container(
                                     decoration: BoxDecoration(
-                                      color: Colors.white,
+                                      color: colorBackgroundLight,
                                       borderRadius: BorderRadius.circular(10),
                                       boxShadow: [
                                         BoxShadow(
                                           offset: Offset(0, 2),
                                           blurRadius: 3.0,
-                                          color: Color(0xFF8B8DA3)
-                                              .withOpacity(0.3),
+                                          color: colorShadow.withOpacity(0.5),
                                         )
                                       ],
                                     ),
@@ -359,7 +351,7 @@ class AuthController extends GetxController {
                                       decoration: InputDecoration(
                                         labelText: 'Password',
                                         labelStyle: TextStyle(
-                                          color: Colors.grey,
+                                          color: colorPlaceholderText,
                                         ),
                                         enabledBorder: OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
@@ -367,20 +359,20 @@ class AuthController extends GetxController {
                                             borderSide: BorderSide(
                                                 color: !!errors
                                                         .contains("password")
-                                                    ? Colors.red.shade500
-                                                    : Colors.transparent)),
+                                                    ? colorErrorText
+                                                    : colorTransparent)),
                                         focusedBorder: OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(10.0)),
                                             borderSide:
-                                                BorderSide(color: Colors.grey)),
+                                                BorderSide(color: colorBorder)),
                                         prefixIcon: Icon(IconlyBold.password,
                                             color: Colors.black26),
                                         suffixIcon: !!errors
                                                     .contains("password") &&
                                                 passwordController.text == ""
                                             ? Icon(Icons.error,
-                                                color: const Color(0xffec6882))
+                                                color: colorSecondaryDark)
                                             : (IconButton(
                                                 onPressed: () {
                                                   showPassword.value =
@@ -405,17 +397,17 @@ class AuthController extends GetxController {
                                     thickness: 0.3,
                                     indent: 5,
                                     endIndent: 5,
-                                    color: Colors.grey,
+                                    color: colorPlaceholderText,
                                   ),
                                   Container(
                                     width: double.infinity,
                                     decoration: BoxDecoration(
-                                        color: Color(0xffec6882),
+                                        color: colorSecondaryDark,
                                         boxShadow: [
                                           BoxShadow(
                                             offset: Offset(3, 3),
                                             blurRadius: 10.0,
-                                            color: const Color(0xffec6882)
+                                            color: colorSecondaryDark
                                                 .withOpacity(0.5),
                                           )
                                         ],
@@ -436,7 +428,7 @@ class AuthController extends GetxController {
                                       child: isLogin.isFalse
                                           ? Text("Login",
                                               style: TextStyle(
-                                                color: Colors.white,
+                                                color: colorTextLight,
                                                 fontWeight: FontWeight.w600,
                                               ))
                                           : SizedBox(
@@ -444,7 +436,7 @@ class AuthController extends GetxController {
                                               width: 18,
                                               child:
                                                   const CircularProgressIndicator(
-                                                color: Colors.white,
+                                                color: colorTextLight,
                                                 strokeWidth: 3.0,
                                               ),
                                             ),
@@ -468,7 +460,7 @@ class AuthController extends GetxController {
         margin: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
         child: Text(
           'Please input $field.',
-          style: TextStyle(color: Colors.red.shade500, fontSize: 12.sp),
+          style: TextStyle(color: colorErrorText, fontSize: 12.sp),
         ));
   }
 }

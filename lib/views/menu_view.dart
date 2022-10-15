@@ -8,6 +8,7 @@ import 'package:iconly/iconly.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 // Project imports:
+import '../constants/color.dart';
 import '../controllers/auth_controller.dart';
 import '../controllers/menu_controller.dart';
 
@@ -99,7 +100,7 @@ class MenuView extends StatelessWidget {
                     onPressed: () {
                       showCupertinoModalBottomSheet(
                           context: context,
-                          backgroundColor: Colors.white,
+                          backgroundColor: colorBackgroundLight,
                           builder: (context) => menuC.keyboardDialogModal());
                     },
                     child: Row(children: [
@@ -140,7 +141,7 @@ class MenuView extends StatelessWidget {
 
               showCupertinoModalBottomSheet(
                   context: context,
-                  backgroundColor: Colors.white,
+                  backgroundColor: colorBackgroundLight,
                   builder: (context) {
                     return authC.loginModal();
                   });
