@@ -381,7 +381,7 @@ class LibraryView extends GetView<LibraryController> {
                                           controller.update();
                                         }
                                       },
-                                      child: Text("Sumbit",
+                                      child: Text("Submit",
                                           style: TextStyle(
                                             color: colorBackgroundLight,
                                             fontWeight: FontWeight.w600,
