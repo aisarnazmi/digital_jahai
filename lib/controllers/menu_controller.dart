@@ -76,7 +76,7 @@ class MenuController extends GetxController {
     var url = Uri.parse(link.url);
 
     if (await canLaunchUrl(url)) {
-        await launchUrl(url, mode: LaunchMode.externalNonBrowserApplication);
+        await launchUrl(url, mode: LaunchMode.externalApplication);
     } else {
       throw 'Could not launch $link';
     }
