@@ -248,7 +248,6 @@ class ManageTermController extends GetxController {
         });
       }
       isLoading.value = false;
-
     } catch (e) {
       if (kDebugMode) {
         print(e.toString());
@@ -272,7 +271,8 @@ class ManageTermController extends GetxController {
         'Authorization': 'Bearer $token',
       };
 
-      final response = await HttpService().get('/library/delete?id=$id', headers);
+      final response =
+          await HttpService().get('/library/delete?id=$id', headers);
 
       var index = terms.indexWhere((element) => element.id == id);
 
@@ -286,7 +286,6 @@ class ManageTermController extends GetxController {
         });
       }
       isLoading.value = false;
-      
     } catch (e) {
       if (kDebugMode) {
         print(e.toString());
@@ -301,22 +300,24 @@ class ManageTermController extends GetxController {
     return FutureBuilder<dynamic>(
       future: getTermListFuture,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (terms.isEmpty) {
+        if (snapshot.connectionState == ConnectionState.waiting ||
+            snapshot.connectionState == ConnectionState.none) {
           return Center(
             child: Container(
-              padding: EdgeInsets.only(top: 30.h, bottom: 30),
-              child: searchController.text == ""
-                  ? Lottie.asset('assets/lottie/typing-animation.json',
-                      height: 36)
-                  : isLoading.isFalse
-                      ? Text("No record found.",
-                          style: TextStyle(color: Colors.grey.shade600))
-                      : null,
-            ),
+                padding: EdgeInsets.only(top: 30.h, bottom: 30),
+                child: Lottie.asset('assets/lottie/typing-animation.json',
+                    height: 36)),
           );
         } else {
           if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
+          } else if (terms.isEmpty) {
+            return Center(
+              child: Container(
+                  padding: EdgeInsets.only(top: 30.h, bottom: 30),
+                  child: Text("No record found.",
+                      style: TextStyle(color: Colors.grey.shade600))),
+            );
           } else {
             return ListView.builder(
                 primary: false,
