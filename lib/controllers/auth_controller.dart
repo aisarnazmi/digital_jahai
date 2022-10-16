@@ -52,6 +52,9 @@ class AuthController extends GetxController {
         tryToken(localToken);
       }
     }
+    if (box.read('email') != null) {
+      emailController.text = box.read('email');
+    }
   }
 
   @override
@@ -130,6 +133,7 @@ class AuthController extends GetxController {
           box.write('token', val);
           token.value = val;
           user.value = User.fromJson(json.decode(response.body));
+          box.write('email', user.value!.email);
         } else if (response.statusCode == 401) {
           loginFailedMsg = json.decode(response.body)['message'];
           loginFailedDialog(loginFailedMsg);
