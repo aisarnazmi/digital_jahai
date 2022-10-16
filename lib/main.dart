@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,6 +14,10 @@ import '../views/manage_term_view.dart';
 import '../views/translate_view.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+
   runApp(const MyApp());
 }
 
@@ -35,7 +40,6 @@ class MyApp extends StatelessWidget {
             // primarySwatch: Colors.blue,
             fontFamily: 'Poppins',
             // textTheme: Typography.blackCupertino.apply(fontSizeFactor: 1.sp),
-            
           ),
           home: child,
           initialBinding: InitialBinding(),
