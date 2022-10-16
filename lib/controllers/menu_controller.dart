@@ -56,7 +56,7 @@ class MenuController extends GetxController {
 
   void openDrawer() {
     xOffsetMain.value = 240;
-    yOffsetMain.value = 140;
+    yOffsetMain.value = 180;
     scaleFactorMain.value = 0.7;
     scaleFactorDrawer.value = 1;
     isDrawerOpen.value = true;
