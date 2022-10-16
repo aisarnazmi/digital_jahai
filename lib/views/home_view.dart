@@ -68,23 +68,26 @@ class TranslateScreen extends StatelessWidget {
     return Obx(() => GestureDetector(
           onTap: () {
             FocusManager.instance.primaryFocus?.unfocus();
-            menuC.closeDrawer();
-          },
-          onHorizontalDragStart: (details) => menuC.isDragging.value = true,
-          onHorizontalDragUpdate: (details) {
-            if (menuC.isDragging.isFalse) {
-              return;
-            }
-            const delta = 1;
 
-            if (details.delta.dx > delta) {
-              menuC.openDrawer();
-            } else if (details.delta.dx < -delta) {
+            if (menuC.isDrawerOpen.isTrue) {
               menuC.closeDrawer();
             }
-
-            menuC.isDragging.value = false;
           },
+          // onHorizontalDragStart: (details) => menuC.isDragging.value = true,
+          // onHorizontalDragUpdate: (details) {
+          //   if (menuC.isDragging.isFalse) {
+          //     return;
+          //   }
+          //   const delta = 1;
+
+          //   if (details.delta.dx > delta) {
+          //     menuC.openDrawer();
+          //   } else if (details.delta.dx < -delta) {
+          //     menuC.closeDrawer();
+          //   }
+
+          //   menuC.isDragging.value = false;
+          // },
           child: AnimatedContainer(
             transform: Matrix4.translationValues(
                 menuC.xOffsetMain.value, menuC.yOffsetMain.value, 0)

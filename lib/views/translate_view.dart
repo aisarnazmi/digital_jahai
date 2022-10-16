@@ -120,7 +120,11 @@ class TranslateView extends GetView<TranslateController> {
                                   child: TextFormField(
                                     controller: controller.searchController,
                                     textInputAction: TextInputAction.search,
-                                    onTap: () => menuC.closeDrawer(),
+                                    onTap: () {
+                                      if (menuC.isDrawerOpen.isTrue) {
+                                        menuC.closeDrawer();
+                                      }
+                                    },
                                     onChanged: (_) {
                                       controller.isTyping.value = true;
                                       controller.update();
