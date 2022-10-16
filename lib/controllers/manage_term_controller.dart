@@ -112,11 +112,17 @@ class ManageTermController extends GetxController {
   }
 
   void openDetailModal(data) {
+    jahaiTermController.text = data.jahai_term ?? "";
+    malayTermController.text = data.malay_term ?? "";
+    englishTermController.text = data.english_term ?? "";
+    descriptionController.text = data.description ?? "";
+    termCategoryController.text = data.term_category ?? "";
+
     showCupertinoModalBottomSheet(
         context: Get.context as BuildContext,
         backgroundColor: colorBackgroundLight,
         isDismissible: true,
-        builder: (context) => detailModal(data));
+        builder: (context) => detailModal(data.id));
   }
 
   void closeModal() {
@@ -384,316 +390,288 @@ class ManageTermController extends GetxController {
     );
   }
 
-  Widget detailModal(data) {
-    jahaiTermController.text = data.jahai_term ?? "";
-    malayTermController.text = data.malay_term ?? "";
-    englishTermController.text = data.english_term ?? "";
-    descriptionController.text = data.description ?? "";
-    termCategoryController.text = data.term_category ?? "";
+  Widget detailModal(id) {
     MediaQueryData mediaQueryData = MediaQuery.of(Get.context as BuildContext);
     return GetBuilder<ManageTermController>(
         init: ManageTermController(),
         builder: (context) {
-          return Material(
-            child: SafeArea(
-              child: Padding(
-                padding:
-                    EdgeInsets.only(bottom: mediaQueryData.viewInsets.bottom),
-                child: SingleChildScrollView(
-                  child: Container(
-                      padding: EdgeInsets.symmetric(
-                          vertical: 25.0.h, horizontal: 20.0.w),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text("Manage Term",
-                                  style: TextStyle(
-                                      color: colorPrimaryLight,
-                                      fontSize: 20.sp,
-                                      fontWeight: FontWeight.w600)),
-                              IconButton(
-                                  onPressed: () {
-                                    FocusManager.instance.primaryFocus
-                                        ?.unfocus();
-                                    Get.back();
-                                  },
-                                  icon: Icon(Icons.close)),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 30.0,
-                          ),
-                          Form(
-                              child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: colorBackgroundLight,
-                                    borderRadius: BorderRadius.circular(10),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        offset: Offset(0, 2),
-                                        blurRadius: 3.0,
-                                        color: colorShadow.withOpacity(0.5),
-                                      )
-                                    ],
-                                  ),
-                                  child: TextFormField(
-                                    controller: jahaiTermController,
-                                    decoration: InputDecoration(
-                                      labelText: 'Jahai Term',
-                                      labelStyle: TextStyle(
-                                        color: colorPlaceholderText,
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10.0)),
-                                          borderSide: BorderSide(
-                                              color: !!errors.contains("jahai")
-                                                  ? colorErrorText
-                                                  : colorTransparent)),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10.0)),
-                                          borderSide:
-                                              BorderSide(color: colorBorder)),
-                                      suffixIcon: !!errors.contains("jahai")
-                                          ? Icon(Icons.error,
-                                              color: colorSecondaryDark)
-                                          : null,
+          return GestureDetector(
+            onTap: () {
+              FocusManager.instance.primaryFocus?.unfocus();
+            },
+            child: Material(
+              child: SafeArea(
+                child: Padding(
+                  padding:
+                      EdgeInsets.only(bottom: mediaQueryData.viewInsets.bottom),
+                  child: SingleChildScrollView(
+                    child: Container(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 25.0.h, horizontal: 20.0.w),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text("Manage Term",
+                                    style: TextStyle(
+                                        color: colorPrimaryLight,
+                                        fontSize: 20.sp,
+                                        fontWeight: FontWeight.w600)),
+                                IconButton(
+                                    onPressed: () {
+                                      FocusManager.instance.primaryFocus
+                                          ?.unfocus();
+                                      Get.back();
+                                    },
+                                    icon: Icon(Icons.close)),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 30.0,
+                            ),
+                            Form(
+                                child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: colorBackgroundLight,
+                                      borderRadius: BorderRadius.circular(10),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          offset: Offset(0, 2),
+                                          blurRadius: 3.0,
+                                          color: colorShadow.withOpacity(0.5),
+                                        )
+                                      ],
                                     ),
-                                  ),
-                                ),
-                                if (!!errors.contains("jahai")) ...[
-                                  validationError("Jahai term"),
-                                  SizedBox(height: 10.0),
-                                ] else ...[
-                                  SizedBox(height: 20.0),
-                                ],
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: colorBackgroundLight,
-                                    borderRadius: BorderRadius.circular(10),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        offset: Offset(0, 2),
-                                        blurRadius: 3.0,
-                                        color: colorShadow.withOpacity(0.5),
-                                      )
-                                    ],
-                                  ),
-                                  child: TextFormField(
-                                    controller: malayTermController,
-                                    decoration: InputDecoration(
-                                      labelText: 'Malay Term',
-                                      labelStyle: TextStyle(
-                                        color: colorPlaceholderText,
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10.0)),
-                                          borderSide: BorderSide(
-                                              color: !!errors.contains("malay")
-                                                  ? colorErrorText
-                                                  : colorTransparent)),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10.0)),
-                                          borderSide:
-                                              BorderSide(color: colorBorder)),
-                                      suffixIcon: !!errors.contains("malay")
-                                          ? Icon(Icons.error,
-                                              color: colorSecondaryDark)
-                                          : null,
-                                    ),
-                                  ),
-                                ),
-                                if (!!errors.contains("malay")) ...[
-                                  validationError("Malay term"),
-                                  SizedBox(height: 10.0),
-                                ] else ...[
-                                  SizedBox(height: 20.0),
-                                ],
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: colorBackgroundLight,
-                                    borderRadius: BorderRadius.circular(10),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        offset: Offset(0, 2),
-                                        blurRadius: 3.0,
-                                        color: colorShadow.withOpacity(0.5),
-                                      )
-                                    ],
-                                  ),
-                                  child: TextFormField(
-                                    controller: englishTermController,
-                                    decoration: InputDecoration(
-                                      labelText: 'English Term',
-                                      labelStyle: TextStyle(
-                                        color: colorPlaceholderText,
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10.0)),
-                                          borderSide: BorderSide(
-                                              color:
-                                                  !!errors.contains("english")
-                                                      ? colorErrorText
-                                                      : colorTransparent)),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10.0)),
-                                          borderSide:
-                                              BorderSide(color: colorBorder)),
-                                      suffixIcon: !!errors.contains("english")
-                                          ? Icon(Icons.error,
-                                              color: colorSecondaryDark)
-                                          : null,
-                                    ),
-                                  ),
-                                ),
-                                if (!!errors.contains("english")) ...[
-                                  validationError("English term"),
-                                  SizedBox(height: 10.0),
-                                ] else ...[
-                                  SizedBox(height: 20.0),
-                                ],
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: colorBackgroundLight,
-                                    borderRadius: BorderRadius.circular(10),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        offset: Offset(0, 2),
-                                        blurRadius: 3.0,
-                                        color: colorShadow.withOpacity(0.5),
-                                      )
-                                    ],
-                                  ),
-                                  child: TextFormField(
-                                    minLines: 4,
-                                    maxLines: 4,
-                                    controller: descriptionController,
-                                    decoration: InputDecoration(
-                                      labelText: 'Description',
-                                      labelStyle: TextStyle(
-                                        color: colorPlaceholderText,
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10.0)),
-                                          borderSide: BorderSide(
-                                              color: !!errors
-                                                      .contains("description")
-                                                  ? colorErrorText
-                                                  : colorTransparent)),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10.0)),
-                                          borderSide:
-                                              BorderSide(color: colorBorder)),
-                                      suffixIcon:
-                                          !!errors.contains("description")
-                                              ? Icon(Icons.error,
-                                                  color: colorSecondaryDark)
-                                              : null,
-                                    ),
-                                  ),
-                                ),
-                                if (!!errors.contains("description")) ...[
-                                  validationError("description"),
-                                  SizedBox(height: 10.0),
-                                ] else ...[
-                                  SizedBox(height: 20.0),
-                                ],
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: colorBackgroundLight,
-                                    borderRadius: BorderRadius.circular(10),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        offset: Offset(0, 2),
-                                        blurRadius: 3.0,
-                                        color: colorShadow.withOpacity(0.5),
-                                      )
-                                    ],
-                                  ),
-                                  child: TextFormField(
-                                    controller: termCategoryController,
-                                    decoration: InputDecoration(
-                                      labelText: 'Term Category',
-                                      labelStyle: TextStyle(
-                                        color: colorPlaceholderText,
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10.0)),
-                                          borderSide: BorderSide(
-                                              color:
-                                                  !!errors.contains("category")
-                                                      ? colorErrorText
-                                                      : colorTransparent)),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10.0)),
-                                          borderSide:
-                                              BorderSide(color: colorBorder)),
-                                      suffixIcon: !!errors.contains("category")
-                                          ? Icon(Icons.error,
-                                              color: colorSecondaryDark)
-                                          : null,
-                                    ),
-                                  ),
-                                ),
-                                if (!!errors.contains("category")) ...[
-                                  validationError("term category")
-                                ],
-                                Divider(
-                                  height: 40.0,
-                                  thickness: 0.3,
-                                  indent: 5,
-                                  endIndent: 5,
-                                  color: colorPlaceholderText,
-                                ),
-                                Row(
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                          color: colorSecondaryDark,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              offset: Offset(3, 3),
-                                              blurRadius: 10.0,
-                                              color: colorSecondaryDark
-                                                  .withOpacity(0.5),
-                                            )
-                                          ],
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10.0))),
-                                      child: IconButton(
-                                        onPressed: () {
-                                          FocusManager.instance.primaryFocus
-                                              ?.unfocus();
-
-                                          if (isLoading.isTrue) {
-                                            return;
-                                          }
-
-                                          initManageTermFuture(
-                                              Action.delete, data.id);
-                                        },
-                                        icon: Icon(IconlyBold.delete,
-                                            color: colorTextLight),
+                                    child: TextFormField(
+                                      controller: jahaiTermController,
+                                      decoration: InputDecoration(
+                                        labelText: 'Jahai Term',
+                                        labelStyle: TextStyle(
+                                          color: colorPlaceholderText,
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10.0)),
+                                            borderSide: BorderSide(
+                                                color:
+                                                    !!errors.contains("jahai")
+                                                        ? colorErrorText
+                                                        : colorTransparent)),
+                                        focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10.0)),
+                                            borderSide:
+                                                BorderSide(color: colorBorder)),
+                                        suffixIcon: !!errors.contains("jahai")
+                                            ? Icon(Icons.error,
+                                                color: colorSecondaryDark)
+                                            : null,
                                       ),
                                     ),
-                                    SizedBox(width: 15.w),
-                                    Expanded(
-                                      child: Container(
+                                  ),
+                                  if (!!errors.contains("jahai")) ...[
+                                    validationError("Jahai term"),
+                                    SizedBox(height: 10.0),
+                                  ] else ...[
+                                    SizedBox(height: 20.0),
+                                  ],
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: colorBackgroundLight,
+                                      borderRadius: BorderRadius.circular(10),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          offset: Offset(0, 2),
+                                          blurRadius: 3.0,
+                                          color: colorShadow.withOpacity(0.5),
+                                        )
+                                      ],
+                                    ),
+                                    child: TextFormField(
+                                      controller: malayTermController,
+                                      decoration: InputDecoration(
+                                        labelText: 'Malay Term',
+                                        labelStyle: TextStyle(
+                                          color: colorPlaceholderText,
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10.0)),
+                                            borderSide: BorderSide(
+                                                color:
+                                                    !!errors.contains("malay")
+                                                        ? colorErrorText
+                                                        : colorTransparent)),
+                                        focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10.0)),
+                                            borderSide:
+                                                BorderSide(color: colorBorder)),
+                                        suffixIcon: !!errors.contains("malay")
+                                            ? Icon(Icons.error,
+                                                color: colorSecondaryDark)
+                                            : null,
+                                      ),
+                                    ),
+                                  ),
+                                  if (!!errors.contains("malay")) ...[
+                                    validationError("Malay term"),
+                                    SizedBox(height: 10.0),
+                                  ] else ...[
+                                    SizedBox(height: 20.0),
+                                  ],
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: colorBackgroundLight,
+                                      borderRadius: BorderRadius.circular(10),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          offset: Offset(0, 2),
+                                          blurRadius: 3.0,
+                                          color: colorShadow.withOpacity(0.5),
+                                        )
+                                      ],
+                                    ),
+                                    child: TextFormField(
+                                      controller: englishTermController,
+                                      decoration: InputDecoration(
+                                        labelText: 'English Term',
+                                        labelStyle: TextStyle(
+                                          color: colorPlaceholderText,
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10.0)),
+                                            borderSide: BorderSide(
+                                                color:
+                                                    !!errors.contains("english")
+                                                        ? colorErrorText
+                                                        : colorTransparent)),
+                                        focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10.0)),
+                                            borderSide:
+                                                BorderSide(color: colorBorder)),
+                                        suffixIcon: !!errors.contains("english")
+                                            ? Icon(Icons.error,
+                                                color: colorSecondaryDark)
+                                            : null,
+                                      ),
+                                    ),
+                                  ),
+                                  if (!!errors.contains("english")) ...[
+                                    validationError("English term"),
+                                    SizedBox(height: 10.0),
+                                  ] else ...[
+                                    SizedBox(height: 20.0),
+                                  ],
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: colorBackgroundLight,
+                                      borderRadius: BorderRadius.circular(10),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          offset: Offset(0, 2),
+                                          blurRadius: 3.0,
+                                          color: colorShadow.withOpacity(0.5),
+                                        )
+                                      ],
+                                    ),
+                                    child: TextFormField(
+                                      minLines: 4,
+                                      maxLines: 4,
+                                      controller: descriptionController,
+                                      decoration: InputDecoration(
+                                        labelText: 'Description',
+                                        labelStyle: TextStyle(
+                                          color: colorPlaceholderText,
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10.0)),
+                                            borderSide: BorderSide(
+                                                color: !!errors
+                                                        .contains("description")
+                                                    ? colorErrorText
+                                                    : colorTransparent)),
+                                        focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10.0)),
+                                            borderSide:
+                                                BorderSide(color: colorBorder)),
+                                        suffixIcon:
+                                            !!errors.contains("description")
+                                                ? Icon(Icons.error,
+                                                    color: colorSecondaryDark)
+                                                : null,
+                                      ),
+                                    ),
+                                  ),
+                                  if (!!errors.contains("description")) ...[
+                                    validationError("description"),
+                                    SizedBox(height: 10.0),
+                                  ] else ...[
+                                    SizedBox(height: 20.0),
+                                  ],
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: colorBackgroundLight,
+                                      borderRadius: BorderRadius.circular(10),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          offset: Offset(0, 2),
+                                          blurRadius: 3.0,
+                                          color: colorShadow.withOpacity(0.5),
+                                        )
+                                      ],
+                                    ),
+                                    child: TextFormField(
+                                      controller: termCategoryController,
+                                      decoration: InputDecoration(
+                                        labelText: 'Term Category',
+                                        labelStyle: TextStyle(
+                                          color: colorPlaceholderText,
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10.0)),
+                                            borderSide: BorderSide(
+                                                color: !!errors
+                                                        .contains("category")
+                                                    ? colorErrorText
+                                                    : colorTransparent)),
+                                        focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10.0)),
+                                            borderSide:
+                                                BorderSide(color: colorBorder)),
+                                        suffixIcon:
+                                            !!errors.contains("category")
+                                                ? Icon(Icons.error,
+                                                    color: colorSecondaryDark)
+                                                : null,
+                                      ),
+                                    ),
+                                  ),
+                                  if (!!errors.contains("category")) ...[
+                                    validationError("term category")
+                                  ],
+                                  Divider(
+                                    height: 40.0,
+                                    thickness: 0.3,
+                                    indent: 5,
+                                    endIndent: 5,
+                                    color: colorPlaceholderText,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Container(
                                         decoration: BoxDecoration(
                                             color: colorSecondaryDark,
                                             boxShadow: [
@@ -706,7 +684,7 @@ class ManageTermController extends GetxController {
                                             ],
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(10.0))),
-                                        child: TextButton(
+                                        child: IconButton(
                                           onPressed: () {
                                             FocusManager.instance.primaryFocus
                                                 ?.unfocus();
@@ -715,26 +693,58 @@ class ManageTermController extends GetxController {
                                               return;
                                             }
 
-                                            if (validate()) {
-                                              initManageTermFuture(
-                                                  Action.update, data.id);
-                                            } else {
-                                              update();
-                                            }
+                                            initManageTermFuture(
+                                                Action.delete, id);
                                           },
-                                          child: Text("Save",
-                                              style: TextStyle(
-                                                color: colorTextLight,
-                                                fontWeight: FontWeight.w600,
-                                              )),
+                                          icon: Icon(IconlyBold.delete,
+                                              color: colorTextLight),
                                         ),
                                       ),
-                                    )
-                                  ],
-                                )
-                              ])),
-                        ],
-                      )),
+                                      SizedBox(width: 15.w),
+                                      Expanded(
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              color: colorSecondaryDark,
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  offset: Offset(3, 3),
+                                                  blurRadius: 10.0,
+                                                  color: colorSecondaryDark
+                                                      .withOpacity(0.5),
+                                                )
+                                              ],
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(10.0))),
+                                          child: TextButton(
+                                            onPressed: () {
+                                              FocusManager.instance.primaryFocus
+                                                  ?.unfocus();
+
+                                              if (isLoading.isTrue) {
+                                                return;
+                                              }
+
+                                              if (validate()) {
+                                                initManageTermFuture(
+                                                    Action.update, id);
+                                              } else {
+                                                update();
+                                              }
+                                            },
+                                            child: Text("Save",
+                                                style: TextStyle(
+                                                  color: colorTextLight,
+                                                  fontWeight: FontWeight.w600,
+                                                )),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  )
+                                ])),
+                          ],
+                        )),
+                  ),
                 ),
               ),
             ),
