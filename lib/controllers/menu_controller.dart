@@ -96,7 +96,7 @@ class MenuController extends GetxController {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("How to Use?",
+                  Text("Install IPA Keyboard",
                       style: TextStyle(
                           color: colorTextDark,
                           fontSize: 20.sp,
@@ -110,12 +110,12 @@ class MenuController extends GetxController {
                 ],
               ),
               SizedBox(
-                height: 25.0.h,
+                height: 20.0.h,
               ),
               Text(
                   "Digital Jahai application required International Phonetic Alphabet (IPA) keyboard to be used with Jahai terms."),
               SizedBox(
-                height: 20.0.h,
+                height: 15.0.h,
               ),
               Text(
                   "Please install IPA keyboard using link below and, follow the installation steps: ",

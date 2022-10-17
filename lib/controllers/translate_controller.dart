@@ -214,7 +214,7 @@ class TranslateController extends GetxController {
                   skeletonCard()
                 ] else ...[
                   SizedBox(
-                    height: 50.0.h,
+                    height: 70.0.h,
                   ),
                 ],
               ],

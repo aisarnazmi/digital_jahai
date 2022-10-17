@@ -110,7 +110,7 @@ class MenuView extends StatelessWidget {
                           Icon(IconlyBold.info_square,
                               color: Colors.white54, size: 24),
                           SizedBox(width: 15.w),
-                          Text('How to Use?',
+                          Text('Install Keyboard',
                               style: TextStyle(
                                   color: Colors.white54,
                                   fontWeight: FontWeight.w600))

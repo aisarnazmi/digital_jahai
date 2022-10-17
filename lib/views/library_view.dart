@@ -28,7 +28,7 @@ class LibraryView extends GetView<LibraryController> {
               body: SafeArea(
                 child: SingleChildScrollView(
                   child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8.0.h),
+                    padding: EdgeInsets.symmetric(vertical: 25.0.h),
                     child: Column(
                       children: <Widget>[
                         Row(

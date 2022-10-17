@@ -37,9 +37,8 @@ class MyApp extends StatelessWidget {
           title: "Digital Jahai",
           // You can use the library anywhere in the app even in theme
           theme: ThemeData(
-            // primarySwatch: Colors.blue,
-            fontFamily: 'Poppins',
-            // textTheme: Typography.blackCupertino.apply(fontSizeFactor: 1.sp),
+            fontFamily: 'Voces',
+            // textTheme: Typography.englishLike2018,
           ),
           home: child,
           initialBinding: InitialBinding(),

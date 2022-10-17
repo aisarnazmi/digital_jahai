@@ -33,7 +33,7 @@ class ManageTermView extends GetView<ManageTermController> {
                 child: SingleChildScrollView(
                   controller: controller.scrollController,
                   child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8.0.h),
+                    padding: EdgeInsets.symmetric(vertical: 25.0.h),
                     child: Column(
                       children: <Widget>[
                         Row(

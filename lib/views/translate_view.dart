@@ -30,7 +30,7 @@ class TranslateView extends GetView<TranslateController> {
               child: SingleChildScrollView(
                 controller: controller.scrollController,
                 child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8.0.h),
+                    padding: EdgeInsets.symmetric(vertical: 25.0.h),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
@@ -87,10 +87,8 @@ class TranslateView extends GetView<TranslateController> {
                                 "Jahai Language\nRepository",
                                 style: TextStyle(
                                     color: colorPrimaryLight,
-                                    fontSize: 36.sp,
-                                    fontWeight: FontWeight.w800,
-                                    letterSpacing: -1,
-                                    wordSpacing: 5,
+                                    fontSize: 46.sp,
+                                    fontWeight: FontWeight.w900,
                                     height: 1.2.h),
                               ),
                             )
@@ -139,7 +137,7 @@ class TranslateView extends GetView<TranslateController> {
                                     },
                                     decoration: InputDecoration(
                                       hintText:
-                                          "Enter ${controller.originLang.value} term...",
+                                          "Input ${controller.originLang.value.capitalize} term ..",
                                       hintStyle: TextStyle(
                                           color: colorPlaceholderText),
                                       enabledBorder: OutlineInputBorder(
