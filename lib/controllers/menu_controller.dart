@@ -76,7 +76,7 @@ class MenuController extends GetxController {
     var url = Uri.parse(link.url);
 
     if (await canLaunchUrl(url)) {
-        await launchUrl(url, mode: LaunchMode.externalApplication);
+      await launchUrl(url, mode: LaunchMode.externalApplication);
     } else {
       throw 'Could not launch $link';
     }
@@ -118,17 +118,17 @@ class MenuController extends GetxController {
                 height: 15.0.h,
               ),
               Text(
-                  "Please install IPA keyboard using link below and, follow the installation steps: ",
+                  "Please install IPA keyboard using link below, and follow the steps to enable IPA keyboard: ",
                   style: TextStyle(fontWeight: FontWeight.w600)),
               SizedBox(
-                height: 15.0.h,
+                height: 3.0.h,
               ),
               if (GetPlatform.isAndroid) ...[
                 Linkify(
                   onOpen: onOpenUrl,
                   options: LinkifyOptions(humanize: true),
                   text:
-                      "Android Platform: https://play.google.com/store/apps/details?id=com.google.android.inputmethod.latin",
+                      "https://play.google.com/store/apps/details?id=com.google.android.inputmethod.latin",
                 ),
                 RichText(
                   text: TextSpan(
@@ -139,7 +139,7 @@ class MenuController extends GetxController {
                     children: const <TextSpan>[
                       TextSpan(
                           text:
-                              "\nStep to add IPA language on Gboard:-\n\n1. Open the "),
+                              "\nStep to add IPA on Gboard (may differ depending on phone) :-\n\n1. Open the "),
                       TextSpan(
                           text: "Settings",
                           style: TextStyle(fontWeight: FontWeight.w600)),
@@ -165,7 +165,7 @@ class MenuController extends GetxController {
                     onOpen: onOpenUrl,
                     options: LinkifyOptions(humanize: true),
                     text:
-                        "IOS Platform: https://apps.apple.com/my/app/ipa-phonetic-keyboard/id1440241497"),
+                        "https://apps.apple.com/my/app/ipa-phonetic-keyboard/id1440241497"),
                 RichText(
                   text: TextSpan(
                     style: const TextStyle(
@@ -175,7 +175,7 @@ class MenuController extends GetxController {
                     children: const <TextSpan>[
                       TextSpan(
                           text:
-                              "\nStep to add IPA language on IOS Keyboard:-\n\n1. Open the "),
+                              "\nStep to add IPA on IOS Keyboard:-\n\n1. Open the "),
                       TextSpan(
                           text: "Settings",
                           style: TextStyle(fontWeight: FontWeight.w600)),
@@ -204,7 +204,7 @@ class MenuController extends GetxController {
                 height: 15.0.h,
               ),
               Text(
-                  "* Now you can use IPA language while typing by switching to IPA keyboard.")
+                  "* Now you can use IPA keyboard, by tapping 🌐button at your keyboard.")
             ],
           ),
         ),
